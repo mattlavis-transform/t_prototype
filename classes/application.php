@@ -67,7 +67,7 @@ class application
         // Config settings globally
         //pre ($_SERVER);
         $cdr = $_SERVER['CONTEXT_DOCUMENT_ROOT'];
-        $path = $cdr . "data/application_config.json";
+        $path = $cdr . "/data/application_config.json";
         $data = file_get_contents($path);
         $this->global_config = json_decode($data, true);
         $this->common_measurement_units = $this->global_config["config"]["common_measurement_units"];
