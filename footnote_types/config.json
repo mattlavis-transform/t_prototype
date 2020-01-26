@@ -1,0 +1,145 @@
+{
+    "footnote_types": {
+        "config": {
+            "object_name": "Footnote types",
+            "title": "Find and edit footnote types",
+            "title_create": "Create a new footnote type",
+            "title_edit": "Edit footnote type {footnote_type_id}",
+            "validate": false,
+            "inset": "Enter criteria to help find a footnote type. Alternatively, <a class='govuk-link' href='create_edit.html'>create a new footnote type</a>.",
+            "freetext_fields": "",
+            "default_sort_fields": "f.footnote_type_id",
+            "buttons": {
+                "heading_text": "Finish now",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Use this form to manage existing footnote types or to create new footnote types."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "What is the ID of this footnote type?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please enter two one-digit alphabetical string. Click here to view <a href='/footnote_types/'>existing footnote types</a>.",
+                "control_name": "footnote_type_id",
+                "control_style": "govuk-input--width-4",
+                "size": 2,
+                "maxlength": 2,
+                "pattern": "[0-9A-Z]{2}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "character_count_control",
+                "label": "What is the description of this footnote type?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the public-facing footnote type description.",
+                "control_name": "description",
+                "rows": 5,
+                "maxlength": 500,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/common/formatting_help.html"
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this footnote type enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "control_scope": "update",
+                "label": "When should this footnote type be terminated?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the footnote type is only needed for a limited time.",
+                "control_name": "validity_end_date",
+                "default": "",
+                "required": false
+            },
+            {
+                "control_type": "select_control",
+                "label": "Select the application code",
+                "label_style": "govuk-label--m",
+                "hint_text": "The application code indicates to which data type the footnote type applies.",
+                "control_name": "application_code",
+                "dataset": "",
+                "default_value": "",
+                "default_string": "- Please select an application code -",
+                "selected": "",
+                "disabled_on_edit": false,
+                "group_by": "",
+                "required": true
+            },
+
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": [
+            {
+                "column_name": "Footnote type",
+                "data_column": "footnote_type_id",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "footnote_type_url",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Application code",
+                "data_column": "application_code",
+                "sort_field": "",
+                "tooltip": "Application code denotes the overarching purpose of footnote types that can be created. In general, all except for &quot;1&nbsp;-&nbsp;additional&nbsp;codes&quot; are legacy codes and are not to be used in the future.",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
+                "column_name": "End date",
+                "data_column": "validity_end_date",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
+                "column_name": "&nbsp;",
+                "data_column": "footnote_url",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            }
+        ]
+    }
+}

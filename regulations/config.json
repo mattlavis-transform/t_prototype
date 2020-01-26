@@ -1,0 +1,246 @@
+{
+    "regulations": {
+        "config": {
+            "title": "Find and edit regulations",
+            "inset": "Enter criteria to help find a regulation. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new regulation</a>.",
+            "freetext_fields": "information_text|base_regulation_id|trade_remedies_case",
+            "default_sort_fields": "mt.measure_type_id",
+            "object_name": "Regulations",
+            "title_create": "Create a new regulation",
+            "title_edit": "Edit regulation",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Finish now",
+                "info_text": "",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Use this form to create a new regulation. All measures need to be associated with a regulation which has a start date no later than the start date of the measures."
+            },
+            {
+                "control_type": "inset_control",
+                "control_scope": "update",
+                "text": "Use this form to update a new regulation."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "Regulation ID",
+                "label_style": "govuk-label--m",
+                "hint_text": "This must be exactly 8 characters long",
+                "control_name": "base_regulation_id",
+                "control_style": "govuk-!-width-one-quarter",
+                "size": 8,
+                "maxlength": 8,
+                "pattern": "[CPUSXNMQA][0-9]{7}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/regulations/help_regulation_id.html"
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this regulation enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This date must be set no later than the date on which you would like any dependent measures to start.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When should this regulation be terminated?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the regulation is only needed for a limited time.",
+                "control_name": "validity_end_date",
+                "default": "",
+                "required": false
+            },
+            {
+                "control_type": "input_control",
+                "label": "What is the public-facing regulation identifier?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the name of the regulation as it would appear on (for example) legislation.gov.uk.",
+                "control_name": "public_identifier",
+                "control_style": "govuk-input--width-10",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": false,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "character_count_control",
+                "label": "What is the description of this regulation?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This field is optional but it may help you find the regulation at a later date.",
+                "control_name": "information_text",
+                "rows": 3,
+                "maxlength": 200,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "input_control",
+                "label": "What is the URL of the regulation?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Optionally, please enter the absolute URL of the regulation, including for example the opening https://www ... This is the web location that will be linked to from this regulation on the Trade Tariff Service.",
+                "control_name": "url",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "control_style": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": false,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "input_control",
+                "label": "Trade remedies case number",
+                "label_style": "govuk-label--m",
+                "hint_text": "If this regulation covers anti-dumping or anti-subsidy duties as a result of a trade remedies provisional or definitive judgment, please enter the Trade Remedies case number here, in the format XXNNNN (where x=letter and N=number).",
+                "control_name": "trade_remedies_case",
+                "size": 30,
+                "maxlength": 30,
+                "pattern": "",
+                "control_style": "govuk-input--width-10",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": false,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "select_control",
+                "label": "Select the regulation group",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "regulation_group_id",
+                "default_value": "",
+                "disabled_on_edit": false,
+                "default_string": "- Please select a regulation group -",
+                "selected": "",
+                "required": true,
+                "group_by": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/regulations/help_regulation_group_id.html"
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [
+            {
+                "label": "Scope",
+                "form_value": "regulation_scope",
+                "data_field": "regulation_scope",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": ""
+            },
+            {
+                "label": "Regulation group",
+                "form_value": "regulation_group_id",
+                "data_field": "regulation_group_id",
+                "data_type": "string",
+                "truncate_at": 60,
+                "height": "300px"
+            },
+            {
+                "label": "Start year",
+                "form_value": "start_year",
+                "data_field": "date_part('year', validity_start_date)",
+                "data_type": "integer",
+                "truncate_at": 0,
+                "height": "200px"
+            },
+            {
+                "label": "Regulation type",
+                "form_value": "regulation_type",
+                "data_field": "regulation_type",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": ""
+            },
+            {
+                "label": "Active state",
+                "form_value": "active_state",
+                "data_field": "active_state",
+                "data_type": "string",
+                "truncate_at":"",
+                "height": ""
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "ID",
+                "data_column": "base_regulation_id",
+                "sort_field": "base_regulation_id",
+                "tooltip": "",
+                "align": "b"
+            },
+            {
+                "column_name": "Information text",
+                "data_column": "information_text",
+                "sort_field": "information_text",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Regulation group",
+                "data_column": "regulation_group_url",
+                "sort_field": "regulation_group_id",
+                "tooltip": "It's vital that a regulation is assigned to the correct regulation group, otherwise there may be issues in processing the trade correctly on CDS.",
+                "align": ""
+            },
+            {
+                "column_name": "Regulation type",
+                "data_column": "regulation_type",
+                "sort_field": "regulation_type",
+                "tooltip": "",
+                "align": "l"
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "validity_start_date",
+                "tooltip": "",
+                "align": "l"
+            },
+            {
+                "column_name": "End date",
+                "data_column": "validity_end_date",
+                "sort_field": "validity_end_date",
+                "tooltip": "",
+                "align": "l"
+            },
+            {
+                "column_name": "Measures",
+                "data_column": "measures_url",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "nw"
+            }
+        ]
+    }
+}

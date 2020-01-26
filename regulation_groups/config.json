@@ -1,0 +1,121 @@
+{
+    "regulation_groups": {
+        "config": {
+            "object_name": "Regulation groups",
+            "title": "Find and edit regulation groups",
+            "title_create": "Create a new regulation group",
+            "title_edit": "Edit regulation group {regulation_group_id}",
+            "validate": true,
+            "inset": "Enter criteria to help find a regulation group.",
+            "freetext_fields": "",
+            "default_sort_fields": "",
+            "buttons": {
+                "heading_text": "Finish now",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Use this form to manage existing regulation groups or to create new regulation groups."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "What is the ID of this regulation group?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please enter two one-digit alphabetical string. Click here to view <a href='/certificate_types/'>existing regulation groups</a>.",
+                "control_name": "regulation_group_id",
+                "control_style": "govuk-input--width-4",
+                "size": 2,
+                "maxlength": 2,
+                "pattern": "[0-9A-Z]{2}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "input_control",
+                "label": "What is the description of this regulation group?",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "description",
+                "control_style": "govuk-input--width-full",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": false,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this regulation group enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When should this regulation group be terminated?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the regulation group is only needed for a limited time.",
+                "control_name": "validity_end_date",
+                "default": "",
+                "required": false
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": [
+            {
+                "column_name": "Regulation group",
+                "data_column": "regulation_group_id",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "description",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
+                "column_name": "End date",
+                "data_column": "validity_end_date",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
+                "column_name": "&nbsp;",
+                "data_column": "regulation_url",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "l"
+            }
+        ]
+    }
+}

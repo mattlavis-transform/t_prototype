@@ -1,0 +1,80 @@
+{
+	"results": [
+		{
+			"id": "A",
+			"text": "A Importation and\/or exportation prohibited"
+		},
+		{
+			"id": "B",
+			"text": "B Entry into free circulation or exportation subject to conditions"
+		},
+		{
+			"id": "C",
+			"text": "C Applicable duty"
+		},
+		{
+			"id": "D",
+			"text": "D Anti-dumping or countervailing duties"
+		},
+		{
+			"id": "E",
+			"text": "E Levies, export refunds and other agricultural amounts"
+		},
+		{
+			"id": "F",
+			"text": "F Additional duty on sugar, flour"
+		},
+		{
+			"id": "G",
+			"text": "G Monetary compensatory amount"
+		},
+		{
+			"id": "H",
+			"text": "H Accession compensatory amount"
+		},
+		{
+			"id": "J",
+			"text": "J Countervailing charge"
+		},
+		{
+			"id": "K",
+			"text": "K Reference price"
+		},
+		{
+			"id": "L",
+			"text": "L Complementary trade mechanism"
+		},
+		{
+			"id": "M",
+			"text": "M Unit price, standard import value, representative price (poultry, sugar)"
+		},
+		{
+			"id": "N",
+			"text": "N Posterior surveillance"
+		},
+		{
+			"id": "O",
+			"text": "S Supplementary unit"
+		},
+		{
+			"id": "P",
+			"text": "P VAT"
+		},
+		{
+			"id": "Q",
+			"text": "Q Excises"
+		},
+		{
+			"id": "R",
+			"text": "R Provisional exclusion"
+		},
+		{
+			"id": "S",
+			"text": "S Supplementary amount"
+		},
+		{
+			"id": "Z",
+			"text": "Z Archived measure type"
+		}
+	]
+}

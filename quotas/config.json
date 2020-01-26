@@ -1,0 +1,781 @@
+{
+    "navigation": {
+        "title": "Quota menu",
+        "roll_forward": true,
+        "links": [
+            {
+                "url" : "/quotas/create_edit.html",
+                "text": "Core data"
+            },
+            {
+                "url" : "/quotas/create_edit2.html",
+                "text": "Reference documents"
+            },
+            {
+                "url" : "/quotas/create_edit3.html",
+                "text": "Commodities"
+            },
+            {
+                "url" : "/quotas/create_edit4.html",
+                "text": "Duties"
+            },
+            {
+                "url" : "/quotas/create_edit5.html",
+                "text": "Measurements"
+            },
+            {
+                "url" : "/quotas/create_edit6.html",
+                "text": "Definitions"
+            },
+            {
+                "url" : "/quotas/create_edit7.html",
+                "text": "Volumes"
+            },
+            {
+                "url" : "/quotas/create_edit8.html",
+                "text": "Confirmation"
+            }
+        ]
+    },
+    "quota_order_numbers": {
+        "config": {
+            "title": "Find and edit a quota",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Quotas",
+            "title_create": "Create quota - core data",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Continue",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "Save progress",
+                "info_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Please use this form to provide the basic information necessary to support the creation of a quota."
+            },
+            {
+                "control_type": "inset_control",
+                "control_scope": "update",
+                "text": "Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "Which regulation gives legal force to this quota?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Start typing in the field to see available regulations. If the regulation you need is not in the list, you can <a class='govuk-link nw' href='/regulations/create_edit.html'>create a new regulation</a> here. If you're not sure of the regulation name or ID, you can <a class='govuk-link nw' href='/regulations/'>search for a regulation</a> here.",
+                "control_name": "measure_generating_regulation_id",
+                "control_style": "govuk-!-width-two-thirds",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "radio_control",
+                "label": "What mechanism will be used to administer this quota?",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "A quota may be managed via the First Come First Served method, which is administered by HMRC, or by the licensing method, which is administered by the RPA (Rural Payments Agency).",
+                "control_name": "quota_mechanism",
+                "dataset": "",
+                "selected": "",
+                "radio_control_style": "stacked",
+                "required": true,
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "select_control",
+                "label": "What is the category of this quota?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please identify if this quota is a WTO quota, an ATQ (Autonomous tariff rate quota) or a preferential quota (which is typically a part of a multilateral or bilateral Trade Agreement).",
+                "control_name": "quota_category",
+                "default_value": "Unspecified",
+                "default_string": "- Please select a quota category -",
+                "selected": "",
+                "required": true,
+                "group_by": "",
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "span_control",
+                "control_scope": "insert",
+                "text": "No quota category selected."
+            },
+            {
+                "control_type": "input_control",
+                "label": "Quota order number",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please enter the quota order number ID for this quota. This should be in the form of a 6-digit number starting with 09. If the third character is &quot;4&quot;, that signifies that this quota will be managed via the licensing mechanism. All other quotas are First Come, First Served (FCFS).",
+                "control_name": "quota_order_number_id",
+                "control_style": "govuk-!-width-one-quarter",
+                "size": 6,
+                "maxlength": 6,
+                "pattern": "09[0-9]{4}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "xdate_picker_control",
+                "label": "When does this quota enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the date on which this quota will come into force.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "xselect_control",
+                "label": "What is the period of this quota?",
+                "label_style": "govuk-label--m",
+                "hint_text": "xxx",
+                "control_name": "period_type",
+                "default_value": "Unspecified",
+                "default_string": "- Please select a quota category -",
+                "selected": "",
+                "required": true,
+                "group_by": "",
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When should this quota be terminated?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the certificate is only needed for a limited time.",
+                "control_name": "validity_end_date",
+                "control_scope": "update",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "character_count_control",
+                "label": "What is the description of this quota?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is for information purposes only, but it will be searchable so may help you find a quota at a later date.",
+                "control_name": "description",
+                "control_scope": "",
+                "rows": 3,
+                "maxlength": 400,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/common/formatting_help.html"
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/origins.php"
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [
+            {
+                "label": "Mechanism",
+                "form_value": "quota_mechanism",
+                "data_field": "is_licensed",
+                "data_type": "bool",
+                "truncate_at": 0,
+                "height": "0"
+            },
+            {
+                "label": "Measure type",
+                "form_value": "measure_type_id",
+                "data_field": "m.measure_type_id",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": "0"
+            },
+            {
+                "label": "Category",
+                "form_value": "quota_category",
+                "data_field": "quota_category",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": "0"
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "Order number",
+                "data_column": "ordernumber",
+                "sort_field": "m.ordernumber",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "description",
+                "sort_field": "qon.description",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Measure type",
+                "data_column": "measure_type_id",
+                "sort_field": "measure_type_id",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Category",
+                "data_column": "quota_category",
+                "sort_field": "quota_category",
+                "tooltip": "Quotas come in three forms:<br /><br /><b>WTO</b> quotas, which are typically aligned to the whole world (Erga Omnes)<br /><br /><b>ATQs</b> or Autonomous Tariff Quotas, which are also aligned to the whole world, but specifically for goods that are to be materailly transformed into other goods<br /><br/><b>PRF</b> or preferential quotas which are usually part of formal trade agreements.",
+                "align": ""
+            },
+            {
+                "column_name": "Mechanism",
+                "data_column": "mechanism",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "qon.validity_start_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Actions",
+                "data_column": "actions",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "r"
+            }
+        ]
+    },
+    "quota_order_numbers2": {
+        "config": {
+            "title": "Find and edit a quota",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Quotas",
+            "title_create": "Create quota - reference documents",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "info_text": "",
+                "submit_button_text_create": "Continue",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "Save progress",
+                "cancel_button_text": "Previous step",
+                "cancel_button_href": "./create_edit.html"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "While this information is not passed down to the border systems, it is required to enable the creation of reference documents for Trade Agreements. Please complete now or return later once the quotas have been set up."
+            },
+            {
+                "control_type": "inset_control",
+                "control_scope": "update",
+                "text": "Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "Quota scoping information",
+                "label_style": "govuk-label--m",
+                "hint_text": "This information is used to provide additional information about a quota on reference documents.",
+                "control_name": "quota_scope",
+                "control_style": "govuk-!-width-three-quarters",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": false,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/quotas/scoping.html"
+            },
+            {
+                "control_type": "input_control",
+                "label": "Quota staging information",
+                "label_style": "govuk-label--m",
+                "hint_text": "This information is used to provide additional information about a quota's staging on reference documents..",
+                "control_name": "quota_staging",
+                "control_style": "govuk-!-width-three-quarters",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": false,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/quotas/staging.html"
+            },
+            {
+                "control_type": "radio_control",
+                "label": "Is this an origin quota?",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "This information is used in the production of reference documents to support preferential trade agreements.",
+                "control_name": "origin_quota",
+                "dataset": "",
+                "selected": "",
+                "radio_control_style": "inline",
+                "required": false,
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ]
+    },
+    "quota_order_numbers3": {
+        "config": {
+            "title": "Find and edit a quota",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Quotas",
+            "title_create": "Create quota - commodities",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "info_text": "",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Use this form to specify the commodities that will be included within this quota."
+            },
+            {
+                "control_type": "inset_control",
+                "control_scope": "update",
+                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "character_count_control",
+                "control_scope": "",
+                "label": "Please list the commodity codes to which this quota will apply",
+                "label_style": "govuk-label--m",
+                "hint_text": "Type or paste a list of 10-digit commodity codes into the box below. Separate individual codes with a space, tab or line break. If you don't know which code you need, you can find it via the&nbsp;<a class='govuk-link nw' target='_blank' href='https://www.gov.uk/trade-tariff'>Trade Tariff tool</a>.",
+                "control_name": "commodity_codes",
+                "rows": 12,
+                "pattern": "[0-9]{10}",
+                "maxlength": null,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "span_control",
+                "control_name": "span_check_commodities",
+                "control_scope": "insert",
+                "text": "<a class='govuk-link' href='#'>Check commodity codes</a>"
+            },
+            {
+                "control_type": "span_control",
+                "control_name": "span_commodity_display",
+                "control_scope": "insert",
+                "text": ""
+            },
+            {
+                "control_type": "radio_control",
+                "label": "Will the applicable in-quota duties be the same for all commodities?",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "For most quotas, the duties are the same for all commodities, however there are occasions where the duties differ.",
+                "control_name": "duties_same_for_all_commodities",
+                "dataset": "",
+                "selected": "",
+                "default": "1",
+                "radio_control_style": "inline",
+                "required": true,
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ]
+    },
+    "quota_order_numbers4": {
+        "config": {
+            "title": "Find and edit a quota",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Quotas",
+            "title_create": "Create quota - duties",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "info_text": "",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Use this form to specify the in-quota duties that will apply to each of the commodities that will be included within this quota. Most quotas use the same in-quota duties for all commodity codes. If this is the case, you can enter the duty once only and copy to all rows."
+            },
+            {
+                "control_type": "inset_control",
+                "control_scope": "update",
+                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/quotas/includes/duty_prototype.php"
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ]
+    },
+    "quota_order_numbers5": {
+        "config": {
+            "title": "Find and edit a quota",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Quotas",
+            "title_create": "Create quota - measurements",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "info_text": "",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Use this form to identify how the goods in this quota will be measured."
+            },
+            {
+                "control_type": "inset_control",
+                "control_scope": "update",
+                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "select_control",
+                "label": "How will the quota balance(s) be measured?",
+                "label_style": "govuk-label--m",
+                "hint_text": "In most cases, quotas are measured according to physical attributes, such as weight or volume. Please select that attribute here. You may also need to select a qualifier for the measurement unit that you select. Only the qualifiers that are applicable to the measurement unit selected are displayed.",
+                "control_name": "measurement_unit_code",
+                "default_value": "Unspecified",
+                "default_string": "- Please select a measurement unit code -",
+                "selected": "",
+                "required": true,
+                "group_by": "",
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "select_control",
+                "label": "What is the measurement unit qualifier for this quota?",
+                "label_style": "govuk-label",
+                "hint_text": "",
+                "control_name": "measurement_unit_qualifier_code",
+                "default_value": "Unspecified",
+                "default_string": "- Please select a measurement qualifier code -",
+                "selected": "",
+                "required": true,
+                "group_by": "",
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "select_control",
+                "label": "What is the maximum precision for this quota?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the maximum number of decimal places that a trader can enter on the SAD form in respect of the quantity being imported under this quota. Unless explicitly otherwise specified, the default value is set to '3' in the box below.",
+                "control_name": "maximum_precision",
+                "default_value": "Unspecified",
+                "default_string": "- Please select the maximum precision -",
+                "default": "3",
+                "selected": "3",
+                "required": true,
+                "group_by": "",
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "input_control",
+                "label": "Criticality threshold",
+                "label_style": "govuk-label--m",
+                "hint_text": "The criticality threshold identifies the percentage of the quota that needs to be used up before the status of the quota is set to 'critical'. At that point, HMRC will take securities on any usage of this quota. This is in almost all cases set to 90.",
+                "control_name": "critical_threshold",
+                "control_style": "govuk-input govuk-input--width-3",
+                "size": 3,
+                "maxlength": 3,
+                "pattern": "[0-9]{1,3}",
+                "required": true,
+                "default": "90",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ]
+    },
+    "quota_order_numbers6": {
+        "config": {
+            "title": "Find and edit a quota",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Quotas",
+            "title_create": "Create quota - definitions",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Continue",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "Save progress",
+                "info_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Please use this form to provide the basic information necessary to support the creation of a quota."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "radio_control",
+                "label": "How will this quota recur?",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "Please identify if this quota's regular recurrence will be as an annual, quarterly, monthly or custom period.",
+                "control_name": "period_type",
+                "dataset": "",
+                "selected": "",
+                "radio_control_style": "stacked",
+                "required": true,
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does the first regularly recurring period start?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please enter the date on which the regular recurring period will start for the first time. If there is one or more introductory period required prior to the start of the first recurring period, please enter that period below.",
+                "control_name": "validity_start_date",
+                "control_scope": "",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does the first regularly recurring period end?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please leave this field blank for all period types other than a custom period.",
+                "control_name": "validity_end_date",
+                "control_scope": "",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "input_control",
+                "label": "How many years should the recurring period be set up for?",
+                "label_style": "govuk-label--m",
+                "hint_text": "You can always add further years at a later date.",
+                "control_name": "year_count",
+                "control_style": "govuk-input--width-4",
+                "size": 1,
+                "maxlength": 1,
+                "pattern": "[0-9]{1,2}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "radio_control",
+                "label": "Will there be one or more introductory periods?",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "Please define if there will be one or more introductory quota periods prior to the start of the first regularly repeating period",
+                "control_name": "introductory_period_option",
+                "dataset": "",
+                "selected": "",
+                "radio_control_style": "stacked",
+                "required": true,
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "comment",
+                "COMMENT": "ANNUAL BLOCKS BEGIN HERE"
+            },
+            {
+                "control_type": "xcharacter_count_control",
+                "label": "What is the description of this quota?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is for information purposes only, but it will be searchable so may help you find a quota at a later date.",
+                "control_name": "description",
+                "control_scope": "",
+                "rows": 3,
+                "maxlength": 500,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ]
+    },
+    "quota_order_numbers7": {
+        "config": {
+            "title": "Find and edit a quota",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Quotas",
+            "title_create": "Create quota - initial volumes",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "info_text": "",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Use this form to specify the in-quota duties that will apply to each of the commodities that will be included within this quota."
+            },
+            {
+                "control_type": "inset_control",
+                "control_scope": "update",
+                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/quotas/includes/create_definitions.php"
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ]
+    },
+    "quota_order_numbers8": {
+        "config": {
+            "title": "Find and edit a quota",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Quotas",
+            "title_create": "Create quota - confirmation",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "info_text": "",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Use this form to specify the in-quota duties that will apply to each of the commodities that will be included within this quota."
+            },
+            {
+                "control_type": "inset_control",
+                "control_scope": "update",
+                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/quotas/includes/create_definitions.php"
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ]
+    }
+}

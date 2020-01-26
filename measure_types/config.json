@@ -1,0 +1,236 @@
+{
+    "measure_types": {
+        "config": {
+            "object_name": "Measure types",
+            "title": "Find and edit measure types",
+            "title_create": "Create a new measure type",
+            "title_edit": "Edit measure type {measure_type_id}",
+            "validate": false,
+            "inset": "Enter criteria to help find a measure type. Alternatively, <a class='govuk-link' href='create_edit.html'>create a new measure type</a>.",
+            "freetext_fields": "description|measure_type_id",
+            "default_sort_fields": "mt.measure_type_id",
+            "buttons": {
+                "heading_text": "Finish now",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Use this form to manage existing measure types or to create new measure types. Please be aware that there is additional configuration work required on downstream systems (e.g. CDS) before any modifications can be made fully operable. Please ensure that HMRC are notified of any upcoming changes to measure types."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "What is the ID of this measure type?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please enter a three-digit numeric string. Click here to view <a class='govuk-link' href='/measure_types/'>existing measure types</a>.",
+                "control_name": "measure_type_id",
+                "control_style": "govuk-input--width-4",
+                "size": 3,
+                "maxlength": 3,
+                "pattern": "[0-9A-Z]{1,3}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": "measure_type_exists"
+            },
+            {
+                "control_type": "character_count_control",
+                "label": "What is the description of this measure type?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the public-facing measure type description.",
+                "control_name": "description",
+                "rows": 5,
+                "maxlength": 500,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/common/formatting_help.html"
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this measure type enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the date on which this measure type will come into force. Any measures that are due to start before this date will not be able to use this measure type.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "control_scope": "update",
+                "label": "When should this measure type be terminated?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the measure type is only needed for a limited time.",
+                "control_name": "validity_end_date",
+                "default": "",
+                "required": false
+            },
+            {
+                "control_type": "select_control",
+                "label": "Select the measure type series",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please ensure that the correct measure type series is selected - some properties of measure types are defined in the measure type series. Click to see all <a class='govuk-link' href='/measure_type_series/'>measure type series</a>.",
+                "control_name": "measure_type_series_id",
+                "dataset": "",
+                "default_value": "",
+                "default_string": "- Please select a measure type series -",
+                "selected": "",
+                "disabled_on_edit": false,
+                "group_by": "",
+                "required": true
+            },
+            {
+                "control_type": "radio_control",
+                "label": "Select the trade movement code",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "The 'trade movement code' identifies if a measure is to be applied to import measures, export measures or both.",
+                "control_name": "trade_movement_code",
+                "dataset": "",
+                "selected": "",
+                "radio_control_style": "stacked",
+                "required": true
+            },
+            {
+                "control_type": "radio_control",
+                "label": "Define if measure components can be assigned to this measure type",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "The 'measure component applicable code' identifies if a measure can be assigned measure components (or measure condition components).",
+                "control_name": "measure_component_applicable_code",
+                "dataset": "",
+                "selected": "",
+                "radio_control_style": "stacked",
+                "required": true
+            },
+            {
+                "control_type": "radio_control",
+                "label": "Define if quota order numbers can be assigned to this measure type",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "The 'order number capture code' identifies if a quota order number can be assigned measure components (or measure condition components).",
+                "control_name": "order_number_capture_code",
+                "dataset": "",
+                "selected": "",
+                "radio_control_style": "stacked",
+                "required": true
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [
+            {
+                "label": "Measure type series",
+                "form_value": "measure_type_series_id",
+                "data_field": "mt.measure_type_series_id",
+                "data_type": "string",
+                "truncate_at": 60,
+                "height": "200px"
+            },
+            {
+                "label": "Trade movement code",
+                "form_value": "trade_movement_code",
+                "data_field": "mt.trade_movement_code",
+                "data_type": "number",
+                "truncate_at": 0
+            },
+            {
+                "label": "Component applicable",
+                "form_value": "measure_component_applicable_code",
+                "data_field": "mt.measure_component_applicable_code",
+                "data_type": "number",
+                "truncate_at": 0
+            },
+            {
+                "label": "Order number",
+                "form_value": "order_number_capture_code",
+                "data_field": "mt.order_number_capture_code",
+                "data_type": "number",
+                "truncate_at": 0
+            },
+            {
+                "label": "Active state",
+                "form_value": "active_state",
+                "data_field": "active_state",
+                "data_type": "string",
+                "truncate_at":"",
+                "height": ""
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "Measure type",
+                "data_column": "measure_type_id",
+                "sort_field": "mt.measure_type_id",
+                "tooltip": "",
+                "align": "b"
+            },
+            {
+                "column_name": "Description",
+                "data_column": "measure_type_url",
+                "sort_field": "mtd.description",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Series",
+                "data_column": "measure_type_series_url",
+                "sort_field": "mt.measure_type_series_id",
+                "tooltip": "Some properties of a measure type are also defined in the related <a class='govuk-link' href='/measure_type_series/''>measure type series</a>.",
+                "align": ""
+            },
+            {
+                "column_name": "Trade movement code",
+                "data_column": "trade_movement_code_description",
+                "sort_field": "mt.trade_movement_code",
+                "tooltip": "Determines whether the measure type is to be used for import or export measures",
+                "align": "c"
+            },
+            {
+                "column_name": "Component applicable",
+                "data_column": "measure_component_applicable_code_description",
+                "sort_field": "mt.measure_component_applicable_code",
+                "tooltip": "Determines whether a measure component or condition component is mandatory, permitted or forbidden for this measure type",
+                "align": "c"
+            },
+            {
+                "column_name": "Order number capture code",
+                "data_column": "order_number_capture_code_description",
+                "sort_field": "mt.order_number_capture_code",
+                "tooltip": "Determines whether a quota order number can be assigned to measures of this type",
+                "align": "c"
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "mt.validity_start_date",
+                "tooltip": "",
+                "align": "l"
+            },
+            {
+                "column_name": "End date",
+                "data_column": "validity_end_date",
+                "sort_field": "mt.validity_end_date",
+                "tooltip": "",
+                "align": "l"
+            },
+            {
+                "column_name": "Measures",
+                "data_column": "measure_url",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "nw"
+            }
+        ]
+    }
+}

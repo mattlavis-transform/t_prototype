@@ -1,0 +1,64 @@
+{
+	"results": [
+		{
+			"id": "AG",
+			"text": "Antigua and Barbuda"
+		},
+		{
+			"id": "BS",
+			"text": "Bahamas"
+		},
+		{
+			"id": "BB",
+			"text": "Barbados"
+		},
+		{
+			"id": "BZ",
+			"text": "Belize"
+		},
+		{
+			"id": "DM",
+			"text": "Dominica"
+		},
+		{
+			"id": "DO",
+			"text": "Dominican Republic"
+		},
+		{
+			"id": "GD",
+			"text": "Grenada"
+		},
+		{
+			"id": "GY",
+			"text": "Guyana"
+		},
+		{
+			"id": "HT",
+			"text": "Haiti"
+		},
+		{
+			"id": "JM",
+			"text": "Jamaica"
+		},
+		{
+			"id": "KN",
+			"text": "St Kitts and Nevis"
+		},
+		{
+			"id": "VC",
+			"text": "St Vincent and the Grenadines"
+		},
+		{
+			"id": "LC",
+			"text": "St. Lucia"
+		},
+		{
+			"id": "SR",
+			"text": "Suriname"
+		},
+		{
+			"id": "TT",
+			"text": "Trinidad and Tobago"
+		}
+	]
+}

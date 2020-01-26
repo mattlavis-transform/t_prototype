@@ -1,0 +1,123 @@
+{
+    "certificate_types": {
+        "config": {
+            "object_name": "Certificate types",
+            "title": "Find and edit certificate types",
+            "title_create": "Create a new certificate type",
+            "title_edit": "Edit certificate type {certificate_type_id}",
+            "validate": false,
+            "inset": "Enter criteria to help find a certificate type. Alternatively, <a class='govuk-link' href='create_edit.html'>create a new certificate type</a>.",
+            "freetext_fields": "",
+            "default_sort_fields": "ct.certificate_type_code",
+            "buttons": {
+                "heading_text": "Finish now",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Use this form to manage existing certificate types or to create new certificate types."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "What is the unique code of this certificate type?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please enter a single digit alphanumeric string. Click here to view <a href='/certificate_types/'>existing certificate types</a>.",
+                "control_name": "certificate_type_code",
+                "control_style": "govuk-input--width-4",
+                "size": 1,
+                "maxlength": 1,
+                "pattern": "[0-9A-Z]{1}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": "certificate_type_exists"
+            },
+            {
+                "control_type": "character_count_control",
+                "label": "What is the description of this certificate type?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the public-facing certificate type description.",
+                "control_name": "description",
+                "rows": 5,
+                "maxlength": 500,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "xinclude_control",
+                "control_scope": "",
+                "path": "/includes/common/formatting_help.html"
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this certificate type enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When should this certificate type be terminated?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the certificate type is only needed for a limited time.",
+                "control_name": "validity_end_date",
+                "control_scope": "update",
+                "default": "",
+                "required": false
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": [
+            {
+                "column_name": "Certificate type",
+                "data_column": "certificate_type_code",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "certificate_type_url",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
+                "column_name": "End date",
+                "data_column": "validity_end_date",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
+                "column_name": "&nbsp;",
+                "data_column": "certificate_url",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            }
+        ]
+    }
+}

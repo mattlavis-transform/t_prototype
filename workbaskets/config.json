@@ -1,0 +1,85 @@
+{
+    "workbaskets": {
+        "config": {
+            "title": "Find and edit workbaskets",
+            "inset": "Enter criteria to help find a workbasket.",
+            "freetext_fields": "w.status|u.name|w.title|w.reason",
+            "default_sort_fields": "w.title",
+            "object_name": "Workbaskets",
+            "title_create": "",
+            "title_edit": "",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Finish now",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "filters": [
+            {
+                "label": "Created by",
+                "form_value": "user_name",
+                "data_field": "u.id",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": ""
+            },
+            {
+                "label": "Status",
+                "form_value": "status",
+                "data_field": "w.status",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": ""
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "ID",
+                "data_column": "id",
+                "sort_field": "w.id",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Workbasket name",
+                "data_column": "title",
+                "sort_field": "w.title",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Reason for creation",
+                "data_column": "reason",
+                "sort_field": "w.reason",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Created by",
+                "data_column": "user_name",
+                "sort_field": "u.name",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Status",
+                "data_column": "status",
+                "sort_field": "w.status",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Actions",
+                "data_column": "actions",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "r"
+            }
+        ]
+    }
+}

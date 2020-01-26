@@ -1,0 +1,16 @@
+{
+    "session": {
+        "config": {
+            "object_name": "Session",
+            "buttons": {
+                "heading_text": "",
+                "info_text": "",
+                "submit_button_text_create": "Sign out",
+                "submit_button_text_edit": "Sign out",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "/"
+            }
+        }
+    }
+}

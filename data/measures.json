@@ -1,0 +1,46 @@
+[
+	{
+		"goods_nomenclature_item_id": "2710201630",
+		"additional_code": "C482",
+		"measure_type_id": "554",
+		"regulation": "R1811210",
+		"geographical_area": "US",
+		"exclusions": "",
+		"validity_start_date": "2020-01-01T00:00:00Z",
+		"validity_end_date": null,
+		"duty": "9.10 % + 45.10 EUR DTN MAX 18.90 % + 16.50 EUR DTN"
+	},
+	{
+		"goods_nomenclature_item_id": "2710201630",
+		"additional_code": "A999",
+		"measure_type_id": "554",
+		"regulation": "R1515190",
+		"geographical_area": "US",
+		"exclusions": "",
+		"validity_start_date": "2020-01-01T00:00:00Z",
+		"validity_end_date": null,
+		"duty": "9.10 % + 45.10 EUR DTN MAX 18.90 % + 16.50 EUR DTN"
+	},
+	{
+		"goods_nomenclature_item_id": "2710201630",
+		"additional_code": "A942",
+		"measure_type_id": "554",
+		"regulation": "R1515190",
+		"geographical_area": "US",
+		"exclusions": "",
+		"validity_start_date": "2020-01-01T00:00:00Z",
+		"validity_end_date": null,
+		"duty": "9.10 % + 45.10 EUR DTN MAX 18.90 % + 16.50 EUR DTN"
+	},
+	{
+		"goods_nomenclature_item_id": "2710201630",
+		"additional_code": "A941",
+		"measure_type_id": "554",
+		"regulation": "R1515190",
+		"geographical_area": "US",
+		"exclusions": "",
+		"validity_start_date": "2020-01-01T00:00:00Z",
+		"validity_end_date": null,
+		"duty": "9.10 % + 45.10 EUR DTN MAX 18.90 % + 16.50 EUR DTN"
+	}
+]

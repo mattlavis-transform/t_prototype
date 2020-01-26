@@ -1,0 +1,176 @@
+{
+    "additional_codes": {
+        "config": {
+            "title": "Find and edit additional codes",
+            "inset": "Enter criteria to help find an additional code. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new additional code</a>.",
+            "freetext_fields": "ac.description|ac.additional_code_type_id+ac.additional_code",
+            "default_sort_fields": "ac.additional_code_type_id|ac.additional_code",
+            "object_name": "Additional codes",
+            "title_create": "Create a new additional code",
+            "title_edit": "Edit additional code {additional_code_type_id}{additional_code}",
+            "description_keys": "additional_code_sid|additional_code_type_id|additional_code",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Finish now",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Additional codes are used in the creation of measures that cannot be fulfilled solely with the use of commodity codes. Their primary use is in the management of trade remedies (anti-dumping and anti-subsidy measures). An additional code is made up of a single letter or digit (<a class='govuk-link' href='/additional_code_types'>additional code type</a>), followed by three alpha-numeric digits (the code) to make a four digit phrase."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "select_control",
+                "label": "What is the type of this additional code?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Select the additional code type first. The next available code in sequence will then be suggested",
+                "control_name": "additional_code_type_id",
+                "default_value": "",
+                "default_string": "- Please select an additional code type -",
+                "selected": "",
+                "required": true,
+                "group_by": "",
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "input_control",
+                "label": "Additional code ID",
+                "label_style": "govuk-label--m",
+                "hint_text": "This must be exactly three alpha-numeric characters long.",
+                "control_name": "additional_code",
+                "control_style": "govuk-!-width-one-quarter",
+                "size": 5,
+                "maxlength": 5,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this additional code enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the date on which this additional code will come into force.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this additional code be terminated?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the additional code is only needed for a limited time.",
+                "control_name": "validity_end_date",
+                "control_scope": "update",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "character_count_control",
+                "label": "What is the description of this additional code?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This will be visible to operators and should be as precise as possible, or use 'Other'.",
+                "control_name": "description",
+                "control_scope": "insert",
+                "rows": 5,
+                "maxlength": 5000,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "insert",
+                "path": "/includes/common/formatting_help.html"
+            },
+            {
+                "control_type": "button_cluster_control"
+            },
+            {
+                "control_type": "detail_table_control",
+                "control_name": "additional_code_descriptions",
+                "control_scope": "update",
+                "caption": "Existing additional code descriptions"
+            }
+        ],
+        "filters": [
+            {
+                "label": "Additional code type",
+                "form_value": "additional_code_type_id",
+                "data_field": "ac.additional_code_type_id",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": "300px"
+            },
+            {
+                "label": "Start year",
+                "form_value": "start_year",
+                "data_field": "date_part('year', ac.validity_start_date)",
+                "data_type": "integer",
+                "truncate_at": 0,
+                "height": "200px"
+            },
+            {
+                "label": "Active state",
+                "form_value": "active_state",
+                "data_field": "active_state",
+                "data_type": "string",
+                "truncate_at":"",
+                "height": ""
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "ID",
+                "data_column": "additional_code_plus_type",
+                "sort_field": "ac.code",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "description_url",
+                "sort_field": "ac.description",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Type",
+                "data_column": "additional_code_type_id_description",
+                "sort_field": "ac.additional_code_type_id",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "ac.validity_start_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "End date",
+                "data_column": "validity_end_date",
+                "sort_field": "ac.validity_end_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "&nbsp;",
+                "data_column": "measures_link",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "r"
+            }
+        ]
+    }
+}

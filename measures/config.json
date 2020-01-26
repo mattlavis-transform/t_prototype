@@ -1,0 +1,658 @@
+{
+    "navigation": {
+        "title": "Measure creation steps",
+        "roll_forward": true,
+        "links": [
+            {
+                "url": "/measures/create_edit.html",
+                "text": "Core measure data"
+            },
+            {
+                "url": "/measures/create_edit_commodities.html",
+                "text": "Commodites"
+            },
+            {
+                "url": "/measures/create_edit_duties.html",
+                "text": "Duties"
+            },
+            {
+                "url": "/measures/create_edit_conditions.html",
+                "text": "Measure conditions"
+            },
+            {
+                "url": "/measures/create_edit_footnotes.html",
+                "text": "Footnotes"
+            },
+            {
+                "url": "/measures/create_edit6.html",
+                "text": "Confirmation"
+            }
+        ]
+    },
+    "measures": {
+        "config": {
+            "title": "Measures",
+            "inset": "Enter criteria to help find measures. Alternatively, <a class='govuk-link' href='./create_edit.html'>create new measures</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Measures",
+            "title_create": "New measures - core data",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Please use this form to bulk create measures. It is essential to plan your activities in advance of using this bulk measure creation functionality. For example, if you intend to add footnotes or conditions to these measures, please ensure that they apply en masse to all measures."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When will these measures start?",
+                "label_style": "govuk-label--m",
+                "hint_text": " This is the start of the measures' validity period. This will be delayed for any measures that are not approved in time, or if the generating regulation has not come into force by the date specified here.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When will these measures end?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the end of the measures' validity period. By default, this will inherit from the generating regulation, and may be open-ended. You can optionally specify an earlier date.",
+                "control_name": "validity_end_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "input_control",
+                "label": "Which regulation gives legal force to these measures?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please start typing the 8-character ID of the regulation or enter keywords to search for a regulation. Please note: the start date of the regulation must be no later than the proposed start date of the measures.",
+                "control_name": "measure_generating_regulation_id",
+                "control_style": "govuk-input tt-input",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "input_control",
+                "label": "What type of measures do you want to create?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please type the measure type ID or phrases contained in the measure type description.",
+                "control_name": "measure_type_id",
+                "control_style": "govuk-input tt-input",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/origins.php"
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [
+            {
+                "label": "Start year",
+                "form_value": "start_year",
+                "data_field": "date_part('year', validity_start_date)",
+                "data_type": "integer",
+                "truncate_at": 0,
+                "height": "200px"
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "Order number",
+                "data_column": "ordernumber",
+                "sort_field": "m.ordernumber",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "description",
+                "sort_field": "qon.description",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Measure type",
+                "data_column": "measure_type_id",
+                "sort_field": "measure_type_id",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Category",
+                "data_column": "quota_category",
+                "sort_field": "quota_category",
+                "tooltip": "Quotas come in three forms:<br /><br /><b>WTO</b> quotas, which are typically aligned to the whole world (Erga Omnes)<br /><br /><b>ATQs</b> or Autonomous Tariff Quotas, which are also aligned to the whole world, but specifically for goods that are to be materailly transformed into other goods<br /><br/><b>PRF</b> or preferential quotas which are usually part of formal trade agreements.",
+                "align": ""
+            },
+            {
+                "column_name": "Mechanism",
+                "data_column": "mechanism",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "qon.validity_start_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Actions",
+                "data_column": "actions",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "r"
+            }
+        ]
+    },
+    "measures_commodities": {
+        "config": {
+            "title": "Measures",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Measures",
+            "title_create": "New measures - commodities",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Use this form to select the commodity codes and additional codes which will be used in the creation of these measures. The additional code field is to be used primarily for the creation of Trade Remedies (anti-dumping and anti-subsidy measures). Blah ..."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "character_count_control",
+                "control_scope": "",
+                "label": "Please list the commodity codes to which this measure will apply",
+                "label_style": "govuk-label--m",
+                "hint_text": "Type or paste a list of 10-digit commodity codes into the box below. Separate individual codes with a space, tab or line break. If you don't know which code you need, you can find it via the&nbsp;<a class='govuk-link nw' target='_blank' href='https://www.gov.uk/trade-tariff'>Trade Tariff tool</a>.",
+                "control_name": "commodity_codes",
+                "rows": 12,
+                "pattern": "[0-9]{10}",
+                "maxlength": null,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "character_count_control",
+                "control_scope": "",
+                "label": "Please list the additional codes to which this measure will apply",
+                "label_style": "govuk-label--m",
+                "hint_text": "Type or paste a list of 4-digit additional codes into the box below. Separate individual codes with a space, tab or line break. If you need to enter a trade remedies residual code (e.g. C999, then please enter it in this box and it will be pre-selected on the following screen.",
+                "control_name": "additional_codes",
+                "rows": 8,
+                "pattern": "[0-4]{10}",
+                "maxlength": null,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "radio_control",
+                "label": "Will the applicable in-quota duties be the same for all commodities?",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "If all combinations of commodity codes and additional codes will have the precise same duties, please select&nbsp;'Yes'. Otherwise, please select&nbsp;'No' and modify the duties on the following screen.",
+                "control_name": "duties_same_for_all_commodities",
+                "dataset": "",
+                "selected": "",
+                "default": "1",
+                "radio_control_style": "inline",
+                "required": true,
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [
+            {
+                "label": "Mechanism",
+                "form_value": "quota_mechanism",
+                "data_field": "is_licensed",
+                "data_type": "bool",
+                "truncate_at": 0,
+                "height": "0"
+            },
+            {
+                "label": "Measure type",
+                "form_value": "measure_type_id",
+                "data_field": "m.measure_type_id",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": "0"
+            },
+            {
+                "label": "Category",
+                "form_value": "quota_category",
+                "data_field": "quota_category",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": "0"
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "Order number",
+                "data_column": "ordernumber",
+                "sort_field": "m.ordernumber",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "description",
+                "sort_field": "qon.description",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Measure type",
+                "data_column": "measure_type_id",
+                "sort_field": "measure_type_id",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Category",
+                "data_column": "quota_category",
+                "sort_field": "quota_category",
+                "tooltip": "Quotas come in three forms:<br /><br /><b>WTO</b> quotas, which are typically aligned to the whole world (Erga Omnes)<br /><br /><b>ATQs</b> or Autonomous Tariff Quotas, which are also aligned to the whole world, but specifically for goods that are to be materailly transformed into other goods<br /><br/><b>PRF</b> or preferential quotas which are usually part of formal trade agreements.",
+                "align": ""
+            },
+            {
+                "column_name": "Mechanism",
+                "data_column": "mechanism",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "qon.validity_start_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Actions",
+                "data_column": "actions",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "r"
+            }
+        ]
+    },
+    "measures_duties": {
+        "config": {
+            "title": "Measures",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Measures",
+            "title_create": "New measures - duties",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "Enter certificate",
+                "label_style": "govuk-label--m",
+                "hint_text": "If there is a certificate required for importers to take advantage of reduced anti-dumping or anti-subsidy duties, then please specify that certificate here.",
+                "control_name": "certificate_code",
+                "control_style": "govuk-input--width-30 certificate",
+                "size": 255,
+                "maxlength": 255,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": "",
+                "group_class": "trade_remedies"
+            },
+            {
+                "control_type": "input_control",
+                "label": "Duty without certificate",
+                "label_style": "govuk-label--m",
+                "hint_text": "DON'T FORGET ABOUT THE RESIDUAL 999 CODE. Please enter the duties that will be applicable if the document is not provided. Please only use this feature if the duty is common across all impacted measures.",
+                "control_name": "certificate_code",
+                "control_style": "govuk-input--width-40 duty",
+                "size": 255,
+                "maxlength": 255,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": "",
+                "group_class": "trade_remedies"
+            },
+            {
+                "control_type": "input_control",
+                "label": "Additional code for 'all other countries'",
+                "label_style": "govuk-label--m",
+                "hint_text": "Pre-populate this with a 999 if they have used on the previous screen",
+                "control_name": "residual_additional_code",
+                "control_style": "govuk-input--width-4",
+                "size": 4,
+                "maxlength": 4,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": "",
+                "group_class": "trade_remedies"
+            },
+
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/measures/includes/duty_prototype.php"
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [
+            {
+                "label": "Mechanism",
+                "form_value": "quota_mechanism",
+                "data_field": "is_licensed",
+                "data_type": "bool",
+                "truncate_at": 0,
+                "height": "0"
+            },
+            {
+                "label": "Measure type",
+                "form_value": "measure_type_id",
+                "data_field": "m.measure_type_id",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": "0"
+            },
+            {
+                "label": "Category",
+                "form_value": "quota_category",
+                "data_field": "quota_category",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": "0"
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "Order number",
+                "data_column": "ordernumber",
+                "sort_field": "m.ordernumber",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "description",
+                "sort_field": "qon.description",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Measure type",
+                "data_column": "measure_type_id",
+                "sort_field": "measure_type_id",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Category",
+                "data_column": "quota_category",
+                "sort_field": "quota_category",
+                "tooltip": "Quotas come in three forms:<br /><br /><b>WTO</b> quotas, which are typically aligned to the whole world (Erga Omnes)<br /><br /><b>ATQs</b> or Autonomous Tariff Quotas, which are also aligned to the whole world, but specifically for goods that are to be materailly transformed into other goods<br /><br/><b>PRF</b> or preferential quotas which are usually part of formal trade agreements.",
+                "align": ""
+            },
+            {
+                "column_name": "Mechanism",
+                "data_column": "mechanism",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "qon.validity_start_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Actions",
+                "data_column": "actions",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "r"
+            }
+        ]
+    },
+    "measures_conditions": {
+        "config": {
+            "title": "Measures",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Measures",
+            "title_create": "New measures - conditions",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "xinset_control",
+                "control_scope": "",
+                "text": "Use this form to add one or more conditions to these measures."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/measures/includes/condition_prototype.php"
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ]
+    },
+    "measures_footnotes": {
+        "config": {
+            "title": "Measures",
+            "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Measures",
+            "title_create": "New measures - footnotes",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Use this form to add one or more footnotes to these measures. Footnotes are not required for measures, so you can add footnotes at a later date if required."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/measures/includes/footnote_prototype.php"
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ]
+    },
+    "footnote_table": {
+        "columns": [
+            {
+                "column_name": "Footnote&nbsp;type",
+                "data_column": "footnote_type_id",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Footnote&nbsp;ID",
+                "data_column": "footnote_id",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "description",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Actions",
+                "data_column": "delete_action",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "nw"
+            }
+        ]
+    },
+    "condition_table": {
+        "columns": [
+            {
+                "column_name": "#",
+                "data_column": "component_sequence_number",
+                "sort_field": "",
+                "tooltip": "Component sequence number",
+                "align": ""
+            },
+            {
+                "column_name": "Monetary unit",
+                "data_column": "condition_monetary_unit_code",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Measurement unit",
+                "data_column": "condition_measurement_unit_code",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Measurement unit qualifier",
+                "data_column": "condition_measurement_unit_qualifier_code",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Action code",
+                "data_column": "action_code",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Certificate",
+                "data_column": "certificate_code",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Actions",
+                "data_column": "action_string",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "nw"
+            }
+        ]
+    }
+}

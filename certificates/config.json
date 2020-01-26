@@ -1,0 +1,178 @@
+{
+    "certificates": {
+        "config": {
+            "title": "Find and edit certificates",
+            "inset": "Enter criteria to help find a certificate. Alternatively, <a class='govuk-link' href='/certificates/create_edit.html'>create a new certificate</a>.",
+            "freetext_fields": "description|certificate_type_code+certificate_code",
+            "default_sort_fields": "certificate_code",
+            "object_name": "Certificates",
+            "title_create": "Create a certificate",
+            "title_edit": "Edit certificate {certificate_type_code}{certificate_code}",
+            "description_keys": "certificate_type_code|certificate_code",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Finish now",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Please use this form to create and edit certificates, licenses or other documents. A certificate code is made up of 4 digits. The first digit is a <a class='govuk-link' href='/certificate_type_codes/'>certificate type code</a>, followed by three alpha-numeric certificate code digits."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "select_control",
+                "label": "What is the type of this certificate?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please select the certificate type code from the list below. The next available certificate code will then be displayed.",
+                "control_name": "certificate_type_code",
+                "default_value": "",
+                "default_string": "- Please select a certificate type -",
+                "selected": "",
+                "required": true,
+                "group_by": "",
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "span_control",
+                "control_scope": "insert",
+                "text": "No certificate type selected."
+            },
+            {
+                "control_type": "input_control",
+                "label": "Certificate code",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please enter a valid unique 3-digit numeric certificate code. <a id='check_certificate_code' class='govuk-link' href='#'>Check certificate code is available</a>.",
+                "control_name": "certificate_code",
+                "control_style": "govuk-!-width-one-quarter",
+                "size": 5,
+                "maxlength": 5,
+                "pattern": "[0-9]{3}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "span_control",
+                "control_scope": "insert",
+                "text": ""
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this certificate enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the date on which this certificate / document will come into force.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When should this certificate be terminated?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the certificate is only needed for a limited time.",
+                "control_name": "validity_end_date",
+                "control_scope": "update",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "character_count_control",
+                "label": "What is the description of this certificate?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please enter a concise description of this certificate using language that will be meaningful to traders.",
+                "control_name": "description",
+                "control_scope": "insert",
+                "rows": 5,
+                "maxlength": 500,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "insert",
+                "path": "/includes/common/formatting_help.html"
+            },
+            {
+                "control_type": "button_cluster_control"
+            },
+            {
+                "control_type": "detail_table_control",
+                "control_scope": "update",
+                "control_name": "certificate_descriptions",
+                "caption": "Existing certificate descriptions"
+            }
+        ],
+                "filters": [
+            {
+                "label": "Certificate type",
+                "form_value": "certificate_type_code",
+                "data_field": "certificate_type_code",
+                "data_type": "string",
+                "truncate_at": 0,
+                "height": "300px"
+            },
+            {
+                "label": "Active state",
+                "form_value": "active_state",
+                "data_field": "active_state",
+                "data_type": "string",
+                "truncate_at":"",
+                "height": ""
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "ID",
+                "data_column": "certificate_code_plus_type",
+                "sort_field": "c.code",
+                "tooltip": "",
+                "align": "b"
+            },
+            {
+                "column_name": "Description",
+                "data_column": "description_url",
+                "sort_field": "c.description",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Type",
+                "data_column": "certificate_type_code_description",
+                "sort_field": "c.certificate_type_code",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "c.validity_start_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "End date",
+                "data_column": "validity_end_date",
+                "sort_field": "c.validity_end_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Actions",
+                "data_column": "measures_url",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            }
+        ]
+    }
+}

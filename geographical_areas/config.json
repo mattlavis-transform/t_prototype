@@ -1,0 +1,180 @@
+{
+    "geographical_areas": {
+        "config": {
+            "title": "Find and edit geographical areas",
+            "inset": "Enter criteria to help find a geographical area. Alternatively, <a class='govuk-link' href='/geographical_areas/create_edit.html'>create a new geographical area</a>.",
+            "freetext_fields": "description|geographical_area_id",
+            "default_sort_fields": "ga.geographical_area_id",
+            "object_name": "Geographical areas",
+            "title_create": "Create a geographical area",
+            "title_edit": "Edit geographical area {geographical_area_id}",
+            "description_keys": "geographical_area_sid|geographical_area_id",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Finish now",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Use this form to create a new geographical area. Alternatively, <a href='./'>search for existing geographical areas</a>."
+            },
+            {
+                "control_type": "inset_control",
+                "control_scope": "update",
+                "text": "Use this form to terminate a geographical area and to <a class='govuk-link' href='#geographical_area_descriptions'>modify its description</a> or <a class='govuk-link' href='#geographical_area_memberships'>country memberships</a>."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "radio_control",
+                "label": "What is the type of this geographical area?",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "",
+                "control_name": "geographical_code",
+                "dataset": "",
+                "selected": "",
+                "radio_control_style": "stacked_detail",
+                "required": true,
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "input_control",
+                "label": "What code identifies this area?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This will be the name of the country or region, but for groups you should use something descriptive that will allow others to easily identify it.",
+                "control_name": "geographical_area_id",
+                "control_style": "govuk-!-width-one-quarter",
+                "size": 5,
+                "maxlength": 5,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this geographical area enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "You will not be able to create measures against this geographical area until this date.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "What is the end date of this geographical area?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the geographical area is only needed for a limited time.",
+                "control_name": "validity_end_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "character_count_control",
+                "label": "What is the description of this geographical area?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This will be the name of the country or region, but for groups you should use something descriptive that will allow others to easily identify it.",
+                "control_name": "description",
+                "control_scope": "insert",
+                "rows": 3,
+                "maxlength": 500,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "insert",
+                "path": "/includes/common/formatting_help.html"
+            },
+            {
+                "control_type": "hidden_control",
+                "control_name": "geographical_area_sid",
+                "value": "???"
+            },
+            {
+                "control_type": "button_cluster_control"
+            },
+            {
+                "control_type": "detail_table_control",
+                "control_scope": "update",
+                "control_name": "geographical_area_descriptions",
+                "caption": "Existing geographical area descriptions"
+            },
+            {
+                "control_type": "membership_table_control",
+                "control_scope": "update",
+                "control_name": "geographical_area_memberships",
+                "caption": "Area memberships"
+            },
+            {
+                "control_type": "roo_membership_table_control",
+                "control_scope": "update",
+                "control_name": "roo_scheme_memberships",
+                "caption": "Rules of origin schemes"
+            }
+        ],
+        "filters": [
+            {
+                "label": "Area code",
+                "form_value": "geographical_code",
+                "data_field": "geographical_code",
+                "data_type": "string",
+                "truncate_at": 0
+            },
+            {
+                "label": "Active state",
+                "form_value": "active_state",
+                "data_field": "active_state",
+                "data_type": "string",
+                "truncate_at":"",
+                "height": ""
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "ID",
+                "data_column": "geographical_area_id",
+                "sort_field": "ga.geographical_area_id",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "SID",
+                "data_column": "geographical_area_sid",
+                "sort_field": "ga.geographical_area_sid",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "geographical_description_url",
+                "sort_field": "ga.description",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Area code",
+                "data_column": "geographical_code_id_description",
+                "sort_field": "ga.geographical_code",
+                "tooltip": "An area code can be one of three things:<br /><br />0 Country<br/ >1 Geographical area group<br />2 Region",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "ga.validity_start_date",
+                "tooltip": "",
+                "align": "l"
+            }
+        ]
+    }
+}

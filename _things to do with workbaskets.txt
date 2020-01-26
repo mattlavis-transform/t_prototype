@@ -1,0 +1,16 @@
+Login
+
+- Get session details
+- Get workbasket ID
+- Get workbasket details
+
+
+Workbasket
+- View core as owner
+- View details as owner
+- Submit for approval
+- View core as approver
+- View details as approver
+- Approve
+- Reject
+

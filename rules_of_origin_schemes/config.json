@@ -1,0 +1,136 @@
+{
+    "rules_of_origin_schemes": {
+        "config": {
+            "object_name": "Rules of origin schemes",
+            "title": "Find and edit Rules of Origin schemes",
+            "title_create": "Create a new Rules of Origin scheme",
+            "title_edit": "Edit Rules of Origin scheme",
+            "validate": false,
+            "inset": "Enter criteria to help find a Rules of Origin scheme. Alternatively, <a class='govuk-link' href='create_edit.html'>create a new Rules of Origin scheme</a>.",
+            "freetext_fields": "",
+            "default_sort_fields": "",
+            "description_keys": "rules_of_origin_scheme_sid",
+            "buttons": {
+                "heading_text": "Finish now",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "insert",
+                "text": "Use this form to create a new Rules of Origin scheme."
+            },
+            {
+                "control_type": "inset_control",
+                "control_scope": "update",
+                "text": "Use this form to manage an existing Rules of Origin scheme."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "character_count_control",
+                "label": "What is the description of this Rules of Origin scheme?",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "description",
+                "rows": 5,
+                "maxlength": 500,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "input_control",
+                "label": "What is the abbreviation of this Rules of Origin scheme?",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "abbreviation",
+                "control_style": "govuk-input--width-10",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": false,
+                "default": "",
+                "disabled_on_edit": false,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this Rules of Origin scheme enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this Rules of Origin scheme end?",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "validity_end_date",
+                "default": "",
+                "required": false
+            },
+            {
+                "control_type": "button_cluster_control"
+            },
+            {
+                "control_type": "xroo_membership_table_control",
+                "control_name": "measure_types",
+                "control_scope": "update",
+                "caption": "Measure types that permit additional codes of this type <span class='caption2'>An additional code may only be used on a measure type if the Rules of Origin scheme has been explicitly assigned to the measure type.</span>"
+            }
+        ],
+        "filters": [],
+        "columns": [
+            {
+                "column_name": "ID",
+                "data_column": "rules_of_origin_scheme_sid",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "link",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Abbreviation",
+                "data_column": "abbreviation",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "l"
+            },
+            {
+                "column_name": "End date",
+                "data_column": "validity_end_date",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "l"
+            },
+            {
+                "column_name": "&nbsp;",
+                "data_column": "table_link",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            }
+            ]
+    }
+}

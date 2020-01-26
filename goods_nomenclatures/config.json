@@ -1,0 +1,208 @@
+{
+    "goods_nomenclatures": {
+        "config": {
+            "title": "Find and edit commodity codes",
+            "inset": "Enter criteria to help find a commodity code.",
+            "freetext_fields": "description|gn.goods_nomenclature_item_id",
+            "default_sort_fields": "goods_nomenclature_item_id|producline_suffix",
+            "object_name": "Goods nomenclatures",
+            "title_create": "Create a new goods nomenclature",
+            "title_edit": "Edit goods nomenclature",
+            "description_keys": "goods_nomenclature_sid|goods_nomenclature_item_id",
+            "validate": true,
+            "buttons": {
+                "heading_text": "Finish now",
+                "submit_button_text_create": "Complete",
+                "submit_button_text_edit": "Complete",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "Commodity code",
+                "label_style": "govuk-label--m",
+                "hint_text": "Enter the 10-digit commodity code that identifies this item",
+                "control_name": "goods_nomenclature_item_id",
+                "control_style": "govuk-!-width-one-quarter",
+                "size": 10,
+                "maxlength": 10,
+                "pattern": "[0-9]{10}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "input_control",
+                "label": "Product line suffix",
+                "label_style": "govuk-label--m",
+                "hint_text": "Enter the 2-digit product line suffix",
+                "control_name": "goods_nomenclature_item_id",
+                "control_style": "govuk-!-width-one-quarter",
+                "size": 2,
+                "maxlength": 2,
+                "pattern": "[0-9]{2}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/goods_nomenclatures/help_productline_suffix.html"
+            },
+            {
+                "control_type": "input_control",
+                "label": "Indent",
+                "label_style": "govuk-label--m",
+                "hint_text": "Lorem ipsum",
+                "control_name": "indent",
+                "control_style": "govuk-!-width-one-quarter",
+                "size": 2,
+                "maxlength": 2,
+                "pattern": "[0-9]{2}",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/goods_nomenclatures/help_indent.html"
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this commodity code enter into force?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is the date on which this commodity code will come into force.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When does this commodity code terminate?",
+                "label_style": "govuk-label--m",
+                "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the commodity code must be terminated.",
+                "control_name": "validity_end_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "character_count_control",
+                "label": "What is the description of this commodity code?",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "description",
+                "control_scope": "insert",
+                "rows": 5,
+                "maxlength": 5000,
+                "required": true,
+                "default": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/common/formatting_help.html"
+            },
+            {
+                "control_type": "button_cluster_control"
+            },
+            {
+                "control_type": "detail_table_control",
+                "control_name": "goods_nomenclature_descriptions",
+                "control_scope": "update",
+                "caption": "Existing commodity code descriptions"
+            }
+        ],
+        "filters": [
+            {
+                "label": "Depth",
+                "form_value": "significant_digits",
+                "data_field": "significant_digits",
+                "data_type": "integer",
+                "truncate_at": 0,
+                "height": "0"
+            },
+            {
+                "label": "Start year",
+                "form_value": "start_year",
+                "data_field": "date_part('year', gn.validity_start_date)",
+                "data_type": "integer",
+                "truncate_at": 0,
+                "height": "175px"
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "Commodity code",
+                "data_column": "goods_nomenclature_item_id_formatted",
+                "sort_field": "gn.goods_nomenclature_item_id",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Suffix",
+                "data_column": "productline_suffix",
+                "sort_field": "gn.producline_suffix",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
+                "column_name": "Indent",
+                "data_column": "number_indents",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
+                "column_name": "SID",
+                "data_column": "goods_nomenclature_sid",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "description_formatted",
+                "sort_field": "description",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start",
+                "data_column": "validity_start_date",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "End",
+                "data_column": "validity_end_date",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Actions",
+                "data_column": "url",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            }
+        ]
+    }
+}

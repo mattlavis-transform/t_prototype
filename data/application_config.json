@@ -1,0 +1,38 @@
+{
+    "config": {
+        "common_measurement_units": [
+            "ASV",
+            "CCT",
+            "CEN",
+            "DAP",
+            "DTN",
+            "GRM",
+            "HLT",
+            "KAC",
+            "KCL",
+            "KGM",
+            "KLT",
+            "KMT",
+            "KNI",
+            "LPA",
+            "LTR",
+            "MIL",
+            "MTK",
+            "MTQ",
+            "MTR",
+            "NAR",
+            "NCL",
+            "NPR",
+            "RET",
+            "TNE",
+            "WAT"
+        ]
+    },
+    "other":
+    {
+        "object":
+        {
+            
+        }
+    }
+}
