@@ -8,7 +8,7 @@
             "validate": false,
             "inset": "Enter criteria to help find a measure type. Alternatively, <a class='govuk-link' href='create_edit.html'>create a new measure type</a>.",
             "freetext_fields": "description|measure_type_id",
-            "default_sort_fields": "mt.measure_type_id",
+            "default_sort_fields": "measure_type_id",
             "buttons": {
                 "heading_text": "Finish now",
                 "submit_button_text_create": "Complete",
@@ -132,7 +132,7 @@
             {
                 "label": "Measure type series",
                 "form_value": "measure_type_series_id",
-                "data_field": "mt.measure_type_series_id",
+                "data_field": "measure_type_series_id",
                 "data_type": "string",
                 "truncate_at": 60,
                 "height": "200px"
@@ -140,21 +140,21 @@
             {
                 "label": "Trade movement code",
                 "form_value": "trade_movement_code",
-                "data_field": "mt.trade_movement_code",
+                "data_field": "trade_movement_code",
                 "data_type": "number",
                 "truncate_at": 0
             },
             {
                 "label": "Component applicable",
                 "form_value": "measure_component_applicable_code",
-                "data_field": "mt.measure_component_applicable_code",
+                "data_field": "measure_component_applicable_code",
                 "data_type": "number",
                 "truncate_at": 0
             },
             {
                 "label": "Order number",
                 "form_value": "order_number_capture_code",
-                "data_field": "mt.order_number_capture_code",
+                "data_field": "order_number_capture_code",
                 "data_type": "number",
                 "truncate_at": 0
             },
@@ -171,56 +171,56 @@
             {
                 "column_name": "Measure type",
                 "data_column": "measure_type_id",
-                "sort_field": "mt.measure_type_id",
+                "sort_field": "measure_type_id",
                 "tooltip": "",
                 "align": "b"
             },
             {
                 "column_name": "Description",
                 "data_column": "measure_type_url",
-                "sort_field": "mtd.description",
+                "sort_field": "description",
                 "tooltip": "",
                 "align": ""
             },
             {
                 "column_name": "Series",
                 "data_column": "measure_type_series_url",
-                "sort_field": "mt.measure_type_series_id",
+                "sort_field": "measure_type_series_id",
                 "tooltip": "Some properties of a measure type are also defined in the related <a class='govuk-link' href='/measure_type_series/''>measure type series</a>.",
                 "align": ""
             },
             {
                 "column_name": "Trade movement code",
                 "data_column": "trade_movement_code_description",
-                "sort_field": "mt.trade_movement_code",
+                "sort_field": "trade_movement_code",
                 "tooltip": "Determines whether the measure type is to be used for import or export measures",
                 "align": "c"
             },
             {
                 "column_name": "Component applicable",
                 "data_column": "measure_component_applicable_code_description",
-                "sort_field": "mt.measure_component_applicable_code",
+                "sort_field": "measure_component_applicable_code",
                 "tooltip": "Determines whether a measure component or condition component is mandatory, permitted or forbidden for this measure type",
                 "align": "c"
             },
             {
                 "column_name": "Order number capture code",
                 "data_column": "order_number_capture_code_description",
-                "sort_field": "mt.order_number_capture_code",
+                "sort_field": "order_number_capture_code",
                 "tooltip": "Determines whether a quota order number can be assigned to measures of this type",
                 "align": "c"
             },
             {
                 "column_name": "Start date",
                 "data_column": "validity_start_date",
-                "sort_field": "mt.validity_start_date",
+                "sort_field": "validity_start_date",
                 "tooltip": "",
                 "align": "l"
             },
             {
                 "column_name": "End date",
                 "data_column": "validity_end_date",
-                "sort_field": "mt.validity_end_date",
+                "sort_field": "validity_end_date",
                 "tooltip": "",
                 "align": "l"
             },

@@ -202,47 +202,45 @@ require("../includes/metadata.php");
                         <div class="complex_search_row">
                             <div class="govuk-grid-column-two-thirds nopad">
                                 <div class="complex_search_form complex_search_form_column1">
-                                    <label class="govuk-label" for="event-name">
+                                    <label class="govuk-label" for="validity_start_date_day">
                                         Start date
                                     </label>
                                 </div>
                                 <div class="complex_search_form complex_search_form_column1a">
-                                    <select class="govuk-select" id="sort" name="sort">
+                                    <select class="govuk-select" id="validity_start_date_operator" name="validity_start_date_operator">
                                         <option value="is">is</option>
                                         <option value="is after">is after</option>
                                         <option value="is before">is before</option>
                                     </select>
                                 </div>
                                 <div class="complex_search_form complex_search_form_column2">
-                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="passport-issued-day" type="number" pattern="[0-9]*">
-                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="passport-issued-day" type="number" pattern="[0-9]*">
-                                    <input size="4" maxlength="4" class="govuk-input govuk-date-input__input govuk-input--width-4" id="passport-issued-year" name="passport-issued-year" type="number" pattern="[0-9]*">
+                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_start_date_day" name="validity_start_date_day" type="number" pattern="[0-9]*">
+                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_start_date_month" name="validity_start_date_month" type="number" pattern="[0-9]*">
+                                    <input size="4" maxlength="4" class="govuk-input govuk-date-input__input govuk-input--width-4" id="validity_start_date_year" name="validity_start_date_year" type="number" pattern="[0-9]*">
                                 </div>
                             </div>
                         </div>
                         <!-- End start date row //-->
 
-                        <!-- Start start date row //-->
+                        <!-- Start end date row //-->
                         <div class="complex_search_row">
                             <div class="govuk-grid-column-two-thirds nopad">
                                 <div class="complex_search_form complex_search_form_column1">
-                                    <label class="govuk-label" for="event-name">
+                                    <label class="govuk-label" for="validity_end_date_day">
                                         End date
                                     </label>
                                 </div>
                                 <div class="complex_search_form complex_search_form_column1a">
-                                    <select class="govuk-select" id="sort" name="sort">
+                                    <select class="govuk-select" id="validity_end_date_operator" name="validity_end_date_operator">
                                         <option value="is">is</option>
                                         <option value="is after">is after</option>
                                         <option value="is before">is before</option>
-                                        <option value="is unspecified">is unspecified</option>
-                                        <option value="is after or unspecified">is after or unspecified</option>
                                     </select>
                                 </div>
                                 <div class="complex_search_form complex_search_form_column2">
-                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="passport-issued-day" type="number" pattern="[0-9]*">
-                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="passport-issued-day" type="number" pattern="[0-9]*">
-                                    <input size="4" maxlength="4" class="govuk-input govuk-date-input__input govuk-input--width-4" id="passport-issued-year" name="passport-issued-year" type="number" pattern="[0-9]*">
+                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_end_date_day" name="validity_end_date_day" type="number" pattern="[0-9]*">
+                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_end_date_month" name="validity_end_date_month" type="number" pattern="[0-9]*">
+                                    <input size="4" maxlength="4" class="govuk-input govuk-date-input__input govuk-input--width-4" id="validity_end_date_year" name="validity_end_date_year" type="number" pattern="[0-9]*">
                                 </div>
                             </div>
                         </div>
@@ -252,24 +250,25 @@ require("../includes/metadata.php");
                         <div class="complex_search_row">
                             <div class="govuk-grid-column-two-thirds nopad">
                                 <div class="complex_search_form complex_search_form_column1">
-                                    <label class="govuk-label" for="event-name">
+                                    <label class="govuk-label" for="creation_date_day">
                                         Creation date
                                     </label>
                                 </div>
                                 <div class="complex_search_form complex_search_form_column1a">
-                                    <select class="govuk-select" id="sort" name="sort">
+                                    <select class="govuk-select" id="creation_date_operator" name="creation_date_operator">
                                         <option value="is">is</option>
                                         <option value="is after">is after</option>
                                         <option value="is before">is before</option>
                                     </select>
                                 </div>
                                 <div class="complex_search_form complex_search_form_column2">
-                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="passport-issued-day" type="number" pattern="[0-9]*">
-                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="passport-issued-day" name="passport-issued-day" type="number" pattern="[0-9]*">
-                                    <input size="4" maxlength="4" class="govuk-input govuk-date-input__input govuk-input--width-4" id="passport-issued-year" name="passport-issued-year" type="number" pattern="[0-9]*">
+                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="creation_date_day" name="creation_date_day" type="number" pattern="[0-9]*">
+                                    <input size="2" maxlength="2" class="govuk-input govuk-date-input__input govuk-input--width-2" id="creation_date_month" name="creation_date_month" type="number" pattern="[0-9]*">
+                                    <input size="4" maxlength="4" class="govuk-input govuk-date-input__input govuk-input--width-4" id="creation_date_year" name="creation_date_year" type="number" pattern="[0-9]*">
                                 </div>
                             </div>
                         </div>
+
                         <!-- End creation    date row //-->
 
                         <div class="govuk-!-margin-top-4">

@@ -1281,10 +1281,10 @@ class application
             $this->sort_clause = "";
         }
 
-        pre ($_REQUEST);
+        //pre ($_REQUEST);
 
         if (!empty($_POST)) {
-            h1 ("post not empty");
+            //h1 ("post not empty");
             $this->filter_options = $_POST;
             $this->clear_filter_cookies();
             foreach ($_POST as $key => $value) {

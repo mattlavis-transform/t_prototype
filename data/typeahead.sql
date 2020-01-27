@@ -1139,16 +1139,76 @@ select *, count(*) OVER() AS full_count from cte where 1 > 0  limit 20 offset 0;
 
 
 
+
+
 with cte as 
-(
-	select br.base_regulation_id, validity_start_date, validity_end_date, effective_end_date,
-	information_text, br.regulation_group_id, rgd.description as regulation_group_description,
+        (
+            select br.base_regulation_id as base_regulation_id, validity_start_date, validity_end_date, effective_end_date,
+            information_text, br.regulation_group_id, rgd.description as regulation_group_description,
+            'Base' as regulation_type,
+            case
+                when (validity_end_date is null or effective_end_date is null) then 'Terminated'
+            else 'Active'
+            end as active_state
+            from base_regulations br, regulation_group_descriptions rgd
+            where br.regulation_group_id = rgd.regulation_group_id
+            
+            union 
+            
+            select mr.modification_regulation_id as base_regulation_id, mr.validity_start_date, mr.validity_end_date, mr.effective_end_date,
+            mr.information_text, br.regulation_group_id as regulation_group_id, rgd.description as regulation_group_description,
+            'Modification' as regulation_type, 
+            case
+                when (mr.validity_end_date is null or mr.effective_end_date is null) then 'Terminated'
+            else 'Active'
+            end as active_state
+            from modification_regulations mr, base_regulations br, regulation_group_descriptions rgd
+            where mr.base_regulation_id = br.base_regulation_id 
+            and mr.base_regulation_role = br.base_regulation_role
+            and br.regulation_group_id = rgd.regulation_group_id 
+        )
+        select *, count(*) OVER() AS full_count
+        from cte where 1 > 0  AND ( lower(information_text) LIKE '%pig%'  OR  lower(base_regulation_id) LIKE '%pig%'  OR  lower(trade_remedies_case) LIKE '%pig%' )  AND date_part('year', validity_start_date) IN (2018) AND regulation_type IN ('Base')
+
+
+with cte as (
+	select *, 
 	case
-	    when validity_end_date is not null then 'Terminated'
+	    when m.validity_end_date is null then 'Terminated'
 	else 'Active'
-	end as active_state
-	from base_regulations br, regulation_group_descriptions rgd
-	where br.regulation_group_id = rgd.regulation_group_id  AND date_part('year', br.validity_start_date) IN (2018)
-)
-select *, count(*) OVER() AS full_count
-from cte where 1 > 0;
+	    end as active_state
+	from ml.measures_real_end_dates m
+)        
+select * from cte where 1 > 0
+and goods_nomenclature_item_id = '0702000000'
+limit 10
+
+
+select measure_sid , goods_nomenclature_item_id , geographical_area_id , measure_type_id , measure_generating_regulation_id, ordernumber 
+	case
+	    when validity_end_date is null then 'Terminated'
+	else 'Active'
+	    end as active_state
+from ml.measures_real_end_dates m
+where 1 > 0
+and goods_nomenclature_item_id = '0702000000';
+
+
+select '"' || geographical_area_id || ' - ' || description || '",' as xxx
+from ml.ml_geographical_areas mga where validity_end_date is null order by geographical_area_id ;
+
+
+
+select '"' || footnote_type_id || footnote_id || ' - ' || REPLACE (regexp_replace(replace(replace(description, e'\t', ' '), '<br>', ' '), E'[\\n\\r]+', ' ', 'g'), '"', '') || '",' as xxx
+from ml.ml_footnotes f where validity_end_date is null
+
+
+with cte as (select c.certificate_type_code, c.certificate_code, c.code, c.description, c.validity_start_date, c.validity_end_date,
+        ctd.description as certificate_type_description,
+        case
+            when c.validity_end_date is not null then 'Terminated'
+            else 'Active'
+	    end as active_state
+        from ml.ml_certificate_codes c, certificate_type_descriptions ctd
+        where c.certificate_type_code = ctd.certificate_type_code)
+        select *, count(*) OVER() AS full_count from cte where 1 > 0  AND ( lower(description) LIKE '%europ%'  OR  lower(certificate_type_code||certificate_code) LIKE '%europ%' )  AND c.certificate_type_code IN ('9') AND active_state IN ('Active') limit 20 offset 0

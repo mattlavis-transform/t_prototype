@@ -1,7 +1,7 @@
 <?php
 	require (dirname(__FILE__) . "../../includes/db.php");
-	pre($_REQUEST);
-	exit();
+	//pre($_REQUEST);
+	//exit();
 	$phase = get_formvar("phase");
 	if ($phase == "perform_backup") {
 		get_formvars_perform_backup();

@@ -13,7 +13,7 @@ class workbasket
         global $conn, $application;
         $errors = array();
 
-        pre($_REQUEST);
+        //pre($_REQUEST);
 
         $this->title = get_formvar("title");
         $this->reason = get_formvar("reason");
