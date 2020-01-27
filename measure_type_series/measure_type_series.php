@@ -115,7 +115,7 @@ class measure_type_series
     {
         global $application;
         $errors = array();
-        pre ($_REQUEST);
+        //pre ($_REQUEST);
         $this->measure_type_series_id = get_formvar("measure_type_series_id", "", True);
         $this->description = get_formvar("description", "", True);
 

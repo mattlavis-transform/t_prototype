@@ -189,7 +189,7 @@ class quota_order_number
         global $application;
         $errors = array();
 
-        pre($_REQUEST);
+        //pre($_REQUEST);
 
         $this->commodity_codes = trim(get_formvar("commodity_codes", "", True));
         $this->commodity_codes = str_replace("\n", " ", $this->commodity_codes);

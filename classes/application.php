@@ -1281,7 +1281,7 @@ class application
             $this->sort_clause = "";
         }
 
-        //pre ($_REQUEST);
+        //pre ($_REQUEST); 
 
         if (!empty($_POST)) {
             //h1 ("post not empty");
