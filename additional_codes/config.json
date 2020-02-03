@@ -49,7 +49,7 @@
                 "control_name": "additional_code",
                 "control_style": "govuk-!-width-one-quarter",
                 "size": 5,
-                "maxlength": 5,
+                "maxlength": 3,
                 "pattern": "",
                 "required": true,
                 "default": "",

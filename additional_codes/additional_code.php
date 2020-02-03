@@ -8,12 +8,12 @@ class additional_code
     public $validity_start_date = "";
     public $validity_end_date = "";
     public $description = "";
-    public $validity_start_day = "";
-    public $validity_start_month = "";
-    public $validity_start_year = "";
-    public $validity_end_day = "";
-    public $validity_end_month = "";
-    public $validity_end_year = "";
+    public $validity_start_date_day = "";
+    public $validity_start_date_month = "";
+    public $validity_start_date_year = "";
+    public $validity_end_date_day = "";
+    public $validity_end_date_month = "";
+    public $validity_end_date_year = "";
     public $descriptions = array();
 
     public function __construct()
@@ -61,7 +61,7 @@ class additional_code
         }
 
         # If we are creating, check that the measure type ID does not already exist
-        if ($this->mode == "insert") {
+        if ($application->mode == "insert") {
             if ($this->exists()) {
                 array_push($errors, "additional_code_exists");
             }
@@ -96,17 +96,73 @@ class additional_code
             $error_string = serialize($errors);
             setcookie("errors", $error_string, time() + (86400 * 30), "/");
             $url = "create_edit.html?err=1&mode=" . $application->mode . "&certificate_type_code=" . $this->certificate_type_code;
-        } else {/*
- if ($create_edit == "create") {
- // Do create scripts
- $this->create();
- } else {
- // Do edit scripts
- $this->update();
- }*/
+        } else {
+            if ($application->mode == "insert") {
+                // Do create scripts
+                $this->create();
+            } else {
+                // Do edit scripts
+                $this->update();
+            }
             $url = "./confirmation.html?mode=" . $application->mode;
         }
         header("Location: " . $url);
+    }
+
+    function create()
+    {
+        global $conn, $application;
+        $operation = "C";
+        $operation_date = $application->get_operation_date();
+        $this->additional_code_description_period_sid = $application->get_next_additional_code_description_period();
+        $this->additional_code_sid = $application->get_next_additional_code();
+
+        if ($this->validity_end_date == "") {
+            $this->validity_end_date = Null;
+        }
+
+        # Create the additional_code record
+        $sql = "INSERT INTO additional_codes_oplog (
+                additional_code_sid, additional_code, additional_code_type_id,
+                validity_start_date, operation, operation_date
+                )
+                VALUES ($1, $2, $3, $4, $5, $6)";
+
+        pg_prepare($conn, "create_additional_code", $sql);
+        $result = pg_execute($conn, "create_additional_code", array(
+            $this->additional_code_sid, $this->additional_code, $this->additional_code_type_id,
+            $this->validity_start_date, $operation, $operation_date
+        ));
+
+        # Create the additional_code description period record
+        $sql = "INSERT INTO additional_code_description_periods_oplog (
+            additional_code_description_period_sid, additional_code_sid, additional_code,
+            additional_code_type_id, validity_start_date,
+            operation, operation_date
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7)";
+
+        pg_prepare($conn, "create_additional_code_description_period", $sql);
+        $result = pg_execute($conn, "create_additional_code_description_period", array(
+            $this->additional_code_description_period_sid, $this->additional_code_sid, $this->additional_code,
+            $this->additional_code_type_id, $this->validity_start_date,
+            $operation, $operation_date
+        ));
+
+        # Create the additional_code description record
+        $sql = "INSERT INTO additional_code_descriptions_oplog (
+            additional_code_description_period_sid, additional_code_sid, additional_code,
+            additional_code_type_id, language_id, description,
+            operation, operation_date
+            )
+            VALUES ($1, $2, $3, $4, 'EN', $5, $6, $7)";
+
+        pg_prepare($conn, "create_additional_code_description", $sql);
+        $result = pg_execute($conn, "create_additional_code_description", array(
+            $this->additional_code_description_period_sid, $this->additional_code_sid, $this->additional_code,
+            $this->additional_code_type_id, $this->description,
+            $operation, $operation_date
+        ));
     }
 
     function exists()
@@ -273,17 +329,17 @@ class additional_code
             $this->validity_end_date = $row[3];
             $this->code = $row[4];
             $this->description = $row[5];
-            $this->validity_start_day = date('d', strtotime($this->validity_start_date));
-            $this->validity_start_month = date('m', strtotime($this->validity_start_date));
-            $this->validity_start_year = date('Y', strtotime($this->validity_start_date));
+            $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
+            $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+            $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
             if ($this->validity_end_date == "") {
-                $this->validity_end_day = "";
-                $this->validity_end_month = "";
-                $this->validity_end_year = "";
+                $this->validity_end_date_day = "";
+                $this->validity_end_date_month = "";
+                $this->validity_end_date_year = "";
             } else {
-                $this->validity_end_day = date('d', strtotime($this->validity_end_date));
-                $this->validity_end_month = date('m', strtotime($this->validity_end_date));
-                $this->validity_end_year = date('Y', strtotime($this->validity_end_date));
+                $this->validity_end_date_day = date('d', strtotime($this->validity_end_date));
+                $this->validity_end_date_month = date('m', strtotime($this->validity_end_date));
+                $this->validity_end_date_year = date('Y', strtotime($this->validity_end_date));
             }
             $this->get_descriptions();
             return (true);
@@ -307,9 +363,9 @@ class additional_code
             $row = pg_fetch_row($result);
             $this->description = $row[2];
             $this->validity_start_date = $row[3];
-            $this->validity_start_day = date('d', strtotime($this->validity_start_date));
-            $this->validity_start_month = date('m', strtotime($this->validity_start_date));
-            $this->validity_start_year = date('Y', strtotime($this->validity_start_date));
+            $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
+            $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+            $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
             $this->certificate_heading = "Edit measure type " . $this->certificate_code;
             $this->disable_certificate_code_field = " disabled";
         }
@@ -319,13 +375,13 @@ class additional_code
     {
         setcookie("certificate_code", "", time() + (86400 * 30), "/");
         setcookie("certificate_type_code", "", time() + (86400 * 30), "/");
-        setcookie("certificate_validity_start_day", "", time() + (86400 * 30), "/");
-        setcookie("certificate_validity_start_month", "", time() + (86400 * 30), "/");
-        setcookie("certificate_validity_start_year", "", time() + (86400 * 30), "/");
+        setcookie("certificate_validity_start_date_day", "", time() + (86400 * 30), "/");
+        setcookie("certificate_validity_start_date_month", "", time() + (86400 * 30), "/");
+        setcookie("certificate_validity_start_date_year", "", time() + (86400 * 30), "/");
         setcookie("certificate_description", "", time() + (86400 * 30), "/");
-        setcookie("certificate_validity_end_day", "", time() + (86400 * 30), "/");
-        setcookie("certificate_validity_end_month", "", time() + (86400 * 30), "/");
-        setcookie("certificate_validity_end_year", "", time() + (86400 * 30), "/");
+        setcookie("certificate_validity_end_date_day", "", time() + (86400 * 30), "/");
+        setcookie("certificate_validity_end_date_month", "", time() + (86400 * 30), "/");
+        setcookie("certificate_validity_end_date_year", "", time() + (86400 * 30), "/");
     }
 
     function validate()

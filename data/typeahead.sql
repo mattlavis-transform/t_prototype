@@ -1212,3 +1212,196 @@ with cte as (select c.certificate_type_code, c.certificate_code, c.code, c.descr
         from ml.ml_certificate_codes c, certificate_type_descriptions ctd
         where c.certificate_type_code = ctd.certificate_type_code)
         select *, count(*) OVER() AS full_count from cte where 1 > 0  AND ( lower(description) LIKE '%europ%'  OR  lower(certificate_type_code||certificate_code) LIKE '%europ%' )  AND c.certificate_type_code IN ('9') AND active_state IN ('Active') limit 20 offset 0
+
+        
+select * from goods_nomenclature_descriptions where description like  '%Grain sorghum%';
+
+
+select goods_nomenclature_item_id, producline_suffix, number_indents,
+            description, leaf, significant_digits, validity_start_date, validity_end_date, node
+            from ml.goods_nomenclature_export_new ('1007%', '2020-02-01')
+            order by goods_nomenclature_item_id, producline_suffix;
+
+           
+select m.measure_sid, m.measure_type_id, m.goods_nomenclature_item_id, mc.duty_expression_id,
+mc.duty_amount, mc.monetary_unit_code, mc.measurement_unit_code, mc.measurement_unit_qualifier_code,
+m.validity_start_date, m.validity_end_date, mtd.description as measure_type_description, m.additional_code_id 
+from measure_type_descriptions mtd, ml.measures_real_end_dates m
+left outer join measure_components mc
+on m.measure_sid = mc.measure_sid
+where m.measure_type_id = mtd.measure_type_id
+and m.additional_code_id not in ('x551', 'x552')
+and m.validity_start_date <= '2020-02-01'
+and (m.validity_end_date is null or m.validity_end_date >= '2020-02-01')
+and m.measure_type_id in ('103', '105')  and left(m.goods_nomenclature_item_id, 4) = '1007'  order by m.goods_nomenclature_item_id, m.validity_start_date, mc.duty_expression_id;
+
+select * from goods_nomenclatures gn
+where goods_nomenclature_item_id like '0403%'
+and validity_end_date is null
+order by 1;
+
+select mts.measure_type_series_id, mts.measure_type_combination, mtsd.description
+from measure_type_series mts , measure_type_series_descriptions mtsd 
+where mts.measure_type_series_id = mtsd.measure_type_series_id
+order by 1;
+order by 1
+
+select mtd.measure_type_id, mtd.description, mt.*
+from measure_types mt, measure_type_descriptions mtd 
+where mt.measure_type_id = mtd.measure_type_id
+and mt.measure_type_series_id = 'C'
+and mt.validity_end_date is null
+order by mt.measure_type_id ;
+
+select mt.measure_type_series_id, mtsd.description, string_agg(measure_type_id, ', ' order by measure_type_id) as xxx
+from measure_types mt, measure_type_series_descriptions mtsd 
+where mt.measure_type_series_id = mtsd.measure_type_series_id 
+and mt.validity_end_date is null
+group by 1, 2
+order by 1;
+
+
+select distinct measure_type_id from ml.measures_real_end_dates mred
+where mred.validity_end_date is null
+order by 1;
+
+select * from measures where measure_type_id = '690' order by validity_start_date desc
+
+select * from measure_types where measure_type_id in ('122', '696');
+
+select * from additional_code_type_measure_types actmt 
+where actmt.validity_end_date is null
+
+select * from ml.measures_real_end_dates mred
+where measure_type_id = '696' and validity_end_date is null;
+
+select * from measure_types where measure_type_id = '109'
+
+
+select distinct measure_explosion_level from measure_types mt 
+
+select goods_nomenclature_item_id, node, description from ml.commodity_friendly_names where node like '04%' order by 1
+
+select * from goods_nomenclature_descriptions gnd where description like '%|mm%'
+
+select roos.rules_of_origin_scheme_sid , roos.description, roosm.geographical_area_id, mga.description 
+from ml.rules_of_origin_schemes roos, ml.rules_of_origin_scheme_memberships roosm,
+ml.ml_geographical_areas mga 
+where roos.rules_of_origin_scheme_sid = roosm.rules_of_origin_scheme_sid
+and mga.geographical_area_id = roosm.geographical_area_id
+order by 1, 4;
+
+
+select left(measure_generating_regulation_id, 7), date_part('year', validity_start_date ), date_part('month', validity_start_date ), count(measure_sid)
+from measures m
+group by measure_generating_regulation_id, date_part('year', validity_start_date ), date_part('month', validity_start_date )
+order by 4 desc, 1;
+
+
+select * from ml.measures_real_end_dates m where (measure_type_id like '55%' or measure_type_id like '56%')
+and (validity_end_date is null or validity_end_date > '2020-01-30');
+
+select * from measures where measure_type_id = '464' and validity_end_date is null;
+
+select * from measures m, measure_types mt
+where m.measure_type_id = mt.measure_type_id 
+and geographical_area_id = '1008'
+--and measure_type_id = '122'
+--and m.measure_type_id = '483'
+and mt.trade_movement_code = 1
+;
+
+select * from geographical_area_memberships gam
+where geographical_area_group_sid in (51, 217, 62)
+and validity_end_date is not null
+order by validity_end_date desc;
+
+
+http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3DL114,YEAR_OJ%3D2019,PAGE_FIRST%3D0005&DB_COLL_OJ=oj-l&type=advanced&lang=en
+http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D44,YEAR_OJ%3D2018,PAGE_FIRST%3D0001&DB_COLL_OJ=oj-l&type=advanced&lang=en
+http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3DL114,YEAR_OJ%3D2019,PAGE_FIRST%3D0005&DB_COLL_OJ=oj-l&type=advanced&lang=en
+
+REGEXP_REPLACE (br.officialjournal_number, '[ D]', '')
+
+
+select br.officialjournal_number, br.officialjournal_page, m.measure_generating_regulation_id,
+'http://eur-lex.europa.eu/search.html?whOJ=NO_OJ%3D' || REGEXP_REPLACE (br.officialjournal_number, '[ D]', '') || ',YEAR_OJ%3D' || date_part('year', br.validity_start_date) || ',PAGE_FIRST%3D' || LPAD(br.officialjournal_page::text, 4, '0') || '&DB_COLL_OJ=oj-l&type=advanced&lang=en' as url,
+geographical_area_id, goods_nomenclature_item_id, m.validity_start_date 
+from measures m, modification_regulations br
+where m.measure_generating_regulation_id = br.base_regulation_id
+and measure_type_id = '695'
+order by br.validity_start_date desc;
+
+select * from measures where measure_generating_regulation_id  = 'R1801960';
+
+select * from base_regulations br
+order by operation_date desc
+limit 10;
+
+-- get the footnote and delete it
+select * from footnotes f
+order by operation_date desc
+limit 10;
+
+select * from footnote_descriptions fd 
+order by operation_date desc
+limit 10;
+
+select * from footnote_description_periods fdp  
+order by operation_date desc
+limit 10;
+
+
+-- get the additional code and delete it
+select * from additional_codes f
+order by operation_date desc
+limit 10;
+
+select * from additional_code_descriptions fd 
+order by operation_date desc
+limit 10;
+
+select * from additional_code_description_periods fdp  
+order by operation_date desc
+limit 10;
+
+
+-- get the geographical area and delete it
+select * from geographical_areas ga
+order by operation_date desc
+limit 10;
+
+select * from geographical_area_descriptions fd 
+order by operation_date desc
+limit 10;
+
+select * from geographical_area_description_periods fdp  
+order by operation_date desc
+limit 10;
+
+
+select right(goods_nomenclature_item_id, 1), count(*)
+from goods_nomenclatures gn 
+group by  right(goods_nomenclature_item_id, 1)
+order by 2 desc
+
+
+select m.measure_sid, m.goods_nomenclature_item_id, m.validity_start_date, mc.certificate_type_code, mc.certificate_code 
+from ml.measures_real_end_dates m, measure_conditions mc 
+where m.measure_type_id = '112' --and m.validity_end_date is null
+and m.measure_sid = mc.measure_sid 
+and mc.certificate_type_code is not null
+order by validity_start_date desc, goods_nomenclature_item_id ;
+
+
+select m.* 
+from ml.measures_real_end_dates m, measure_conditions mc 
+where m.measure_type_id = '119'
+--and (m.validity_end_date is null or m.validity_end_date > '2020-02-01')
+and m.measure_sid = mc.measure_sid 
+and mc.certificate_type_code = 'C'
+and mc.certificate_code = '119'
+and mc.certificate_type_code is not null
+order by validity_start_date desc; --goods_nomenclature_item_id;
+
+

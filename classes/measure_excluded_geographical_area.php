@@ -9,9 +9,9 @@ class measure_excluded_geographical_area
     
     function populate_from_cookies() {
 		$this->heading          		= "Add geographical area exclusion";
-        $this->validity_start_day		= get_cookie("base_regulation_validity_start_day");
-        $this->validity_start_month		= get_cookie("base_regulation_validity_start_month");
-        $this->validity_start_year		= get_cookie("base_regulation_validity_start_year");
+        $this->validity_start_date_day		= get_cookie("base_regulation_validity_start_date_day");
+        $this->validity_start_date_month		= get_cookie("base_regulation_validity_start_date_month");
+        $this->validity_start_date_year		= get_cookie("base_regulation_validity_start_date_year");
         $this->base_regulation_id		= strtoupper(get_cookie("base_regulation_base_regulation_id"));
         $this->information_text_name	= get_cookie("base_regulation_information_text_name");
         $this->information_text_url		= get_cookie("base_regulation_information_text_url");

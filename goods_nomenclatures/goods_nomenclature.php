@@ -198,18 +198,18 @@ class goods_nomenclature
             $this->description = $row[5];
             $this->goods_nomenclature_sid = $row[6];
 
-            $this->validity_start_day = date('d', strtotime($this->validity_start_date));
-            $this->validity_start_month = date('m', strtotime($this->validity_start_date));
-            $this->validity_start_year = date('Y', strtotime($this->validity_start_date));
+            $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
+            $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+            $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
             $this->validity_end_date = $row[2];
             if ($this->validity_end_date == "") {
-                $this->validity_end_day = "";
-                $this->validity_end_month = "";
-                $this->validity_end_year = "";
+                $this->validity_end_date_day = "";
+                $this->validity_end_date_month = "";
+                $this->validity_end_date_year = "";
             } else {
-                $this->validity_end_day = date('d', strtotime($this->validity_end_date));
-                $this->validity_end_month = date('m', strtotime($this->validity_end_date));
-                $this->validity_end_year = date('Y', strtotime($this->validity_end_date));
+                $this->validity_end_date_day = date('d', strtotime($this->validity_end_date));
+                $this->validity_end_date_month = date('m', strtotime($this->validity_end_date));
+                $this->validity_end_date_year = date('Y', strtotime($this->validity_end_date));
             }
             //$this->get_descriptions();
             return (true);
@@ -427,12 +427,12 @@ class goods_nomenclature
 
     function populate_from_cookies()
     {
-        $this->validity_start_day = get_cookie("goods_nomenclature_validity_start_day");
-        $this->validity_start_month = get_cookie("goods_nomenclature_validity_start_month");
-        $this->validity_start_year = get_cookie("goods_nomenclature_validity_start_year");
-        $this->validity_end_day = get_cookie("goods_nomenclature_validity_end_day");
-        $this->validity_end_month = get_cookie("goods_nomenclature_validity_end_month");
-        $this->validity_end_year = get_cookie("goods_nomenclature_validity_end_year");
+        $this->validity_start_date_day = get_cookie("goods_nomenclature_validity_start_date_day");
+        $this->validity_start_date_month = get_cookie("goods_nomenclature_validity_start_date_month");
+        $this->validity_start_date_year = get_cookie("goods_nomenclature_validity_start_date_year");
+        $this->validity_end_date_day = get_cookie("goods_nomenclature_validity_end_date_day");
+        $this->validity_end_date_month = get_cookie("goods_nomenclature_validity_end_date_month");
+        $this->validity_end_date_year = get_cookie("goods_nomenclature_validity_end_date_year");
         $this->description = get_cookie("goods_nomenclature_description");
         $this->heading = "Create new goods_nomenclature";
         $this->disable_goods_nomenclature_item_id_field = "";
@@ -705,9 +705,9 @@ class goods_nomenclature
             $row = pg_fetch_row($result);
             $this->description = $row[2];
             $this->validity_start_date = $row[3];
-            $this->validity_start_day = date('d', strtotime($this->validity_start_date));
-            $this->validity_start_month = date('m', strtotime($this->validity_start_date));
-            $this->validity_start_year = date('Y', strtotime($this->validity_start_date));
+            $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
+            $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+            $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
             $this->goods_nomenclature_heading = "Edit measure type " . $this->productline_suffix;
             $this->disable_productline_suffix_field = " disabled";
         }
@@ -719,13 +719,13 @@ class goods_nomenclature
         setcookie("goods_nomenclature_item_id", "", time() + (86400 * 30), "/");
         setcookie("productline_suffix", "", time() + (86400 * 30), "/");
         setcookie("goods_nomenclature_description", "", time() + (86400 * 30), "/");
-        setcookie("goods_nomenclature_validity_start_day", "", time() + (86400 * 30), "/");
-        setcookie("goods_nomenclature_validity_start_month", "", time() + (86400 * 30), "/");
-        setcookie("goods_nomenclature_validity_start_year", "", time() + (86400 * 30), "/");
+        setcookie("goods_nomenclature_validity_start_date_day", "", time() + (86400 * 30), "/");
+        setcookie("goods_nomenclature_validity_start_date_month", "", time() + (86400 * 30), "/");
+        setcookie("goods_nomenclature_validity_start_date_year", "", time() + (86400 * 30), "/");
         setcookie("goods_nomenclature_description", "", time() + (86400 * 30), "/");
-        setcookie("goods_nomenclature_validity_end_day", "", time() + (86400 * 30), "/");
-        setcookie("goods_nomenclature_validity_end_month", "", time() + (86400 * 30), "/");
-        setcookie("goods_nomenclature_validity_end_year", "", time() + (86400 * 30), "/");
+        setcookie("goods_nomenclature_validity_end_date_day", "", time() + (86400 * 30), "/");
+        setcookie("goods_nomenclature_validity_end_date_month", "", time() + (86400 * 30), "/");
+        setcookie("goods_nomenclature_validity_end_date_year", "", time() + (86400 * 30), "/");
     }
 
     function get_footnotes() {

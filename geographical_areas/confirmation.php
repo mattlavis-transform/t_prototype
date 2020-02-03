@@ -31,7 +31,7 @@ require("../includes/metadata.php");
                     <!-- Start panel //-->
                     <div class="govuk-panel govuk-panel--confirmation">
                         <h1 class="govuk-panel__title">
-                            The regulation has been <?= $verb ?>
+                            The geographical area has been <?= $verb ?>
                         </h1>
                         <div class="govuk-panel__body">
                             Subject to approval
@@ -41,7 +41,7 @@ require("../includes/metadata.php");
                     <!-- End panel //-->
                     <h2 class="govuk-heading-m">Next steps</h2>
                     <ul class="govuk-list">
-                        <li><a href="./">Manage more regulations</a></li>
+                        <li><a href="./">Manage more geographical areas</a></li>
                         <li><a href="/">Return to main menu</a></li>
                     </ul>
                 </div>

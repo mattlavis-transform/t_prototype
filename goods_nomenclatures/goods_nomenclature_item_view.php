@@ -147,6 +147,7 @@ require("../includes/metadata.php");
                                     <td class="govuk-table__cell nopad">Description</td>
                                     <td class="govuk-table__cell"><?= $description ?></td>
                                 </tr>
+                                <!--
                                 <tr class="govuk-table__row">
                                     <td class="govuk-table__cell nopad">Friendly description</td>
                                     <td class="govuk-table__cell"><?= $friendly_description ?></td>
@@ -155,6 +156,7 @@ require("../includes/metadata.php");
                                     <td class="govuk-table__cell nopad">At risk product</td>
                                     <td class="govuk-table__cell"><?= $at_risk_product ?></td>
                                 </tr>
+                                //-->
                                 <tr class="govuk-table__row">
                                     <td class="govuk-table__cell nopad">Validity start date</td>
                                     <td class="govuk-table__cell"><?= $validity_start_date ?></td>
@@ -173,11 +175,6 @@ require("../includes/metadata.php");
                                 <button type="submit" class="govuk-button small" )>Edit this commodity code</button>
                             </form>
                             //-->
-                            <ul class="govuk-list">
-                                <li><a href="">Terminate this commodity code</a></li>
-                                <li><a href="">Delete this commodity code</a></li>
-                                <li><a href="">Edit this commodity code</a></li>
-                            </ul>
                         </div>
                         <div class="govuk-grid-column-one-quarter">
                             <div class="gem-c-contextual-sidebar">
@@ -185,29 +182,28 @@ require("../includes/metadata.php");
 
 
                                 <div class="gem-c-related-navigation">
+                                    <h2 class="gem-c-related-navigation__main-heading" data-track-count="sidebarRelatedItemSection">
+                                        Actions
+                                    </h2>
+                                    <nav role="navigation" class="gem-c-related-navigation__nav-section" aria-labelledby="related-nav-related_items-90f47a0c" data-module="gem-toggle">
+                                        <ul class="gem-c-related-navigation__link-list" data-module="track-click">
+                                            <li class="govuk-link gem-c-related-navigation__link"><a href="">Terminate this commodity code</a></li>
+                                            <li class="govuk-link gem-c-related-navigation__link"><a href="">Delete this commodity code</a></li>
+                                            <li class="govuk-link gem-c-related-navigation__link"><a href="">Edit this commodity code</a></li>
+                                            <li class="govuk-link gem-c-related-navigation__link"><a href="">Add child commodity code</a></li>
+                                        </ul>
+                                    </nav>
 
                                     <h2 class="gem-c-related-navigation__main-heading" data-track-count="sidebarRelatedItemSection">
                                         Related content
                                     </h2>
-
-
-
-
                                     <nav role="navigation" class="gem-c-related-navigation__nav-section" aria-labelledby="related-nav-related_items-90f47a0c" data-module="gem-toggle">
-
-
                                         <ul class="gem-c-related-navigation__link-list" data-module="track-click">
-
                                             <li class="govuk-link gem-c-related-navigation__link"><a class="gem-c-related-navigation__section-link" title="Opens in new window" href="https://www.trade-tariff.service.gov.uk/trade-tariff/commodities/<?= $goods_nomenclature_item_id ?>#import" target="_blank" href="#usage_measures">View this commodity on the Trade Tariff Service</a></li>
                                             <li class="govuk-link gem-c-related-navigation__link"><a class="gem-c-related-navigation__section-link" title="Opens in new window" href="https://ec.europa.eu/taxation_customs/dds2/taric/measures.jsp?Lang=en&SimDate=20190827&Area=&MeasType=&StartPub=&EndPub=&MeasText=&GoodsText=&op=&Taric=<?= $goods_nomenclature_item_id ?>&search_text=goods&textSearch=&LangDescr=en&OrderNum=&Regulation=&measStartDat=&measEndDat=" target="_blank" href="#usage_measures">View this commodity on the EU Taric consultation</a></li>
-
                                         </ul>
                                     </nav>
-
                                 </div>
-
-
-
                             </div>
                         </div>
                     </div>

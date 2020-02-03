@@ -7,20 +7,16 @@ class footnote
     public $validity_start_date = "";
     public $validity_end_date = "";
     public $description = "";
-    public $validity_start_day = "";
-    public $validity_start_month = "";
-    public $validity_start_year = "";
-    public $validity_end_day = "";
-    public $validity_end_month = "";
-    public $validity_end_year = "";
+    public $validity_start_date_day = "";
+    public $validity_start_date_month = "";
+    public $validity_start_date_year = "";
+    public $validity_end_date_day = "";
+    public $validity_end_date_month = "";
+    public $validity_end_date_year = "";
     public $descriptions = array();
     public $application_code_description = "";
 
     public $footnote_assignments = array();
-
-    public function __construct()
-    {
-    }
 
     function validate_form()
     {
@@ -50,18 +46,18 @@ class footnote
         $this->set_dates();
 
         //prend ($_REQUEST);
-        # Check on the certificate_type_code
-        if (strlen($this->footnote_type_id) != 1) {
+        # Check on the footnote_type_id
+        if (strlen($this->footnote_type_id) != 2) {
             array_push($errors, "footnote_type_id");
         }
 
         # Check on the additional code
-        if (strlen($this->footnote_id) != 3) {
+        if ((strlen($this->footnote_id) != 3) && (strlen($this->footnote_id) != 5)) {
             array_push($errors, "footnote_id");
         }
 
         # If we are creating, check that the measure type ID does not already exist
-        if ($this->mode == "insert") {
+        if ($application->mode == "insert") {
             if ($this->exists()) {
                 array_push($errors, "footnote_exists");
             }
@@ -97,14 +93,14 @@ class footnote
             $error_string = serialize($errors);
             setcookie("errors", $error_string, time() + (86400 * 30), "/");
             $url = "create_edit.html?err=1&mode=" . $application->mode . "&certificate_type_code=" . $this->certificate_type_code;
-        } else {/*
- if ($create_edit == "create") {
- // Do create scripts
- $this->create();
- } else {
- // Do edit scripts
- $this->update();
- }*/
+        } else {
+            if ($application->mode == "insert") {
+                // Do create scripts
+                $this->create();
+            } else {
+                // Do edit scripts
+                $this->update();
+            }
             $url = "./confirmation.html?mode=" . $application->mode;
         }
         header("Location: " . $url);
@@ -250,12 +246,12 @@ class footnote
     {
         #$this->footnote_id = get_cookie("footnote_id");
         #$this->footnote_type_id = get_cookie("footnote_type_id");
-        $this->validity_start_day = get_cookie("footnote_validity_start_day");
-        $this->validity_start_month = get_cookie("footnote_validity_start_month");
-        $this->validity_start_year = get_cookie("footnote_validity_start_year");
-        $this->validity_end_day = get_cookie("footnote_validity_end_day");
-        $this->validity_end_month = get_cookie("footnote_validity_end_month");
-        $this->validity_end_year = get_cookie("footnote_validity_end_year");
+        $this->validity_start_date_day = get_cookie("footnote_validity_start_date_day");
+        $this->validity_start_date_month = get_cookie("footnote_validity_start_date_month");
+        $this->validity_start_date_year = get_cookie("footnote_validity_start_date_year");
+        $this->validity_end_date_day = get_cookie("footnote_validity_end_date_day");
+        $this->validity_end_date_month = get_cookie("footnote_validity_end_date_month");
+        $this->validity_end_date_year = get_cookie("footnote_validity_end_date_year");
         $this->description = get_cookie("footnote_description");
         $this->heading = "Create new footnote";
         $this->disable_footnote_id_field = "";
@@ -278,49 +274,47 @@ class footnote
 
     function set_dates()
     {
-        if (($this->validity_start_day == "") || ($this->validity_start_month == "") || ($this->validity_start_year == "")) {
+        if (($this->validity_start_date_day == "") || ($this->validity_start_date_month == "") || ($this->validity_start_date_year == "")) {
             $this->validity_start_date = Null;
         } else {
-            $this->validity_start_date = to_date_string($this->validity_start_day, $this->validity_start_month, $this->validity_start_year);
+            $this->validity_start_date = to_date_string($this->validity_start_date_day, $this->validity_start_date_month, $this->validity_start_date_year);
         }
 
-        if (($this->validity_end_day == "") || ($this->validity_end_month == "") || ($this->validity_end_year == "")) {
+        if (($this->validity_end_date_day == "") || ($this->validity_end_date_month == "") || ($this->validity_end_date_year == "")) {
             $this->validity_end_date = Null;
         } else {
-            $this->validity_end_date = to_date_string($this->validity_end_day, $this->validity_end_month, $this->validity_end_year);
+            $this->validity_end_date = to_date_string($this->validity_end_date_day, $this->validity_end_date_month, $this->validity_end_date_year);
         }
     }
 
     function create()
     {
-        global $conn;
-        $application = new application;
+        global $conn, $application;
         $operation = "C";
         $operation_date = $application->get_operation_date();
         $this->footnote_description_period_sid = $application->get_next_footnote_description_period();
-        #h1 ($this->footnote_description_period_sid);
-        #exit();
-        if ($this->validity_start_date == "") {
-            $this->validity_start_date = Null;
-        }
+        //h1 ($this->footnote_description_period_sid);
+        //exit();
+        //prend($this);
         if ($this->validity_end_date == "") {
             $this->validity_end_date = Null;
         }
 
         # Create the footnote record
-        $sql = "INSERT INTO footnotes_oplog (footnote_id, footnote_type_id, 
- validity_start_date, validity_end_date, operation, operation_date)
- VALUES ($1, $2, $3, $4, $5, $6)";
+        $sql = "INSERT INTO footnotes_oplog (
+                footnote_id, footnote_type_id, validity_start_date,
+                operation, operation_date)
+                VALUES ($1, $2, $3, $4, $5)";
         pg_prepare($conn, "create_footnote", $sql);
         $result = pg_execute($conn, "create_footnote", array(
-            $this->footnote_id, $this->footnote_type_id,
-            $this->validity_start_date, $this->validity_end_date, $operation, $operation_date
+            $this->footnote_id, $this->footnote_type_id, $this->validity_start_date,
+            $operation, $operation_date
         ));
 
         # Create the footnote description period record
         $sql = "INSERT INTO footnote_description_periods_oplog (footnote_description_period_sid, footnote_id,
- footnote_type_id, validity_start_date, operation, operation_date)
- VALUES ($1, $2, $3, $4, $5, $6)";
+        footnote_type_id, validity_start_date, operation, operation_date)
+        VALUES ($1, $2, $3, $4, $5, $6)";
         pg_prepare($conn, "create_footnote_description_period", $sql);
         $result = pg_execute($conn, "create_footnote_description_period", array(
             $this->footnote_description_period_sid, $this->footnote_id,
@@ -329,8 +323,8 @@ class footnote
 
         # Create the footnote description record
         $sql = "INSERT INTO footnote_descriptions_oplog (footnote_description_period_sid, footnote_id,
- footnote_type_id, language_id, description, operation, operation_date)
- VALUES ($1, $2, $3, 'EN', $4, $5, $6)";
+        footnote_type_id, language_id, description, operation, operation_date)
+        VALUES ($1, $2, $3, 'EN', $4, $5, $6)";
         pg_prepare($conn, "create_footnote_description", $sql);
         $result = pg_execute($conn, "create_footnote_description", array(
             $this->footnote_description_period_sid, $this->footnote_id,
@@ -630,18 +624,18 @@ class footnote
             $row = pg_fetch_row($result);
             $this->description = $row[0];
             $this->validity_start_date = $row[1];
-            $this->validity_start_day = date('d', strtotime($this->validity_start_date));
-            $this->validity_start_month = date('m', strtotime($this->validity_start_date));
-            $this->validity_start_year = date('Y', strtotime($this->validity_start_date));
+            $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
+            $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+            $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
             $this->validity_end_date = $row[2];
             if ($this->validity_end_date == "") {
-                $this->validity_end_day = "";
-                $this->validity_end_month = "";
-                $this->validity_end_year = "";
+                $this->validity_end_date_day = "";
+                $this->validity_end_date_month = "";
+                $this->validity_end_date_year = "";
             } else {
-                $this->validity_end_day = date('d', strtotime($this->validity_end_date));
-                $this->validity_end_month = date('m', strtotime($this->validity_end_date));
-                $this->validity_end_year = date('Y', strtotime($this->validity_end_date));
+                $this->validity_end_date_day = date('d', strtotime($this->validity_end_date));
+                $this->validity_end_date_month = date('m', strtotime($this->validity_end_date));
+                $this->validity_end_date_year = date('Y', strtotime($this->validity_end_date));
             }
             $this->application_code = $row[3];
             $this->application_code_description = $row[4];
@@ -727,9 +721,9 @@ class footnote
             $row = pg_fetch_row($result);
             $this->description = $row[2];
             $this->validity_start_date = $row[3];
-            $this->validity_start_day = date('d', strtotime($this->validity_start_date));
-            $this->validity_start_month = date('m', strtotime($this->validity_start_date));
-            $this->validity_start_year = date('Y', strtotime($this->validity_start_date));
+            $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
+            $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+            $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
             $this->footnote_heading = "Edit measure type " . $this->footnote_id;
             $this->disable_footnote_id_field = " disabled";
         }
@@ -739,13 +733,13 @@ class footnote
     {
         setcookie("footnote_id", "", time() + (86400 * 30), "/");
         setcookie("footnote_type_id", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_day", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_month", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_year", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_day", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_month", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_year", "", time() + (86400 * 30), "/");
         setcookie("footnote_description", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_day", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_month", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_year", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_day", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_month", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_year", "", time() + (86400 * 30), "/");
     }
 
     function get_latest_description()

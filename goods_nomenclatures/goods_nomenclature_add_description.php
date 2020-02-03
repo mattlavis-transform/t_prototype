@@ -111,20 +111,20 @@
 		<div class="govuk-date-input" id="validity_start">
 			<div class="govuk-date-input__item">
 				<div class="govuk-form-group">
-					<label class="govuk-label govuk-date-input__label" for="validity_start_day">Day</label>
-					<input <?=$disabled?> value="<?=$goods_nomenclature->validity_start_day?>" class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_start_day" maxlength="2" name="validity_start_day" type="text" pattern="[0-9]*">
+					<label class="govuk-label govuk-date-input__label" for="validity_start_date_day">Day</label>
+					<input <?=$disabled?> value="<?=$goods_nomenclature->validity_start_date_day?>" class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_start_date_day" maxlength="2" name="validity_start_date_day" type="text" pattern="[0-9]*">
 				</div>
 			</div>
 			<div class="govuk-date-input__item">
 				<div class="govuk-form-group">
-					<label class="govuk-label govuk-date-input__label" for="validity_start_month">Month</label>
-					<input <?=$disabled?> value="<?=$goods_nomenclature->validity_start_month?>" class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_start_month" maxlength="2" name="validity_start_month" type="text" pattern="[0-9]*">
+					<label class="govuk-label govuk-date-input__label" for="validity_start_date_month">Month</label>
+					<input <?=$disabled?> value="<?=$goods_nomenclature->validity_start_date_month?>" class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_start_date_month" maxlength="2" name="validity_start_date_month" type="text" pattern="[0-9]*">
 				</div>
 			</div>
 			<div class="govuk-date-input__item">
 				<div class="govuk-form-group">
-					<label class="govuk-label govuk-date-input__label" for="validity_start_year">Year</label>
-					<input <?=$disabled?> value="<?=$goods_nomenclature->validity_start_year?>" class="govuk-input govuk-date-input__input govuk-input--width-4" id="validity_start_year" maxlength="4" name="validity_start_year" type="text" pattern="[0-9]*">
+					<label class="govuk-label govuk-date-input__label" for="validity_start_date_year">Year</label>
+					<input <?=$disabled?> value="<?=$goods_nomenclature->validity_start_date_year?>" class="govuk-input govuk-date-input__input govuk-input--width-4" id="validity_start_date_year" maxlength="4" name="validity_start_date_year" type="text" pattern="[0-9]*">
 				</div>
 			</div>
 		</div>
@@ -134,9 +134,9 @@
 <?php
 	if ($action == "edit") {
 ?>		
-	<input type="hidden" name="validity_start_day" value="<?=$goods_nomenclature->validity_start_day?>" />
-	<input type="hidden" name="validity_start_month" value="<?=$goods_nomenclature->validity_start_month?>" />
-	<input type="hidden" name="validity_start_year" value="<?=$goods_nomenclature->validity_start_year?>" />
+	<input type="hidden" name="validity_start_date_day" value="<?=$goods_nomenclature->validity_start_date_day?>" />
+	<input type="hidden" name="validity_start_date_month" value="<?=$goods_nomenclature->validity_start_date_month?>" />
+	<input type="hidden" name="validity_start_date_year" value="<?=$goods_nomenclature->validity_start_date_year?>" />
 <?php
 	}
 ?>

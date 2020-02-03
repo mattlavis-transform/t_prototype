@@ -3,7 +3,7 @@
         "config": {
             "title": "Find and edit geographical areas",
             "inset": "Enter criteria to help find a geographical area. Alternatively, <a class='govuk-link' href='/geographical_areas/create_edit.html'>create a new geographical area</a>.",
-            "freetext_fields": "description|geographical_area_id",
+            "freetext_fields": "description|geographical_area_id|geographical_area_sid::text",
             "default_sort_fields": "ga.geographical_area_id",
             "object_name": "Geographical areas",
             "title_create": "Create a geographical area",
@@ -52,8 +52,8 @@
                 "hint_text": "This will be the name of the country or region, but for groups you should use something descriptive that will allow others to easily identify it.",
                 "control_name": "geographical_area_id",
                 "control_style": "govuk-!-width-one-quarter",
-                "size": 5,
-                "maxlength": 5,
+                "size": 4,
+                "maxlength": 4,
                 "pattern": "",
                 "required": true,
                 "default": "",
@@ -71,6 +71,7 @@
             },
             {
                 "control_type": "date_picker_control",
+                "control_scope": "update",
                 "label": "What is the end date of this geographical area?",
                 "label_style": "govuk-label--m",
                 "hint_text": "This is optional and should usually be left unset (open-ended) unless you know the geographical area is only needed for a limited time.",

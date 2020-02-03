@@ -397,16 +397,16 @@ class quota_order_number
 
     function set_dates()
     {
-        if (($this->validity_start_day == "") || ($this->validity_start_month == "") || ($this->validity_start_year == "")) {
+        if (($this->validity_start_date_day == "") || ($this->validity_start_date_month == "") || ($this->validity_start_date_year == "")) {
             $this->validity_start_date = Null;
         } else {
-            $this->validity_start_date    = to_date_string($this->validity_start_day,    $this->validity_start_month, $this->validity_start_year);
+            $this->validity_start_date    = to_date_string($this->validity_start_date_day,    $this->validity_start_date_month, $this->validity_start_date_year);
         }
 
-        if (($this->validity_end_day == "") || ($this->validity_end_month == "") || ($this->validity_end_year == "")) {
+        if (($this->validity_end_date_day == "") || ($this->validity_end_date_month == "") || ($this->validity_end_date_year == "")) {
             $this->validity_end_date = Null;
         } else {
-            $this->validity_end_date    = to_date_string($this->validity_end_day, $this->validity_end_month, $this->validity_end_year);
+            $this->validity_end_date    = to_date_string($this->validity_end_date_day, $this->validity_end_date_month, $this->validity_end_date_year);
         }
     }
 
@@ -447,13 +447,13 @@ class quota_order_number
     {
         setcookie("footnote_id", "", time() + (86400 * 30), "/");
         setcookie("footnote_type_id", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_day", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_month", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_year", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_day", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_month", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_year", "", time() + (86400 * 30), "/");
         setcookie("footnote_description", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_day", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_month", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_year", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_day", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_month", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_year", "", time() + (86400 * 30), "/");
     }
 
 
@@ -475,17 +475,17 @@ class quota_order_number
                 $this->quota_scope = $row[4];
                 $this->quota_category = $row[5];
                 $this->quota_order_number_sid = $row[6];
-                $this->validity_start_day = date('d', strtotime($this->validity_start_date));
-                $this->validity_start_month = date('m', strtotime($this->validity_start_date));
-                $this->validity_start_year = date('Y', strtotime($this->validity_start_date));
+                $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
+                $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+                $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
                 if ($this->validity_end_date != "") {
-                    $this->validity_end_day = date('d', strtotime($this->validity_end_date));
-                    $this->validity_end_month = date('m', strtotime($this->validity_end_date));
-                    $this->validity_end_year = date('Y', strtotime($this->validity_end_date));
+                    $this->validity_end_date_day = date('d', strtotime($this->validity_end_date));
+                    $this->validity_end_date_month = date('m', strtotime($this->validity_end_date));
+                    $this->validity_end_date_year = date('Y', strtotime($this->validity_end_date));
                 } else {
-                    $this->validity_end_day = "";
-                    $this->validity_end_month = "";
-                    $this->validity_end_year = "";
+                    $this->validity_end_date_day = "";
+                    $this->validity_end_date_month = "";
+                    $this->validity_end_date_year = "";
                 }
             }
         }
@@ -493,12 +493,12 @@ class quota_order_number
 
     function populate_from_cookies()
     {
-        $this->validity_start_day = get_cookie("quota_order_number_validity_start_day");
-        $this->validity_start_month = get_cookie("quota_order_number_goods_nomenclature_validity_start_month");
-        $this->validity_start_year = get_cookie("quota_order_number_goods_nomenclature_validity_start_year");
-        $this->validity_end_day = get_cookie("quota_order_number_goods_nomenclature_validity_end_day");
-        $this->validity_end_month = get_cookie("quota_order_number_goods_nomenclature_validity_end_month");
-        $this->validity_end_year = get_cookie("quota_order_number_goods_nomenclature_validity_end_year");
+        $this->validity_start_date_day = get_cookie("quota_order_number_validity_start_date_day");
+        $this->validity_start_date_month = get_cookie("quota_order_number_goods_nomenclature_validity_start_date_month");
+        $this->validity_start_date_year = get_cookie("quota_order_number_goods_nomenclature_validity_start_date_year");
+        $this->validity_end_date_day = get_cookie("quota_order_number_goods_nomenclature_validity_end_date_day");
+        $this->validity_end_date_month = get_cookie("quota_order_number_goods_nomenclature_validity_end_date_month");
+        $this->validity_end_date_year = get_cookie("quota_order_number_goods_nomenclature_validity_end_date_year");
         $this->description = get_cookie("quota_order_number_goods_nomenclature_description");
         $this->quota_scope = get_cookie("quota_order_number_quota_scope");
         $this->quota_staging = get_cookie("quota_order_number_quota_staging");
@@ -507,12 +507,12 @@ class quota_order_number
 
     function clear()
     {
-        $this->validity_start_day = "";
-        $this->validity_start_month = "";
-        $this->validity_start_year = "";
-        $this->validity_end_day = "";
-        $this->validity_end_month = "";
-        $this->validity_end_year = "";
+        $this->validity_start_date_day = "";
+        $this->validity_start_date_month = "";
+        $this->validity_start_date_year = "";
+        $this->validity_end_date_day = "";
+        $this->validity_end_date_month = "";
+        $this->validity_end_date_year = "";
         $this->description = "";
         $this->quota_scope = "";
         $this->quota_staging = "";

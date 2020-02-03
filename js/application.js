@@ -82,6 +82,7 @@ $(document).ready(function () {
 
 
     /* Start geographical areas typeahead */
+    /*
     var geo_bloodhound = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
         queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -98,6 +99,7 @@ $(document).ready(function () {
         source: geo_bloodhound,
         limit: 20,
     });
+    */
     /* End geographical areas typeahead */
 
 

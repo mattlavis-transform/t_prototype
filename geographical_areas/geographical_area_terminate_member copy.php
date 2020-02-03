@@ -156,20 +156,20 @@ require("../includes/metadata.php");
 				<div class="govuk-date-input" id="validity_end">
 			<div class="govuk-date-input__item">
 				<div class="govuk-form-group">
-					<label class="govuk-label govuk-date-input__label" for="validity_end_day">Day</label>
-					<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_end_day" maxlength="2" name="validity_end_day" type="text" pattern="[0-9]*">
+					<label class="govuk-label govuk-date-input__label" for="validity_end_date_day">Day</label>
+					<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_end_date_day" maxlength="2" name="validity_end_date_day" type="text" pattern="[0-9]*">
 				</div>
 			</div>
 			<div class="govuk-date-input__item">
 				<div class="govuk-form-group">
-					<label class="govuk-label govuk-date-input__label" for="validity_end_month">Month</label>
-					<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_end_month" maxlength="2" name="validity_end_month" type="text" pattern="[0-9]*">
+					<label class="govuk-label govuk-date-input__label" for="validity_end_date_month">Month</label>
+					<input class="govuk-input govuk-date-input__input govuk-input--width-2" id="validity_end_date_month" maxlength="2" name="validity_end_date_month" type="text" pattern="[0-9]*">
 				</div>
 			</div>
 			<div class="govuk-date-input__item">
 				<div class="govuk-form-group">
-					<label class="govuk-label govuk-date-input__label" for="validity_end_year">Year</label>
-					<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="validity_end_year" maxlength="4" name="validity_end_year" type="text" pattern="[0-9]*">
+					<label class="govuk-label govuk-date-input__label" for="validity_end_date_year">Year</label>
+					<input class="govuk-input govuk-date-input__input govuk-input--width-4" id="validity_end_date_year" maxlength="4" name="validity_end_date_year" type="text" pattern="[0-9]*">
 				</div>
 			</div>
 		</div>

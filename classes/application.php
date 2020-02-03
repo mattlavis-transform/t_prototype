@@ -1144,12 +1144,45 @@ class application
         return ($s);
     }
 
+    function get_next_geographical_area()
+    {
+        global $conn;
+        $s = $this->get_single_value("SELECT MAX(geographical_area_sid) FROM geographical_areas");
+        if ($s < $this->min_geographical_areas) {
+            $s = $this->min_geographical_areas;
+        }
+        $s += 1;
+        return ($s);
+    }
+
     function get_next_footnote_description_period()
     {
         global $conn;
         $s = $this->get_single_value("SELECT MAX(footnote_description_period_sid) FROM footnote_description_periods");
         if ($s < $this->min_footnote_description_periods) {
             $s = $this->min_footnote_description_periods;
+        }
+        $s += 1;
+        return ($s);
+    }
+
+    function get_next_additional_code_description_period()
+    {
+        global $conn;
+        $s = $this->get_single_value("SELECT MAX(additional_code_description_period_sid) FROM additional_code_description_periods");
+        if ($s < $this->min_additional_code_description_periods) {
+            $s = $this->min_additional_code_description_periods;
+        }
+        $s += 1;
+        return ($s);
+    }
+
+    function get_next_additional_code()
+    {
+        global $conn;
+        $s = $this->get_single_value("SELECT MAX(additional_code_sid) FROM additional_codes");
+        if ($s < $this->min_additional_codes) {
+            $s = $this->min_additional_codes;
         }
         $s += 1;
         return ($s);

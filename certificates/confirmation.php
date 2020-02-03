@@ -41,7 +41,7 @@ require("../includes/metadata.php");
                     <!-- End panel //-->
                     <h2 class="govuk-heading-m">Next steps</h2>
                     <ul class="govuk-list">
-                        <li><a href="./">Manage more certificate types</a></li>
+                        <li><a href="./">Manage more certificates</a></li>
                         <li><a href="/">Return to main menu</a></li>
                     </ul>
                 </div>

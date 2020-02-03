@@ -81,18 +81,18 @@ class quota_suspension_period
             $row = pg_fetch_row($result);
         	$this->description  						= $row[0];
 			$this->validity_start_date					= $row[1];
-			$this->validity_start_day   				= date('d', strtotime($this->validity_start_date));
-			$this->validity_start_month 				= date('m', strtotime($this->validity_start_date));
-			$this->validity_start_year  				= date('Y', strtotime($this->validity_start_date));
+			$this->validity_start_date_day   				= date('d', strtotime($this->validity_start_date));
+			$this->validity_start_date_month 				= date('m', strtotime($this->validity_start_date));
+			$this->validity_start_date_year  				= date('Y', strtotime($this->validity_start_date));
 			$this->validity_end_date					= $row[2];
 			if ($this->validity_end_date == "") {
-				$this->validity_end_day   					= "";
-				$this->validity_end_month 					= "";
-				$this->validity_end_year  					= "";
+				$this->validity_end_date_day   					= "";
+				$this->validity_end_date_month 					= "";
+				$this->validity_end_date_year  					= "";
 			} else {
-				$this->validity_end_day   					= date('d', strtotime($this->validity_end_date));
-				$this->validity_end_month 					= date('m', strtotime($this->validity_end_date));
-				$this->validity_end_year  					= date('Y', strtotime($this->validity_end_date));
+				$this->validity_end_date_day   					= date('d', strtotime($this->validity_end_date));
+				$this->validity_end_date_month 					= date('m', strtotime($this->validity_end_date));
+				$this->validity_end_date_year  					= date('Y', strtotime($this->validity_end_date));
 			}
 
 			$this->footnote_heading					= "Edit measure type " . $this->footnote_id;
@@ -105,13 +105,13 @@ class quota_suspension_period
     public function clear_cookies() {
         setcookie("footnote_id", "", time() + (86400 * 30), "/");
         setcookie("footnote_type_id", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_day", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_month", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_year", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_day", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_month", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_year", "", time() + (86400 * 30), "/");
         setcookie("footnote_description", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_day", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_month", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_year", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_day", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_month", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_year", "", time() + (86400 * 30), "/");
 	}
 
 }

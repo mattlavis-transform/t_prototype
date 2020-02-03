@@ -298,9 +298,9 @@ class geographical_area
 
 
     function populate_from_cookies() {
-        $this->validity_start_day				= get_cookie("geographical_area_validity_start_day");
-        $this->validity_start_month				= get_cookie("geographical_area_validity_start_month");
-        $this->validity_start_year				= get_cookie("geographical_area_validity_start_year");
+        $this->validity_start_date_day				= get_cookie("geographical_area_validity_start_date_day");
+        $this->validity_start_date_month				= get_cookie("geographical_area_validity_start_date_month");
+        $this->validity_start_date_year				= get_cookie("geographical_area_validity_start_date_year");
         $this->description						= get_cookie("geographical_area_description");
 	}
 	
@@ -319,17 +319,17 @@ class geographical_area
             $row = pg_fetch_row($result);
         	$this->description  		= $row[0];
 			$this->validity_start_date	= $row[1];
-			$this->validity_start_day   = date('d', strtotime($this->validity_start_date));
-			$this->validity_start_month = date('m', strtotime($this->validity_start_date));
-			$this->validity_start_year  = date('Y', strtotime($this->validity_start_date));
+			$this->validity_start_date_day   = date('d', strtotime($this->validity_start_date));
+			$this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+			$this->validity_start_date_year  = date('Y', strtotime($this->validity_start_date));
         }
 	}
 
 
     function clear_cookies() {
-        setcookie("geographical_area_validity_start_day", "", time() + (86400 * 30), "/");
-        setcookie("geographical_area_validity_start_month", "", time() + (86400 * 30), "/");
-        setcookie("geographical_area_validity_start_year", "", time() + (86400 * 30), "/");
+        setcookie("geographical_area_validity_start_date_day", "", time() + (86400 * 30), "/");
+        setcookie("geographical_area_validity_start_date_month", "", time() + (86400 * 30), "/");
+        setcookie("geographical_area_validity_start_date_year", "", time() + (86400 * 30), "/");
         setcookie("geographical_area_description", "", time() + (86400 * 30), "/");
     }
 

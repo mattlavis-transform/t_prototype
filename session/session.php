@@ -11,7 +11,7 @@ class session
     public function __construct()
     {
         //session_cache_limiter('private, must-revalidate');
-        //session_cache_expire(5);
+        //session_cache_expire(50);
         session_start();
 
         // Check user ID

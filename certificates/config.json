@@ -53,8 +53,8 @@
                 "hint_text": "Please enter a valid unique 3-digit numeric certificate code. <a id='check_certificate_code' class='govuk-link' href='#'>Check certificate code is available</a>.",
                 "control_name": "certificate_code",
                 "control_style": "govuk-!-width-one-quarter",
-                "size": 5,
-                "maxlength": 5,
+                "size": 3,
+                "maxlength": 3,
                 "pattern": "[0-9]{3}",
                 "required": true,
                 "default": "",
@@ -134,35 +134,35 @@
             {
                 "column_name": "ID",
                 "data_column": "certificate_code_plus_type",
-                "sort_field": "c.code",
+                "sort_field": "code",
                 "tooltip": "",
                 "align": "b"
             },
             {
                 "column_name": "Description",
                 "data_column": "description_url",
-                "sort_field": "c.description",
+                "sort_field": "description",
                 "tooltip": "",
                 "align": ""
             },
             {
                 "column_name": "Type",
                 "data_column": "certificate_type_code_description",
-                "sort_field": "c.certificate_type_code",
+                "sort_field": "certificate_type_code",
                 "tooltip": "",
                 "align": ""
             },
             {
                 "column_name": "Start date",
                 "data_column": "validity_start_date",
-                "sort_field": "c.validity_start_date",
+                "sort_field": "validity_start_date",
                 "tooltip": "",
                 "align": ""
             },
             {
                 "column_name": "End date",
                 "data_column": "validity_end_date",
-                "sort_field": "c.validity_end_date",
+                "sort_field": "validity_end_date",
                 "tooltip": "",
                 "align": ""
             },

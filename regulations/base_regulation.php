@@ -5,7 +5,13 @@ class base_regulation
     public $base_regulation_id = "";
     public $regulation_type = "";
     public $validity_start_date = "";
+    public $validity_start_date_day = "";
+    public $validity_start_date_month = "";
+    public $validity_start_date_year = "";
     public $validity_end_date = "";
+    public $validity_end_date_day = "";
+    public $validity_end_date_month = "";
+    public $validity_end_date_year = "";
     public $regulation_group_id = "";
     public $information_text = "";
     public $public_identifier = "";
@@ -70,7 +76,7 @@ class base_regulation
         }
 
         # If we are creating, check that the measure type ID does not already exist
-        if ($this->mode == "insert") {
+        if ($application->mode == "insert") {
             if ($this->exists()) {
                 array_push($errors, "base_regulation_exists");
             }
@@ -109,17 +115,44 @@ class base_regulation
             $error_string = serialize($errors);
             setcookie("errors", $error_string, time() + (86400 * 30), "/");
             $url = "create_edit.html?err=1&mode=" . $application->mode . "&certificate_type_code=" . $this->certificate_type_code;
-        } else {/*
- if ($create_edit == "create") {
- // Do create scripts
- $this->create();
- } else {
- // Do edit scripts
- $this->update();
- }*/
+        } else {
+            if ($application->mode == "insert") {
+                // Do create scripts
+                $this->create();
+            } else {
+                // Do edit scripts
+                $this->update();
+            }
             $url = "./confirmation.html?mode=" . $application->mode;
         }
         header("Location: " . $url);
+    }
+
+    function create()
+    {
+        global $conn, $application;
+        $operation = "C";
+        $operation_date = $application->get_operation_date();
+        
+        # Create the certificate record
+        $sql = "INSERT INTO base_regulations_oplog (
+            base_regulation_id, base_regulation_role, validity_start_date, community_code,
+            regulation_group_id, replacement_indicator, stopped_flag, information_text,
+            approved_flag, published_date, officialjournal_number, officialjournal_page,
+            public_identifier, url, trade_remedies_case,
+            operation, operation_date, status)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)";
+        pg_prepare($conn, "create_base_regulation", $sql);
+        $result = pg_execute($conn, "create_base_regulation", array(
+            $this->base_regulation_id, "1", $this->validity_start_date, 1, 
+            $this->regulation_group_id, 0, 'f', $this->information_text,
+            't', $this->validity_start_date, "1", 1,
+            $this->public_identifier, $this->url, $this->trade_remedies_case,
+            $operation, $operation_date, 'Awaiting approval'
+        ));
+
+        prend($this);
+
     }
 
     function exists()
@@ -128,7 +161,7 @@ class base_regulation
         $exists = false;
         $sql = "SELECT * FROM base_regulations WHERE base_regulation_id = $1 AND base_regulation_role = 1";
         pg_prepare($conn, "base_regulation_exists", $sql);
-        $result = pg_execute($conn, "base_regulation_exists", array($this->certificate_code, $this->certificate_type_code));
+        $result = pg_execute($conn, "base_regulation_exists", array($this->base_regulation_id));
         if ($result) {
             if (pg_num_rows($result) > 0) {
                 $exists = true;
@@ -139,16 +172,16 @@ class base_regulation
 
     function set_dates()
     {
-        if (($this->validity_start_day == "") || ($this->validity_start_month == "") || ($this->validity_start_year == "")) {
+        if (($this->validity_start_date_day == "") || ($this->validity_start_date_month == "") || ($this->validity_start_date_year == "")) {
             $this->validity_start_date = Null;
         } else {
-            $this->validity_start_date = to_date_string($this->validity_start_day, $this->validity_start_month, $this->validity_start_year);
+            $this->validity_start_date = to_date_string($this->validity_start_date_day, $this->validity_start_date_month, $this->validity_start_date_year);
         }
 
-        if (($this->validity_end_day == "") || ($this->validity_end_month == "") || ($this->validity_end_year == "")) {
+        if (($this->validity_end_date_day == "") || ($this->validity_end_date_month == "") || ($this->validity_end_date_year == "")) {
             $this->validity_end_date = Null;
         } else {
-            $this->validity_end_date = to_date_string($this->validity_end_day, $this->validity_end_month, $this->validity_end_year);
+            $this->validity_end_date = to_date_string($this->validity_end_date_day, $this->validity_end_date_month, $this->validity_end_date_year);
         }
     }
 
@@ -274,9 +307,9 @@ class base_regulation
 
     function populate_from_cookies()
     {
-        $this->validity_start_day = get_cookie("base_regulation_validity_start_day");
-        $this->validity_start_month = get_cookie("base_regulation_validity_start_month");
-        $this->validity_start_year = get_cookie("base_regulation_validity_start_year");
+        $this->validity_start_date_day = get_cookie("base_regulation_validity_start_date_day");
+        $this->validity_start_date_month = get_cookie("base_regulation_validity_start_date_month");
+        $this->validity_start_date_year = get_cookie("base_regulation_validity_start_date_year");
         $this->base_regulation_id = strtoupper(get_cookie("base_regulation_base_regulation_id"));
         $this->information_text_name = get_cookie("base_regulation_information_text_name");
         $this->information_text_url = get_cookie("base_regulation_information_text_url");
@@ -295,9 +328,9 @@ class base_regulation
             $this->validity_start_date = $row[0];
             $this->regulation_group_id = $row[1];
             $this->information_text = $row[2];
-            $this->validity_start_day = date('d', strtotime($this->validity_start_date));
-            $this->validity_start_month = date('m', strtotime($this->validity_start_date));
-            $this->validity_start_year = date('Y', strtotime($this->validity_start_date));
+            $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
+            $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+            $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
             $this->split_information_text();
         }
     }
@@ -315,9 +348,9 @@ class base_regulation
 
     function clear_cookies()
     {
-        setcookie("geographical_area_validity_start_day", "", time() + (86400 * 30), "/");
-        setcookie("geographical_area_validity_start_month", "", time() + (86400 * 30), "/");
-        setcookie("geographical_area_validity_start_year", "", time() + (86400 * 30), "/");
+        setcookie("geographical_area_validity_start_date_day", "", time() + (86400 * 30), "/");
+        setcookie("geographical_area_validity_start_date_month", "", time() + (86400 * 30), "/");
+        setcookie("geographical_area_validity_start_date_year", "", time() + (86400 * 30), "/");
         setcookie("geographical_area_description", "", time() + (86400 * 30), "/");
     }
 

@@ -59,9 +59,10 @@ require("includes/metadata.php");
                 <!-- Start column two //-->
                 <div class="govuk-grid-column-one-quarter">
                     <h2 class="govuk-heading-m govuk-!-margin-0">View goods classification</h2>
-                    <p class="govuk-body-xs">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet </p>
+                    <!--<p class="govuk-body-xs">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet </p>//-->
                     <ul class="menu">
                         <li><a href="/goods_nomenclatures/">Find commodities</a></li>
+                        <!--<li><a href="/goods_nomenclatures/create_edit.html">Create commodities</a></li>//-->
                     </ul>
 
                     <h2 class="govuk-heading-m govuk-!-margin-0">Manage geographical areas</h2>

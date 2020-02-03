@@ -83,16 +83,16 @@ class measure
 
     function set_dates()
     {
-        if (($this->validity_start_day == "") || ($this->validity_start_month == "") || ($this->validity_start_year == "")) {
+        if (($this->validity_start_date_day == "") || ($this->validity_start_date_month == "") || ($this->validity_start_date_year == "")) {
             $this->validity_start_date = Null;
         } else {
-            $this->validity_start_date    = to_date_string($this->validity_start_day,    $this->validity_start_month, $this->validity_start_year);
+            $this->validity_start_date    = to_date_string($this->validity_start_date_day,    $this->validity_start_date_month, $this->validity_start_date_year);
         }
 
-        if (($this->validity_end_day == "") || ($this->validity_end_month == "") || ($this->validity_end_year == "")) {
+        if (($this->validity_end_date_day == "") || ($this->validity_end_date_month == "") || ($this->validity_end_date_year == "")) {
             $this->validity_end_date = Null;
         } else {
-            $this->validity_end_date    = to_date_string($this->validity_end_day, $this->validity_end_month, $this->validity_end_year);
+            $this->validity_end_date    = to_date_string($this->validity_end_date_day, $this->validity_end_date_month, $this->validity_end_date_year);
         }
     }
 
@@ -100,13 +100,13 @@ class measure
     {
         setcookie("footnote_id", "", time() + (86400 * 30), "/");
         setcookie("footnote_type_id", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_day", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_month", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_start_year", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_day", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_month", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_start_date_year", "", time() + (86400 * 30), "/");
         setcookie("footnote_description", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_day", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_month", "", time() + (86400 * 30), "/");
-        setcookie("footnote_validity_end_year", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_day", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_month", "", time() + (86400 * 30), "/");
+        setcookie("footnote_validity_end_date_year", "", time() + (86400 * 30), "/");
     }
 
     function validate_form_core()
@@ -1021,23 +1021,23 @@ class measure
             $this->reduction_indicator = $row[13];
 
             if ($this->validity_start_date != Null) {
-                $this->validity_start_day = date('d', strtotime($this->validity_start_date));
-                $this->validity_start_month = date('m', strtotime($this->validity_start_date));
-                $this->validity_start_year = date('Y', strtotime($this->validity_start_date));
+                $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
+                $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+                $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
             } else {
-                $this->validity_start_day = "";
-                $this->validity_start_month = "";
-                $this->validity_start_year = "";
+                $this->validity_start_date_day = "";
+                $this->validity_start_date_month = "";
+                $this->validity_start_date_year = "";
             }
 
             if ($this->validity_end_date != Null) {
-                $this->validity_end_day = date('d', strtotime($this->validity_end_date));
-                $this->validity_end_month = date('m', strtotime($this->validity_end_date));
-                $this->validity_end_year = date('Y', strtotime($this->validity_end_date));
+                $this->validity_end_date_day = date('d', strtotime($this->validity_end_date));
+                $this->validity_end_date_month = date('m', strtotime($this->validity_end_date));
+                $this->validity_end_date_year = date('Y', strtotime($this->validity_end_date));
             } else {
-                $this->validity_end_day = "";
-                $this->validity_end_month = "";
-                $this->validity_end_year = "";
+                $this->validity_end_date_day = "";
+                $this->validity_end_date_month = "";
+                $this->validity_end_date_year = "";
             }
             $this->heading = "Edit measure " . $this->measure_sid;
         }
@@ -1047,12 +1047,12 @@ class measure
     {
         $this->heading = "Create new measure";
         $this->measure_sid = get_cookie("measure_sid");
-        $this->validity_start_day = get_cookie("measure_type_validity_start_day");
-        $this->validity_start_month = get_cookie("measure_type_validity_start_month");
-        $this->validity_start_year = get_cookie("measure_type_validity_start_year");
-        $this->validity_end_day = get_cookie("measure_type_validity_end_day");
-        $this->validity_end_month = get_cookie("measure_type_validity_end_month");
-        $this->validity_end_year = get_cookie("measure_type_validity_end_year");
+        $this->validity_start_date_day = get_cookie("measure_type_validity_start_date_day");
+        $this->validity_start_date_month = get_cookie("measure_type_validity_start_date_month");
+        $this->validity_start_date_year = get_cookie("measure_type_validity_start_date_year");
+        $this->validity_end_date_day = get_cookie("measure_type_validity_end_date_day");
+        $this->validity_end_date_month = get_cookie("measure_type_validity_end_date_month");
+        $this->validity_end_date_year = get_cookie("measure_type_validity_end_date_year");
 
         $this->measure_generating_regulation_id = get_cookie("measure_generating_regulation_id");
         $this->measure_type_id = get_cookie("measure_type_id");

@@ -4,14 +4,14 @@ class quota_definition
 	// Class properties and methods go here
     public $quota_order_number_id               = "";
     public $quota_order_number_sid              = 0;
-	public $validity_start_day                  = 0;
-	public $validity_start_month                = 0;
-	public $validity_start_year                 = 0;
+	public $validity_start_date_day                  = 0;
+	public $validity_start_date_month                = 0;
+	public $validity_start_date_year                 = 0;
 	public $validity_start_date                 = "";
 	public $validity_end_date                   = "";
-	public $validity_end_day                    = 0;
-	public $validity_end_month                  = 0;
-	public $validity_end_year                   = 0;
+	public $validity_end_date_day                    = 0;
+	public $validity_end_date_month                  = 0;
+	public $validity_end_date_year                   = 0;
     public $initial_volume                      = 0;
     public $measurement_unit_code               = "";
     public $measurement_unit_qualifier_code     = "";
@@ -168,25 +168,25 @@ class quota_definition
                 $this->measurement_unit_qualifier_code  = $row['measurement_unit_qualifier_code'];
                 $this->description                      = $row['description'];
 
-                $this->validity_start_day   = date('d', strtotime($this->validity_start_date));
-                $this->validity_start_month = date('m', strtotime($this->validity_start_date));
-                $this->validity_start_year  = date('Y', strtotime($this->validity_start_date));
+                $this->validity_start_date_day   = date('d', strtotime($this->validity_start_date));
+                $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
+                $this->validity_start_date_year  = date('Y', strtotime($this->validity_start_date));
 
-                $this->validity_end_day   = date('d', strtotime($this->validity_end_date));
-                $this->validity_end_month = date('m', strtotime($this->validity_end_date));
-                $this->validity_end_year  = date('Y', strtotime($this->validity_end_date));
+                $this->validity_end_date_day   = date('d', strtotime($this->validity_end_date));
+                $this->validity_end_date_month = date('m', strtotime($this->validity_end_date));
+                $this->validity_end_date_year  = date('Y', strtotime($this->validity_end_date));
             }
         }
 
     }
 
     function populate_from_cookies(){
-        $this->validity_start_day				= get_cookie("quota_definition_validity_start_day");
-        $this->validity_start_month				= get_cookie("quota_definition_validity_start_month");
-        $this->validity_start_year				= get_cookie("quota_definition_validity_start_year");
-        $this->validity_end_day					= get_cookie("quota_definition_validity_end_day");
-        $this->validity_end_month				= get_cookie("quota_definition_validity_end_month");
-        $this->validity_end_year				= get_cookie("quota_definition_validity_end_year");
+        $this->validity_start_date_day				= get_cookie("quota_definition_validity_start_date_day");
+        $this->validity_start_date_month				= get_cookie("quota_definition_validity_start_date_month");
+        $this->validity_start_date_year				= get_cookie("quota_definition_validity_start_date_year");
+        $this->validity_end_date_day					= get_cookie("quota_definition_validity_end_date_day");
+        $this->validity_end_date_month				= get_cookie("quota_definition_validity_end_date_month");
+        $this->validity_end_date_year				= get_cookie("quota_definition_validity_end_date_year");
         $this->initial_volume					= get_cookie("quota_definition_initial_volume");
         $this->measurement_unit_code			= get_cookie("quota_definition_measurement_unit_code");
         $this->measurement_unit_qualifier_code	= get_cookie("quota_definition_measurement_unit_qualifier_code");
@@ -199,12 +199,12 @@ class quota_definition
     }
 
     function clear_cookies(){
-        setcookie("quota_definition_validity_start_day", "", time() + (86400 * 30), "/");
-        setcookie("quota_definition_validity_start_month", "", time() + (86400 * 30), "/");
-        setcookie("quota_definition_validity_start_year", "", time() + (86400 * 30), "/");
-        setcookie("quota_definition_validity_end_day", "", time() + (86400 * 30), "/");
-        setcookie("quota_definition_validity_end_month", "", time() + (86400 * 30), "/");
-        setcookie("quota_definition_validity_end_year", "", time() + (86400 * 30), "/");
+        setcookie("quota_definition_validity_start_date_day", "", time() + (86400 * 30), "/");
+        setcookie("quota_definition_validity_start_date_month", "", time() + (86400 * 30), "/");
+        setcookie("quota_definition_validity_start_date_year", "", time() + (86400 * 30), "/");
+        setcookie("quota_definition_validity_end_date_day", "", time() + (86400 * 30), "/");
+        setcookie("quota_definition_validity_end_date_month", "", time() + (86400 * 30), "/");
+        setcookie("quota_definition_validity_end_date_year", "", time() + (86400 * 30), "/");
         setcookie("quota_definition_initial_volume", "", time() + (86400 * 30), "/");
         setcookie("quota_definition_measurement_unit_code", "", time() + (86400 * 30), "/");
         setcookie("quota_definition_measurement_unit_qualifier_code", "", time() + (86400 * 30), "/");
