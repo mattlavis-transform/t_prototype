@@ -25,14 +25,14 @@ require("../includes/metadata.php");
 
         <main class="govuk-main-wrapper" id="main-content" role="main">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-full">
                     <!-- Start panel //-->
                     <div class="govuk-panel govuk-panel--confirmation">
                         <h1 class="govuk-panel__title">
-                            Your workbasket has been created
+                            Your workbasket has been created.
                         </h1>
                         <div class="govuk-panel__body">
-                            Workbasket name<br><strong>Matt's workbasket</strong>
+                            Workbasket name<br><strong><?=$application->session->workbasket->title?></strong>
                         </div>
                     </div>
                     <!-- End panel //-->

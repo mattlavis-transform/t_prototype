@@ -5,6 +5,10 @@
         "links": [
             {
                 "url": "/measures/create_edit.html",
+                "text": "Start"
+            },
+            {
+                "url": "/measures/create_edit_core.html",
                 "text": "Core measure data"
             },
             {
@@ -29,7 +33,117 @@
             }
         ]
     },
-    "measures": {
+    "measures_activity": {
+        "config": {
+            "title": "Measures",
+            "inset": "Enter criteria to help find measures. Alternatively, <a class='govuk-link' href='./create_edit.html'>create new measures</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordenumber",
+            "object_name": "Measures",
+            "title_create": "New measures",
+            "title_edit": "Edit quota",
+            "description_keys": "",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Continue to core measure data",
+                "submit_button_text_edit": "Add to workbasket",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Please use this function to bulk-create measures. It is essential to plan your activities in advance of using this bulk measure creation functionality. For example, if you intend to add footnotes or conditions to these measures, please ensure that they apply en masse to all measures."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "What is the name of this activity?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please provide a name for this activity, so that it can be identified later in your workbasket.",
+                "control_name": "activity_name",
+                "control_style": "govuk-input",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [
+            {
+                "label": "Start year",
+                "form_value": "start_year",
+                "data_field": "date_part('year', validity_start_date)",
+                "data_type": "integer",
+                "truncate_at": 0,
+                "height": "200px"
+            }
+        ],
+        "columns": [
+            {
+                "column_name": "Order number",
+                "data_column": "ordernumber",
+                "sort_field": "m.ordernumber",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Description",
+                "data_column": "description",
+                "sort_field": "qon.description",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Measure type",
+                "data_column": "measure_type_id",
+                "sort_field": "measure_type_id",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Category",
+                "data_column": "quota_category",
+                "sort_field": "quota_category",
+                "tooltip": "Quotas come in three forms:<br /><br /><b>WTO</b> quotas, which are typically aligned to the whole world (Erga Omnes)<br /><br /><b>ATQs</b> or Autonomous Tariff Quotas, which are also aligned to the whole world, but specifically for goods that are to be materailly transformed into other goods<br /><br/><b>PRF</b> or preferential quotas which are usually part of formal trade agreements.",
+                "align": ""
+            },
+            {
+                "column_name": "Mechanism",
+                "data_column": "mechanism",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "qon.validity_start_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Actions",
+                "data_column": "actions",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "r"
+            }
+        ]
+    },
+    "measures_core": {
         "config": {
             "title": "Measures",
             "inset": "Enter criteria to help find measures. Alternatively, <a class='govuk-link' href='./create_edit.html'>create new measures</a>.",
@@ -42,8 +156,8 @@
             "validate": false,
             "buttons": {
                 "heading_text": "Next steps",
-                "submit_button_text_create": "Complete",
-                "submit_button_text_edit": "Complete",
+                "submit_button_text_create": "Add to workbasket",
+                "submit_button_text_edit": "Add to workbasket",
                 "save_progress_button_text": "",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
@@ -190,8 +304,8 @@
             "validate": false,
             "buttons": {
                 "heading_text": "Next steps",
-                "submit_button_text_create": "Complete",
-                "submit_button_text_edit": "Complete",
+                "submit_button_text_create": "Add to workbasket",
+                "submit_button_text_edit": "Add to workbasket",
                 "save_progress_button_text": "",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
@@ -340,8 +454,8 @@
             "validate": false,
             "buttons": {
                 "heading_text": "Next steps",
-                "submit_button_text_create": "Complete",
-                "submit_button_text_edit": "Complete",
+                "submit_button_text_create": "Add to workbasket",
+                "submit_button_text_edit": "Add to workbasket",
                 "save_progress_button_text": "",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
@@ -505,8 +619,8 @@
             "validate": false,
             "buttons": {
                 "heading_text": "Next steps",
-                "submit_button_text_create": "Complete",
-                "submit_button_text_edit": "Complete",
+                "submit_button_text_create": "Add to workbasket",
+                "submit_button_text_edit": "Add to workbasket",
                 "save_progress_button_text": "",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
@@ -544,8 +658,8 @@
             "validate": false,
             "buttons": {
                 "heading_text": "Next steps",
-                "submit_button_text_create": "Complete",
-                "submit_button_text_edit": "Complete",
+                "submit_button_text_create": "Add to workbasket",
+                "submit_button_text_edit": "Add to workbasket",
                 "save_progress_button_text": "",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"

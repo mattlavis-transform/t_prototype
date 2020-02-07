@@ -740,6 +740,11 @@ class footnote
         setcookie("footnote_validity_end_date_day", "", time() + (86400 * 30), "/");
         setcookie("footnote_validity_end_date_month", "", time() + (86400 * 30), "/");
         setcookie("footnote_validity_end_date_year", "", time() + (86400 * 30), "/");
+
+        setcookie("filter_footnotes_freetext", "", time() + (86400 * 30), "/");
+        setcookie("filter_footnotes_start_year", "", time() + (86400 * 30), "/");
+        setcookie("filter_footnotes_active_state", "", time() + (86400 * 30), "/");
+        setcookie("filter_footnotes_footnote_type_id", "", time() + (86400 * 30), "/");
     }
 
     function get_latest_description()

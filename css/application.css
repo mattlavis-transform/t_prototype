@@ -905,6 +905,7 @@ td.vertical_align_middle {
     font-weight: bold;
     background-color: #f0f0f0 !important;
 }
+
 /*
 .govuk-table__cell:first-child, .govuk-table__header:first-child {
     padding-left: 5px;
@@ -1047,6 +1048,7 @@ td.vertical_align_middle {
         top: 0px;
     }
 }
+
 /* Begin task list component */
 
 .app-task-list {
@@ -1054,15 +1056,15 @@ td.vertical_align_middle {
     padding-left: 0;
     margin-top: 0;
     margin-bottom: 0;
-  }
-  
-  @media (min-width: 40.0625em) {
+}
+
+@media (min-width: 40.0625em) {
     .app-task-list {
-      min-width: 550px;
+        min-width: 550px;
     }
-  }
-  
-  .app-task-list__section {
+}
+
+.app-task-list__section {
     display: table;
     font-family: "GDS Transport", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -1071,41 +1073,41 @@ td.vertical_align_middle {
     font-size: 18px;
     font-size: 1.125rem;
     line-height: 1.11111;
-  }
-  
-  @media print {
+}
+
+@media print {
     .app-task-list__section {
-      font-family: sans-serif;
+        font-family: sans-serif;
     }
-  }
-  
-  @media (min-width: 40.0625em) {
+}
+
+@media (min-width: 40.0625em) {
     .app-task-list__section {
-      font-size: 24px;
-      font-size: 1.5rem;
-      line-height: 1.25;
+        font-size: 24px;
+        font-size: 1.5rem;
+        line-height: 1.25;
     }
-  }
-  
-  @media print {
+}
+
+@media print {
     .app-task-list__section {
-      font-size: 18pt;
-      line-height: 1.15;
+        font-size: 18pt;
+        line-height: 1.15;
     }
-  }
-  
-  .app-task-list__section-number {
+}
+
+.app-task-list__section-number {
     display: table-cell;
-  }
-  
-  @media (min-width: 40.0625em) {
+}
+
+@media (min-width: 40.0625em) {
     .app-task-list__section-number {
-      min-width: 30px;
-      padding-right: 0;
+        min-width: 30px;
+        padding-right: 0;
     }
-  }
-  
-  .app-task-list__items {
+}
+
+.app-task-list__items {
     font-family: "GDS Transport", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -1116,89 +1118,149 @@ td.vertical_align_middle {
     margin-bottom: 40px;
     list-style: none;
     padding-left: 0;
-  }
-  
-  @media print {
+}
+
+@media print {
     .app-task-list__items {
-      font-family: sans-serif;
+        font-family: sans-serif;
     }
-  }
-  
-  @media (min-width: 40.0625em) {
+}
+
+@media (min-width: 40.0625em) {
     .app-task-list__items {
-      font-size: 16px;
-      /*font-size: 1.1875rem;*/
-      line-height: 1.31579;
+        font-size: 16px;
+        /*font-size: 1.1875rem;*/
+        line-height: 1.31579;
     }
-  }
-  
-  @media print {
+}
+
+@media print {
     .app-task-list__items {
-      font-size: 14pt;
-      line-height: 1.15;
+        font-size: 14pt;
+        line-height: 1.15;
     }
-  }
-  
-  @media (min-width: 40.0625em) {
+}
+
+@media (min-width: 40.0625em) {
     .app-task-list__items {
-      margin-bottom: 60px;
+        margin-bottom: 60px;
     }
-  }
-  
-  @media (min-width: 40.0625em) {
+}
+
+@media (min-width: 40.0625em) {
     .app-task-list__items {
-      padding-left: 30px;
+        padding-left: 30px;
     }
-  }
-  
-  .app-task-list__item {
+}
+
+.app-task-list__item {
     border-bottom: 1px solid #b1b4b6;
     margin-bottom: 0 !important;
     padding-top: 10px;
     padding-bottom: 10px;
-  }
-  
-  .app-task-list__item:after {
+}
+
+.app-task-list__item:after {
     content: "";
     display: block;
     clear: both;
-  }
-  
-  .app-task-list__item:first-child {
+}
+
+.app-task-list__item:first-child {
     border-top: 1px solid #b1b4b6;
-  }
-  
-  .app-task-list__task-name {
+}
+
+.app-task-list__task-name {
     display: block;
-  }
-  
-  @media (min-width: 28.125em) {
+}
+
+@media (min-width: 28.125em) {
     .app-task-list__task-name {
-      float: left;
+        float: left;
     }
-  }
-  
-  .app-task-list__task-completed {
+}
+
+.app-task-list__task-completed {
     margin-top: 10px;
     margin-bottom: 5px;
-  }
-  
-  @media (min-width: 28.125em) {
+}
+
+@media (min-width: 28.125em) {
     .app-task-list__task-completed {
-      float: right;
-      margin-top: 0;
-      margin-bottom: 0;
+        float: right;
+        margin-top: 0;
+        margin-bottom: 0;
     }
-  }
+}
 
 /* End task list component */
 
 .additional_code_head {
-    font-weight:bold;
-    font-size:19px !important;
-    padding-top:3em;
+    font-weight: bold;
+    font-size: 19px !important;
+    padding-top: 3em;
 }
+
 .gem-c-related-navigation__main-heading {
-    margin-bottom:0px !important;
-    font-size:19px;
+    margin-bottom: 0px !important;
+    font-size: 19px;
 }
+
+.block_href a {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+
+.workbasket_filter {
+    height: auto;
+    max-width: 400px;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+}
+.govuk-accordion__section-content table {
+    margin-bottom:1em !important;
+}
+.govuk-accordion__section-content table tbody tr:last-of-type td.govuk-table__cell {
+    border:0px !important;
+}
+.govuk-accordion__section-content table tbody tr.noborder td.govuk-table__cell {
+    border:0px !important;
+}
+.govuk-accordion__section-content table tbody tr td.govuk-table__cell {
+    font-size: 14px !important;
+}
+
+.govuk-accordion__section-content table thead tr th.govuk-table__header {
+    font-size: 14px !important;
+}
+
+.govuk-accordion__section-button {
+    font-size: 19px;
+}
+.govuk-accordion__section-content table tbody tr td.govuk-table__cell img {
+    margin:0px 0px 0px 4px;
+    padding:0px
+}
+table.workbaskets tbody tr td.govuk-table__cell img {
+    xpadding:0px 0px 0px 6px;
+    margin:0px 0px 0px 4px;
+    padding:0px;
+    xborder-left:1px #c0c0c0 solid;
+}
+.govuk-accordion__section-content table tbody tr td.govuk-table__cell a {
+    margin:0px;
+    padding:0px
+}
+.govuk-accordion__section-content table tbody tr td.govuk-table__cell details {
+    margin-bottom:0.5em !important;
+    padding-right:0px !important;
+    margin-right:0px !important;
+    font-size:14px;
+}
+
+.govuk-accordion__section-content table tbody tr td.govuk-table__cell details div.govuk-details__text {
+    padding-right:0px !important;
+    margin-right:0px !important;
+}
+

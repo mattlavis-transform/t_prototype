@@ -116,6 +116,16 @@ function string_to_date($var)
     return ($var2);
 }
 
+function string_to_time($var)
+{
+    if ($var != "") {
+        $var2 = DateTime::createFromFormat('Y-m-d H:i:s', $var)->format('d M y H:i');
+    } else {
+        $var2 = "";
+    }
+    return ($var2);
+}
+
 function get_checked($key, $value)
 {
     if ($key == $value) {

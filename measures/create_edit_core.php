@@ -1,7 +1,7 @@
 <?php
 require(dirname(__FILE__) . "../../includes/db.php");
 $application = new application;
-$application->init("measures_activity");
+$application->init("measures_core");
 $error_handler = new error_handler();
 
 // If there is no measure prototype in place, then create it

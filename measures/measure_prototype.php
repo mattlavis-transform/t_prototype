@@ -51,6 +51,7 @@ class measure_prototype
         $this->additional_code_list = array();
         $this->duties_same_for_all_commodities = null;
 
+        $this->activity_name = "";
         $this->measure_components_xml = "";
         $this->measure_excluded_geographical_areas_xml = "";
         $this->measure_conditions_xml = "";

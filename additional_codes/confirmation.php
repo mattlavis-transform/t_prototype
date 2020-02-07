@@ -31,12 +31,11 @@ require("../includes/metadata.php");
                     <!-- Start panel //-->
                     <div class="govuk-panel govuk-panel--confirmation">
                         <h1 class="govuk-panel__title">
-                            Additional code has been <?= $verb ?>
+                            Additional code C233 has been <?= $verb ?>.
                         </h1>
                         <div class="govuk-panel__body">
-                            Subject to approval
+                            This change has been added to your workbasket<br /><br />&quot;<?=$application->session->workbasket->title?>&quot;
                         </div>
-
                     </div>
                     <!-- End panel //-->
                     <h2 class="govuk-heading-m">Next steps</h2>

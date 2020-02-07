@@ -31,17 +31,17 @@ require("../includes/metadata.php");
                     <!-- Start panel //-->
                     <div class="govuk-panel govuk-panel--confirmation">
                         <h1 class="govuk-panel__title">
-                            Footnote has been <?= $verb ?>
+                            Footnote xxxxx has been <?= $verb ?>.
                         </h1>
                         <div class="govuk-panel__body">
-                            Subject to approval
+                            This change has been added to your workbasket<br /><br />&quot;<?=$application->session->workbasket->title?>&quot;
                         </div>
 
                     </div>
                     <!-- End panel //-->
                     <h2 class="govuk-heading-m">Next steps</h2>
                     <ul class="govuk-list">
-                        <li><a href="./">Manage more certificate types</a></li>
+                        <li><a href="./">Manage more footnotes</a></li>
                         <li><a href="/">Return to main menu</a></li>
                     </ul>
                 </div>

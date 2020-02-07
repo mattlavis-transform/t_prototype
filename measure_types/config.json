@@ -11,8 +11,8 @@
             "default_sort_fields": "measure_type_id",
             "buttons": {
                 "heading_text": "Finish now",
-                "submit_button_text_create": "Complete",
-                "submit_button_text_edit": "Complete",
+                "submit_button_text_create": "Add to workbasket",
+                "submit_button_text_edit": "Add to workbasket",
                 "save_progress_button_text": "",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"

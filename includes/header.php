@@ -65,14 +65,12 @@
             <div class="govuk-header__controls">
                 <?php
                 //$application->session->workbasket = null;
-                if ($application->session->workbasket != null) {
-                    echo ('<a href="/workbaskets/view.html">My workbasket (' . $application->session->workbasket->id . ')</a>&nbsp;&nbsp;');
-                    //echo ('Workbasket: <a href="/workbaskets/view.html"><abbr title="View current workbasket ' . $_SESSION["workbasket_title"] . '">' . $_SESSION["workbasket_title_abbreviated"] . '</abbr></a>&nbsp;&nbsp;');
-                } else {
-                    echo ('<a href="/workbaskets/view.html">Create workbasket</a>&nbsp;&nbsp;');
-                }
                 if ($application->session->user_id != null) {
-                    //echo ('Logged in to <span class="yellow">TARIFFS-DEV</span> as: ' . $application->session->user_id . '&nbsp;&nbsp;');
+                    if ($application->session->workbasket != null) {
+                        echo ('Current workbasket: <a href="/workbaskets/view.html">' . $application->session->workbasket->title . '</a>&nbsp;&nbsp;');
+                    } else {
+                        echo ('<a href="/workbaskets/create_edit.html">Create workbasket</a>&nbsp;&nbsp;');
+                    }
                     echo ('<a href="/session/sign_out.html">Sign out</a>');
                 }
                 ?>

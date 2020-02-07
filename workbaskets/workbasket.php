@@ -7,6 +7,9 @@ class workbasket
     public $type = "";
     public $status = "";
     public $user_id = "";
+    public $date_created = "";
+    public $date_last_updated = "";
+
 
     public function create_workbasket()
     {
@@ -32,9 +35,10 @@ class workbasket
             setcookie("errors", $error_string, time() + (86400 * 30), "/");
             $url = "workbasket_new.html?err=1";
         } else {
-            $sql = "insert into workbaskets (title, reason, user_id) values ($1, $2, $3) RETURNING id;";
+            $operation_date = $application->get_operation_date();
+            $sql = "insert into workbaskets (title, reason, user_id, status) values ($1, $2, $3, 'in progress', $4) RETURNING id;";
             pg_prepare($conn, "workbasket_insert", $sql);
-            $result = pg_execute($conn, "workbasket_insert", array($this->title, $this->reason, $this->user_id));
+            $result = pg_execute($conn, "workbasket_insert", array($this->title, $this->reason, $this->session->user_id, $operation_date));
             if ($result) {
                 $row = pg_fetch_row($result);
                 $this->id = $row[0];
@@ -68,6 +72,39 @@ class workbasket
 
     function reassign_workbasket()
     {
+    }
+
+    public function status_image()
+    {
+        switch ($this->status) {
+            case "In Progress":
+                $this->status_image = "in_progress.png";
+                break;
+            case "Approval Rejected":
+                $this->status_image = "approval_rejected.png";
+                break;
+            case "Sent To CDS":
+                $this->status_image = "sent_to_cds.png";
+                break;
+            case "Published":
+                $this->status_image = "published.png";
+                break;
+            case "In Progress":
+                $this->status_image = "in_progress.png";
+                break;
+            case "Awaiting Approval":
+                $this->status_image = "awaiting_approval.png";
+                break;
+            case "Re-editing":
+                $this->status_image = "re_editing.png";
+                break;
+            case "CDS Error":
+                $this->status_image = "cds_error.png";
+                break;
+            default:
+                $this->status_image = "";
+        }
+        return ("<img style='position:relative;top:3px;margin-right:10px' src='/assets/images/" . $this->status_image . "' />");
     }
 }
 

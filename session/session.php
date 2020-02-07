@@ -161,6 +161,14 @@ class session
         }
     }
 
+    public function close_workbasket() {
+        $this->workbasket = null;
+        $_SESSION["workbasket_id"] = "";
+        $_SESSION["workbasket_title"] = "";
+        $url = "/#workbaskets";
+        header("Location: " . $url);
+    }
+
     public function accept_cookies()
     {
         $this->cookies_accepted = 1;

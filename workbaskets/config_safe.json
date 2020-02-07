@@ -12,8 +12,8 @@
             "buttons": {
                 "heading_text": "Finish now",
                 "info_text": "",
-                "submit_button_text_create": "Complete",
-                "submit_button_text_edit": "Complete",
+                "submit_button_text_create": "Add to workbasket",
+                "submit_button_text_edit": "Add to workbasket",
                 "save_progress_button_text": "Transfer workbasket",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "/"

@@ -64,15 +64,20 @@ class application
     public function init($tariff_object, $config_file = "config.json")
     {
         $this->tariff_object = $tariff_object;
+        $uri = $_SERVER["REQUEST_URI"];
+        if (strpos($uri, 'create') !== false) {
+            if ($this->session->workbasket == null) {
+                $url = "/workbaskets/create_edit.html?tariff_object=" . $this->tariff_object;
+                header("Location: " . $url);
+            }
+        }
+
         // Config settings globally
-        //pre ($_SERVER);
         $cdr = $_SERVER['CONTEXT_DOCUMENT_ROOT'];
         $path = $cdr . "/data/application_config.json";
         $data = file_get_contents($path);
         $this->global_config = json_decode($data, true);
         $this->common_measurement_units = $this->global_config["config"]["common_measurement_units"];
-        //$this->object_name = $this->data[$this->tariff_object]["config"]["object_name"];
-
 
         // Config settings for the specific object
         $sfn = $_SERVER['SCRIPT_FILENAME'];
@@ -344,6 +349,7 @@ class application
                 $this->row_count = $row['full_count'];
                 $base_regulation = new base_regulation;
                 $base_regulation->base_regulation_id = $row['base_regulation_id'];
+                $base_regulation->base_regulation_url = "<a class='govuk-link' href='create_edit.html?base_regulation_id=" . $row['base_regulation_id'] . "'>" . $row['base_regulation_id'] . "</a>";
                 $base_regulation->information_text = $row['information_text'];
                 $base_regulation->regulation_type = $row['regulation_type'];
                 $base_regulation->regulation_group_id = $row['regulation_group_id'];
@@ -1277,12 +1283,17 @@ class application
 
     public function clear_filter_cookies()
     {
-        $match = "filter_" . $this->tariff_object . "_";
+        $match = "filter_";
+        //$match = "filter_" . $this->tariff_object . "_";
         foreach ($_COOKIE as $key => $value) {
             if (contains($match, $key)) {
                 setcookie($key, "", time() + (86400 * 30), "/");
             }
         }
+        /*
+        $footnote = new footnote();
+        $footnote->clear_cookies();
+        */
     }
 
     public function get_filter_options()
@@ -1587,6 +1598,42 @@ class application
                 $workbasket->updated_at = $row[8];
                 $workbasket->id = $row[9];
                 $workbasket->actions = "<a class='govuk-link' href='reassign.html'>Reassign workbasket</a><br /><a class='govuk-link' href='view.html'>View workbasket</a><br /><a class='govuk-link' href='view.html'>Approve workbasket</a>";
+                array_push($this->workbaskets, $workbasket);
+            }
+            return ($this->workbaskets);
+        }
+    }
+
+
+    public function get_my_workbaskets()
+    {
+        global $conn;
+        //pre ($this->session);
+        $offset = ($this->page - 1) * $this->page_size;
+        $this->workbaskets = array();
+        $sql = "select u.name as user_name, u.id as uid, u.uid as user_id, u.email as user_email,
+        w.title, w.reason, w.type, w.status, w.created_at, w.updated_at, w.id,
+        count(*) OVER() AS full_count
+        from workbaskets w, users  u
+        where w.user_id = u.id and w.user_id = '" . $this->session->uid . "' order by w.created_at desc";
+
+        pg_prepare($conn, "get_my_workbaskets", $sql);
+        $result = pg_execute($conn, "get_my_workbaskets", array());
+        $row_count = pg_num_rows($result);
+        if (($result) && ($row_count > 0)) {
+            while ($row = pg_fetch_array($result)) {
+                $workbasket = new workbasket();
+                $workbasket->user_name = $row[0];
+                $workbasket->uid = $row[1];
+                $workbasket->user_id = $row[2];
+                $workbasket->user_email = $row[3];
+                $workbasket->title = $row[4];
+                $workbasket->reason = $row[5];
+                $workbasket->type = $row[6];
+                $workbasket->status = ucwords($row[7]);
+                $workbasket->created_at = string_to_time($row[8]);
+                $workbasket->updated_at = string_to_time($row[9]);
+                $workbasket->id = $row[10];
                 array_push($this->workbaskets, $workbasket);
             }
             return ($this->workbaskets);
@@ -1928,7 +1975,7 @@ class application
         $sql .= $filter_clause;
         $sql .= $this->sort_clause;
         $sql .= " limit $this->page_size offset $offset";
-        prend ($sql);
+        prend($sql);
         die();
 
         $result = pg_query($conn, $sql);
@@ -1945,7 +1992,7 @@ class application
                 $measure->ordernumber = $row['ordernumber'];
                 $measure->active_state = $row['active_state'];
 
-                
+
                 array_push($temp, $measure);
             }
             $this->measures = $temp;

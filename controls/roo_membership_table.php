@@ -67,7 +67,7 @@ class roo_membership_table_control
                                 <?php
                                 if ($item->validity_end_date == null){
                                     ?>
-                                <a title="Terminate this membership" href="<?= $terminate_url ?>">Terminate</a>
+                                <a class="govuk-link" title="Terminate this membership" href="<?= $terminate_url ?>">Terminate</a>
                                     <?php
                                 }
                                 ?>&nbsp;

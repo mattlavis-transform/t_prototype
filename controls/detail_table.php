@@ -46,7 +46,7 @@ class detail_table_control
 ?>
             <!-- Start detail table control //-->
             <hr />
-            <table class="govuk-table" id="<?=$this->control_name?>">
+            <table class="govuk-table sticky" id="<?= $this->control_name ?>">
                 <caption class="govuk-table__caption--m"><?= $this->caption ?> </caption>
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
@@ -57,16 +57,24 @@ class detail_table_control
                 </thead>
                 <tbody class="govuk-table__body">
                     <?php
+                    $count = count($this->dataset);
+                    $index = 0;
                     foreach ($this->dataset as $item) {
-                        //$this->edit_url .= "&validity_start_date=" .  $item->validity_start_date;
+                        $index += 1;
                         $edit_url = $this->edit_url .= "&validity_start_date=" .  $item->validity_start_date;
                     ?>
                         <tr class="govuk-table__row">
                             <td class="govuk-table__cell"><?= short_date($item->validity_start_date) ?></td>
                             <td class="govuk-table__cell"><?= $item->description ?></td>
                             <td class="govuk-table__cell r" nowrap>
-                                <a class="govuk-link" title="Edit this <?= $this->object_description ?>" href="<?= $edit_url ?>">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <a class="govuk-link" title="Delete this <?= $this->object_description ?>" href="<?= $this->delete_url ?>">Delete</a>
+                                <?php
+                                if ($index != $count) {
+                                ?>
+                                    <a class="govuk-link" title="Delete this <?= $this->object_description ?>" href="<?= $this->delete_url ?>">Delete</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php
+                                }
+                                ?>
+                                <a class="govuk-link" title="Edit this <?= $this->object_description ?>" href="<?= $edit_url ?>">Edit</a>
                             </td>
                         </tr>
                     <?php

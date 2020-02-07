@@ -60,6 +60,8 @@ require("../includes/metadata.php");
                             $custom_errors = "workbasket_exists"
                         );
 
+
+
                         // Description
                         new character_count_control(
                             $label = "What is the reason for creating this workbasket?",
@@ -69,8 +71,10 @@ require("../includes/metadata.php");
                             $rows = 5,
                             $maxlength = 500,
                             $required = "required",
-                            $default = $workbasket->reason
-                        );
+                            $default = $workbasket->reason,
+                            $pattern = "",
+                            $control_scope = ""
+                            );
 
                         $btn = new button_cluster_control();
                         $btn->submit_button_text = "Create workbasket";

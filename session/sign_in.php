@@ -32,6 +32,9 @@ require("../includes/metadata.php");
                     <form action="" method="post">
                     <!-- End main title //-->
                     <?php
+                        new inset_control(
+                            $text = "Please note: this is a dummy page. Logging in will not be required in the real application, as single-sign on will be operational."
+                        );
                     new input_control(
                         $label = "User ID",
                         $label_style = "govuk-label--m",
@@ -47,6 +50,7 @@ require("../includes/metadata.php");
                         $custom_errors = ""
                     );
 
+                    /*
                     new input_control(
                         $label = "Email address",
                         $label_style = "govuk-label--m",
@@ -91,6 +95,7 @@ require("../includes/metadata.php");
                         $disabled = false,
                         $custom_errors = ""
                     );
+                    */
 
                     $btn = new button_cluster_control("Sign in to the Tariff Application");
                     $btn->submit_button_text = "Sign in to the Tariff Application";
