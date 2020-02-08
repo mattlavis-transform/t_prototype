@@ -84,8 +84,9 @@
                 "control_type": "xroo_membership_table_control",
                 "control_name": "measure_types",
                 "control_scope": "update",
-                "caption": "Measure types that permit additional codes of this type <span class='caption2'>An additional code may only be used on a measure type if the Rules of Origin scheme has been explicitly assigned to the measure type.</span>"
-            }
+                "caption": "Measure types that permit additional codes of this type",
+                "subcaption": "An additional code may only be used on a measure type if the additional code type has been explicitly assigned to the measure type."
+        }
         ],
         "filters": [],
         "columns": [

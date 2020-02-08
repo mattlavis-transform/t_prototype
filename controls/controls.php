@@ -28,5 +28,6 @@ require (dirname(__FILE__) . "../../controls/footnote_assignment_table.php");
 require (dirname(__FILE__) . "../../controls/additional_code_measure_type_table.php");
 require (dirname(__FILE__) . "../../controls/back_to_top.php");
 require (dirname(__FILE__) . "../../controls/left_nav.php");
+require (dirname(__FILE__) . "../../controls/dependent_object_table_control.php");
 
 ?>

@@ -8,6 +8,8 @@
             "object_name": "Certificates",
             "title_create": "Create a certificate",
             "title_edit": "Edit certificate {certificate_type_code}{certificate_code}",
+            "url_edit": "./create_edit.html?mode=update&certificate_type_code={certificate_type_code}&certificate_code={certificate_code}",
+            "title_view": "Certificate code {certificate_code}",
             "description_keys": "certificate_type_code|certificate_code",
             "validate": false,
             "buttons": {
@@ -18,6 +20,38 @@
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
             }
+        },
+        "view": {
+            "fields": [
+                {
+                    "label": "Certificate code",
+                    "value": "{certificate_code}"
+                },
+                {
+                    "label": "Certificate type code",
+                    "value": "{certificate_type_code} - {certificate_type_description}"
+                },
+                {
+                    "label": "Current description",
+                    "value": "{description}"
+                },
+                {
+                    "label": "Start date",
+                    "value": "{validity_start_date}"
+                },
+                {
+                    "label": "End date",
+                    "value": "{validity_end_date}"
+                }
+            ],
+            "controls": [
+                {
+                    "control_type": "detail_table_control",
+                    "control_scope": "view",
+                    "control_name": "certificate_descriptions",
+                    "caption": "Existing certificate descriptions"
+                }
+            ]
         },
         "form": [
             {
@@ -112,7 +146,7 @@
                 "caption": "Existing certificate descriptions"
             }
         ],
-                "filters": [
+        "filters": [
             {
                 "label": "Certificate type",
                 "form_value": "certificate_type_code",
@@ -126,7 +160,7 @@
                 "form_value": "active_state",
                 "data_field": "active_state",
                 "data_type": "string",
-                "truncate_at":"",
+                "truncate_at": "",
                 "height": ""
             }
         ],

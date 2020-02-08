@@ -607,9 +607,10 @@ class certificate
     function populate_from_db()
     {
         global $conn;
-        $sql = "SELECT description, validity_start_date, validity_end_date, description
-        FROM certificates c, certificate_descriptions cd
+        $sql = "SELECT cd.description, validity_start_date, validity_end_date, ctd.description as certificate_type_description
+        FROM certificates c, certificate_descriptions cd, certificate_type_descriptions ctd
         WHERE c.certificate_code = cd.certificate_code
+        and c.certificate_type_code = ctd.certificate_type_code 
         AND c.certificate_type_code = $1 AND c.certificate_code = $2";
         //h1 ($sql);
         pg_prepare($conn, "get_certificate", $sql);
@@ -633,6 +634,7 @@ class certificate
                 $this->validity_end_date_year  					= date('Y', strtotime($this->validity_end_date));
             }
 
+            $this->certificate_type_description  						= $row[3];
             $this->certificate_heading					= "Edit measure type " . $this->certificate_code;
             $this->disable_certificate_code_field		= " disabled";
             $this->get_descriptions();

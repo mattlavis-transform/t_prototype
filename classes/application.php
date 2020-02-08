@@ -583,7 +583,8 @@ class application
                 $certificate->certificate_code = $row['certificate_code'];
                 $certificate->certificate_code_plus_type = $certificate->certificate_type_code . $certificate->certificate_code;
                 $certificate->description = $row['description'];
-                $certificate->description_url = '<a class="govuk-link" href="create_edit.html?mode=update&certificate_type_code=' . $certificate->certificate_type_code . '&certificate_code=' . $certificate->certificate_code . '">' . $certificate->description . '</a>';
+                //$certificate->description_url = '<a class="govuk-link" href="create_edit.html?mode=update&certificate_type_code=' . $certificate->certificate_type_code . '&certificate_code=' . $certificate->certificate_code . '">' . $certificate->description . '</a>';
+                $certificate->description_url = '<a class="govuk-link" href="view.html?mode=view&certificate_type_code=' . $certificate->certificate_type_code . '&certificate_code=' . $certificate->certificate_code . '">' . $certificate->description . '</a>';
                 $certificate->certificate_type_description = $row['certificate_type_description'];
                 $certificate->certificate_type_code_description = $certificate->certificate_type_code . "&nbsp;" . $certificate->certificate_type_description;
                 $certificate->validity_start_date = short_date($row['validity_start_date']);

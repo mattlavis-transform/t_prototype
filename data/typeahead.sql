@@ -1405,3 +1405,102 @@ and mc.certificate_type_code is not null
 order by validity_start_date desc; --goods_nomenclature_item_id;
 
 
+select * from ml.measures_real_end_dates m -- , measure_conditions mc 
+--where m.measure_sid = mc.measure_sid 
+where m.validity_end_date is null 
+and m.measure_type_id = '103'
+and m.additional_code_type_id = '2'
+and m.additional_code_id = '500';
+
+
+select * from goods_nomenclature_descriptions gnd where lower(description) like '% note %'
+
+Intended to be fitted in aircraft imported duty free or built within the Community
+
+select  m.measure_type_id || m.additional_code_id as unique_code, mc.duty_amount
+from measure_components mc, ml.measures_real_end_dates m
+where additional_code_type_id = '7'
+and mc.measure_sid = m.measure_sid 
+and (validity_end_date is null or validity_end_date > '2020-02-01')
+and geographical_area_id = 'JP'
+and m.measure_type_id in ('672', '673', '674')
+and reduction_indicator = 6
+order by 1;
+
+select m.goods_nomenclature_item_id, * from measures m, measure_components mc 
+where geographical_area_id = 'JP'
+and measure_type_id = '142' -- and validity_end_date is null
+and m.measure_sid = mc.measure_sid 
+and mc.duty_expression_id in ('12', '14');
+
+
+select distinct m.goods_nomenclature_item_id
+from measures m, goods_nomenclatures gn 
+where measure_type_id = '488'
+and m.goods_nomenclature_item_id = gn.goods_nomenclature_item_id 
+and gn.producline_suffix = '80'
+and gn.validity_end_date is null 
+order by 1;
+
+select *
+from measures m
+where measure_type_id = '490'
+and m.validity_end_date > '2019-01-01'
+and geographical_area_id = 'AU'
+order by 1
+
+select m.goods_nomenclature_item_id , m.geographical_area_id , mc.*
+from ml.measures_real_end_dates m, measure_components mc 
+where measure_type_id = '489'
+and m.measure_sid = mc.measure_sid 
+and (validity_end_date is null or validity_end_date > '2020-02-01')
+
+select * from measure_types where measure_type_id like '65%' order by 1;
+
+select * from measures where measure_type_id = '490' and validity_start_date >= '2019-01-01' -- unit price
+
+select * from measure_components mc where measure_sid = 3740750; -- ADSZ
+
+select * from monetary_unit_descriptions mud where monetary_unit_code = 'EUC'
+
+select * from measures where additional_code_id = '507' and additional_code_type_id = '7' and geographical_area_id = '1011'
+order by validity_start_date desc;
+
+select * from ml.commodity_friendly_names cfn order by 1
+
+select * from quota_order_numbers where quota_order_number_id = '098603';
+select * from quota_order_number_origins qono where quota_order_number_sid = 3339;
+select * from measures where ordernumber = '098603' and goods_nomenclature_item_id = '7209150000' order by validity_start_date desc;
+
+
+select mc.* from measures m, measure_components mc
+where measure_type_id in ('109', 'x110', 'x111')
+and m.measure_sid = mc.measure_sid 
+and mc.measurement_unit_qualifier_code is not null
+and validity_end_date is null order by validity_start_date desc;
+
+select mt.measure_type_series_id, m.measure_type_id, mc.*
+from ml.measures_real_end_dates m, measure_conditions mc, measure_types mt
+where m.measure_sid = mc.measure_sid 
+and  m.measure_type_id = '724'
+and m.measure_type_id = mt.measure_type_id 
+and mt.measure_type_series_id in ('A', 'cB')
+and m.validity_end_date is null;
+
+select * from measures m where measure_type_id = '740';
+
+select * from ml.measures_real_end_dates m where ordernumber like '094%' and validity_end_date > '2020-01-31'
+
+
+
+SELECT mtd.description as description, validity_start_date, validity_end_date, trade_movement_code,
+        priority_code, measure_component_applicable_code, origin_dest_code,
+        order_number_capture_code, measure_explosion_level, mt.measure_type_series_id, mtsd.description as measure_type_series_description
+        FROM measure_types mt, measure_type_descriptions mtd, measure_type_series_descriptions mtsd
+        WHERE mt.measure_type_id = mtd.measure_type_id
+        and mt.measure_type_series_id = mtsd.measure_type_series_id
+        AND mt.measure_type_id = '305';
+        
+       
+       
+       SELECT c.description, validity_start_date, validity_end_date, ctd.description as certificate_type_description FROM certificates c, certificate_descriptions cd, certificate_type_descriptions ctd WHERE c.certificate_code = cd.certificate_code and c.certificate_type_code = ctd.certificate_type_code AND c.certificate_type_code = $1 AND c.certificate_code = $2
