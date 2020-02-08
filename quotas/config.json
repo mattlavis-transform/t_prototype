@@ -62,12 +62,12 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Please use this form to provide the basic information necessary to support the creation of a quota."
+                "text": "Please use this form to provide the basic information necessary to support the creation of a quota.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+                "text": "Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -293,12 +293,12 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "While this information is not passed down to the border systems, it is required to enable the creation of reference documents for Trade Agreements. Please complete now or return later once the quotas have been set up."
+                "text": "While this information is not passed down to the border systems, it is required to enable the creation of reference documents for Trade Agreements. Please complete now or return later once the quotas have been set up.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+                "text": "Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -385,12 +385,12 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Use this form to specify the commodities that will be included within this quota."
+                "text": "Use this form to specify the commodities that will be included within this quota.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -463,12 +463,12 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Use this form to specify the in-quota duties that will apply to each of the commodities that will be included within this quota. Most quotas use the same in-quota duties for all commodity codes. If this is the case, you can enter the duty once only and copy to all rows."
+                "text": "Use this form to specify the in-quota duties that will apply to each of the commodities that will be included within this quota. Most quotas use the same in-quota duties for all commodity codes. If this is the case, you can enter the duty once only and copy to all rows.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -508,12 +508,12 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Use this form to identify how the goods in this quota will be measured."
+                "text": "Use this form to identify how the goods in this quota will be measured.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -603,7 +603,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Please use this form to provide the basic information necessary to support the creation of a quota."
+                "text": "Please use this form to provide the basic information necessary to support the creation of a quota.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -713,12 +713,12 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Use this form to specify the in-quota duties that will apply to each of the commodities that will be included within this quota."
+                "text": "Use this form to specify the in-quota duties that will apply to each of the commodities that will be included within this quota.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -758,12 +758,12 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Use this form to specify the in-quota duties that will apply to each of the commodities that will be included within this quota."
+                "text": "Use this form to specify the in-quota duties that will apply to each of the commodities that will be included within this quota.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+                "text": "Page 2 Update text - Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

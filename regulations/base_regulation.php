@@ -23,7 +23,7 @@ class base_regulation
         global $application;
         global $error_handler;
 
-        $this->measure_type_id = trim(get_querystring("base_regulation_id"));
+        $this->base_regulation_id = trim(get_querystring("base_regulation_id"));
 
         if (empty($_GET)) {
             $this->clear_cookies();
@@ -44,6 +44,7 @@ class base_regulation
 
     function validate_form()
     {
+        h1 ("here");
         global $application;
         $errors = array();
         $this->base_regulation_id = strtoupper(get_formvar("base_regulation_id", "", True));
@@ -320,7 +321,9 @@ class base_regulation
     function populate_from_db()
     {
         global $conn;
-        $sql = "SELECT validity_start_date, regulation_group_id, information_text FROM base_regulations WHERE base_regulation_id = $1";
+        $sql = "SELECT validity_start_date, regulation_group_id, information_text,
+        public_identifier, trade_remedies_case, url
+        FROM base_regulations WHERE base_regulation_id = $1";
         pg_prepare($conn, "get_specific_description", $sql);
         $result = pg_execute($conn, "get_specific_description", array($this->base_regulation_id));
         if ($result) {
@@ -328,10 +331,16 @@ class base_regulation
             $this->validity_start_date = $row[0];
             $this->regulation_group_id = $row[1];
             $this->information_text = $row[2];
+            $this->public_identifier = $row[3];
+            $this->trade_remedies_case = $row[4];
+            $this->url = $row[5];
             $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
             $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
             $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
-            $this->split_information_text();
+
+            return (true);
+        } else {
+            return (false);
         }
     }
 

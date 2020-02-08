@@ -8,6 +8,8 @@
             "object_name": "Geographical areas",
             "title_create": "Create a geographical area",
             "title_edit": "Edit geographical area {geographical_area_id}",
+            "url_edit": "./create_edit.html?mode=update&geographical_area_id={geographical_area_id}&geographical_area_sid={geographical_area_sid}",
+            "title_view": "Geographical area {geographical_area_id}",
             "description_keys": "geographical_area_sid|geographical_area_id",
             "validate": false,
             "buttons": {
@@ -19,16 +21,60 @@
                 "cancel_button_href": "./"
             }
         },
+        "view": {
+            "fields": [
+                {
+                    "label": "Geographical area ID",
+                    "value": "{geographical_area_id}"
+                },
+                {
+                    "label": "Current description",
+                    "value": "{description}"
+                },
+                {
+                    "label": "Area code",
+                    "value": "{geographical_code} - {geographical_code_description}"
+                },
+                {
+                    "label": "Start date",
+                    "value": "{validity_start_date}"
+                },
+                {
+                    "label": "End date",
+                    "value": "{validity_end_date}"
+                }
+            ],
+            "controls": [
+                {
+                    "control_type": "detail_table_control",
+                    "control_scope": "view",
+                    "control_name": "geographical_area_descriptions",
+                    "caption": "Existing geographical area descriptions"
+                },
+                {
+                    "control_type": "membership_table_control",
+                    "control_scope": "view",
+                    "control_name": "geographical_area_memberships",
+                    "caption": "Area memberships"
+                },
+                {
+                    "control_type": "roo_membership_table_control",
+                    "control_scope": "view",
+                    "control_name": "roo_scheme_memberships",
+                    "caption": "Rules of origin schemes"
+                }    
+            ]
+        },
         "form": [
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Use this form to create a new geographical area. Alternatively, <a href='./'>search for existing geographical areas</a>."
+                "text": "Use this form to create a new geographical area. Alternatively, <a href='./'>search for existing geographical areas</a>.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Use this form to terminate a geographical area and to <a class='govuk-link' href='#geographical_area_descriptions'>modify its description</a> or <a class='govuk-link' href='#geographical_area_memberships'>country memberships</a>."
+                "text": "Use this form to terminate a geographical area and to <a class='govuk-link' href='#geographical_area_descriptions'>modify its description</a> or <a class='govuk-link' href='#geographical_area_memberships'>country memberships</a>.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -136,7 +182,7 @@
                 "form_value": "active_state",
                 "data_field": "active_state",
                 "data_type": "string",
-                "truncate_at":"",
+                "truncate_at": "",
                 "height": ""
             }
         ],

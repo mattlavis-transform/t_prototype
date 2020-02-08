@@ -8,6 +8,8 @@
             "object_name": "Footnotes",
             "title_create": "Create a new footnote",
             "title_edit": "Edit footnote {footnote_type_id}{footnote_id}",
+            "url_edit": "./create_edit.html?mode=update&footnote_type_id={footnote_type_id}&footnote_id={footnote_id}",
+            "title_view": "Footnote {footnote_type_id}{footnote_id}",
             "description_keys": "footnote_type_id|footnote_id",
             "validate": false,
             "buttons": {
@@ -19,16 +21,58 @@
                 "cancel_button_href": "./"
             }
         },
+        "view": {
+            "fields": [
+                {
+                    "label": "Footnote type",
+                    "value": "{footnote_type_id} - {footnote_type_description}"
+                },
+                {
+                    "label": "Application code",
+                    "value": "{application_code_description}"
+                },
+                {
+                    "label": "Footnote ID",
+                    "value": "{footnote_type_id}{footnote_id}"
+                },
+                {
+                    "label": "Current description",
+                    "value": "{description}"
+                },
+                {
+                    "label": "Start date",
+                    "value": "{validity_start_date}"
+                },
+                {
+                    "label": "End date",
+                    "value": "{validity_end_date}"
+                }
+            ],
+            "controls": [
+                {
+                    "control_type": "detail_table_control",
+                    "control_scope": "view",
+                    "control_name": "footnote_descriptions",
+                    "caption": "Existing footnote descriptions"
+                },
+                {
+                    "control_type": "xfootnote_assignment_table_control",
+                    "control_scope": "update",
+                    "control_name": "footnote_assignments",
+                    "caption": "Footnote assignments<span class='caption2'>This footnote has been assigned to the following measures.</span>"
+                }    
+            ]
+        },
         "form": [
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Use this form to create a new footnote. You can associate the footnote with commodity codes or measures once it has been created."
+                "text": "Use this form to create a new footnote. You can associate the footnote with commodity codes or measures once it has been created. <br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Use this form to edit an existing footnote, to <a class='govuk-link' href='#footnote_descriptions'>modify its description</a>, or to <a class='govuk-link' href='#footnote_assignments'>assign the footnote to commodity codes or measures</a>."
+                "text": "Use this form to edit an existing footnote, to <a class='govuk-link' href='#footnote_descriptions'>modify its description</a>, or to <a class='govuk-link' href='#footnote_assignments'>assign the footnote to commodity codes or measures</a>.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -141,7 +185,7 @@
                 "form_value": "active_state",
                 "data_field": "f.active_state",
                 "data_type": "string",
-                "truncate_at":"",
+                "truncate_at": "",
                 "height": ""
             }
         ],

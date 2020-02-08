@@ -23,12 +23,12 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Use this form to create a new Rules of Origin scheme."
+                "text": "Use this form to create a new Rules of Origin scheme.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Use this form to manage an existing Rules of Origin scheme."
+                "text": "Use this form to manage an existing Rules of Origin scheme.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

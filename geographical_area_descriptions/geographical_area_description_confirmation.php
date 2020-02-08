@@ -2,13 +2,6 @@
 require(dirname(__FILE__) . "../../includes/db.php");
 $error_handler = new error_handler();
 $application = new application;
-/*
-$submitted = get_formvar("submitted");
-$workbasket = new workbasket();
-if ($submitted) {
-    $workbasket->create_workbasket();
-}
-*/
 ?>
 
 <!DOCTYPE html>

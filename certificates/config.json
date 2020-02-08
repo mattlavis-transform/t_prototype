@@ -23,7 +23,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Please use this form to create and edit certificates, licenses or other documents. A certificate code is made up of 4 digits. The first digit is a <a class='govuk-link' href='/certificate_type_codes/'>certificate type code</a>, followed by three alpha-numeric certificate code digits."
+                "text": "Please use this form to create and edit certificates, licenses or other documents. A certificate code is made up of 4 digits. The first digit is a <a class='govuk-link' href='/certificate_type_codes/'>certificate type code</a>, followed by three alpha-numeric certificate code digits. <br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

@@ -183,7 +183,7 @@ class geographical_area
                 $this->create();
             } else {
                 // Do edit scripts
-                $this->update();
+                //$this->update();
             }
             $url = "./confirmation.html?mode=" . $application->mode;
         }
@@ -619,6 +619,7 @@ class geographical_area
             $this->get_descriptions();
             $this->get_members();
             $this->get_rules_of_origin_schemes();
+            $this->get_descriptive_fields();
             return (true);
         } else {
             return (false);
@@ -716,5 +717,17 @@ class geographical_area
             $ret = false;
         }
         return ($ret);
+    }
+
+    public function get_descriptive_fields()
+    {
+        global $application;
+        $application->get_geographical_codes();
+        $this->geographical_code_description = $application->geographical_codes[$this->geographical_code]->string;
+        /*foreach ($this->application_codes as $item) {
+            if ($item->id == $this->application_code) {
+                $this->application_code_description = $item->string;
+            }
+        }*/
     }
 }

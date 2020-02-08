@@ -4,7 +4,9 @@
             "object_name": "Certificate types",
             "title": "Find and edit certificate types",
             "title_create": "Create a new certificate type",
-            "title_edit": "Edit certificate type {certificate_type_id}",
+            "title_edit": "Edit certificate type {certificate_type_code}",
+            "url_edit": "./create_edit.html?mode=update&certificate_type_code={certificate_type_code}",
+            "title_view": "Certificate code type {certificate_type_code}",
             "validate": false,
             "inset": "Enter criteria to help find a certificate type. Alternatively, <a class='govuk-link' href='create_edit.html'>create a new certificate type</a>.",
             "freetext_fields": "",
@@ -18,11 +20,33 @@
                 "cancel_button_href": "./"
             }
         },
+        "view": {
+            "fields": [
+                {
+                    "label": "Certificate type code",
+                    "value": "{certificate_type_code}"
+                },
+                {
+                    "label": "Description",
+                    "value": "{description}"
+                },
+                {
+                    "label": "Start date",
+                    "value": "{validity_start_date}"
+                },
+                {
+                    "label": "End date",
+                    "value": "{validity_end_date}"
+                }
+            ],
+            "controls": [
+            ]
+        },
         "form": [
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Use this form to manage existing certificate types or to create new certificate types."
+                "text": "Use this form to manage existing certificate types or to create new certificate types. <br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

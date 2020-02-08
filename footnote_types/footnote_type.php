@@ -91,7 +91,12 @@ class footnote_type
     function populate_from_db()
     {
         global $conn;
-        $sql = "SELECT description, validity_start_date, validity_end_date, application_code
+        $sql = "SELECT description, validity_start_date, validity_end_date, application_code,
+        case
+        when application_code in ('1', '2') then 'Nomenclature-related footnote'
+        when application_code in ('6', '7') then 'Measure-related footnote'
+        else 'Not recommended'
+        end as application_code_description
         FROM footnote_types act, footnote_type_descriptions actd
         WHERE act.footnote_type_id = actd.footnote_type_id
         AND act.footnote_type_id = $1";
@@ -120,6 +125,7 @@ class footnote_type
                 $this->validity_end_date_string = $this->validity_end_date_day . "|" . $this->validity_end_date_month . "|" . $this->validity_end_date_year;
             }
             $this->application_code = $row[3];
+            $this->application_code_description = $row[4];
             $this->id_disabled = true;
 
             return (true);

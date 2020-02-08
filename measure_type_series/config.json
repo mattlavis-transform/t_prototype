@@ -23,7 +23,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Use this form to manage existing measure type series or to create new measure type series."
+                "text": "Use this form to manage existing measure type series or to create new measure type series.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

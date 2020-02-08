@@ -57,7 +57,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Please use this function to bulk-create measures. It is essential to plan your activities in advance of using this bulk measure creation functionality. For example, if you intend to add footnotes or conditions to these measures, please ensure that they apply en masse to all measures."
+                "text": "Please use this function to bulk-create measures. It is essential to plan your activities in advance of using this bulk measure creation functionality. For example, if you intend to add footnotes or conditions to these measures, please ensure that they apply en masse to all measures.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -167,7 +167,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Please use this form to bulk create measures. It is essential to plan your activities in advance of using this bulk measure creation functionality. For example, if you intend to add footnotes or conditions to these measures, please ensure that they apply en masse to all measures."
+                "text": "Please use this form to bulk create measures. It is essential to plan your activities in advance of using this bulk measure creation functionality. For example, if you intend to add footnotes or conditions to these measures, please ensure that they apply en masse to all measures.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -315,7 +315,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Use this form to select the commodity codes and additional codes which will be used in the creation of these measures. The additional code field is to be used primarily for the creation of Trade Remedies (anti-dumping and anti-subsidy measures). Blah ..."
+                "text": "Use this form to select the commodity codes and additional codes which will be used in the creation of these measures. The additional code field is to be used primarily for the creation of Trade Remedies (anti-dumping and anti-subsidy measures).<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -465,7 +465,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+                "text": "Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -669,7 +669,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Use this form to add one or more footnotes to these measures. Footnotes are not required for measures, so you can add footnotes at a later date if required."
+                "text": "Use this form to add one or more footnotes to these measures. Footnotes are not required for measures, so you can add footnotes at a later date if required.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

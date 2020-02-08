@@ -5,7 +5,7 @@ $error_handler = new error_handler();
 $submitted = get_formvar("submitted");
 $workbasket = new workbasket();
 if ($submitted) {
-    $workbasket->create_workbasket();
+    $application->session->create_workbasket();
     $application->session->workbasket = $workbasket;
 }
 ?>
@@ -74,8 +74,14 @@ require("../includes/metadata.php");
                             $default = $workbasket->reason,
                             $pattern = "",
                             $control_scope = ""
-                            );
+                        );
 
+                        //prend ($_SESSION);
+
+                        new hidden_control(
+                            $control_name = "user_id",
+                            $value = $_SESSION["uid"]
+                        );
                         $btn = new button_cluster_control();
                         $btn->submit_button_text = "Create workbasket";
                         ?>

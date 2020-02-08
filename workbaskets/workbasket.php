@@ -11,48 +11,6 @@ class workbasket
     public $date_last_updated = "";
 
 
-    public function create_workbasket()
-    {
-        global $conn, $application;
-        $errors = array();
-
-        //pre($_REQUEST);
-
-        $this->title = get_formvar("title");
-        $this->reason = get_formvar("reason");
-        $this->user_id = get_formvar("user_id");
-
-        if ($this->title == "") {
-            array_push($errors, "workbasket_title");
-        }
-
-        if ($this->title == "") {
-            array_push($errors, "workbasket_reason");
-        }
-
-        if (count($errors) > 0) {
-            $error_string = serialize($errors);
-            setcookie("errors", $error_string, time() + (86400 * 30), "/");
-            $url = "workbasket_new.html?err=1";
-        } else {
-            $operation_date = $application->get_operation_date();
-            $sql = "insert into workbaskets (title, reason, user_id, status) values ($1, $2, $3, 'in progress', $4) RETURNING id;";
-            pg_prepare($conn, "workbasket_insert", $sql);
-            $result = pg_execute($conn, "workbasket_insert", array($this->title, $this->reason, $this->session->user_id, $operation_date));
-            if ($result) {
-                $row = pg_fetch_row($result);
-                $this->id = $row[0];
-                $application->session->set_workbasket_id($this->id, $this->title);
-            } else {
-                h1("No result");
-            }
-
-
-            $url = "workbasket_confirmation.html";
-        }
-        header("Location: " . $url);
-    }
-
     function create_measure_prototype()
     {
         global $conn;

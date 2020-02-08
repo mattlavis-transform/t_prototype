@@ -7,6 +7,10 @@ class inset_control
 
     public function __construct($text, $control_scope = "")
     {
+        global $application;
+        if (strpos($text, "{workbasket_name}") !== false) {
+            $text = str_replace("{workbasket_name}", "<strong>" . $application->session->workbasket->title . "</strong>", $text);        
+        }
         preg_match_all('/{(.*?)}/', $text, $matches);
         foreach ($matches[1] as $match) {
             if (isset($_GET[$match])) {
@@ -17,7 +21,9 @@ class inset_control
         }
         $text = str_replace("{", "", $text);
         $text = str_replace("}", "", $text);
-        $this->text = $text;
+
+        
+            $this->text = $text;
         $this->control_scope = $control_scope;
         $this->suppress_control = false;
 

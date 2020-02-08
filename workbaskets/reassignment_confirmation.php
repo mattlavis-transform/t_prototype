@@ -5,7 +5,7 @@ $application = new application;
 $submitted = get_formvar("submitted");
 $workbasket = new workbasket();
 if ($submitted) {
-    $workbasket->create_workbasket();
+    $application->session->create_workbasket();
 }
 ?>
 <!DOCTYPE html>

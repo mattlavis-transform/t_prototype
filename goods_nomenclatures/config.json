@@ -23,7 +23,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt."
+                "text": "Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

@@ -150,6 +150,28 @@ class session
         }
     }
 
+    public function get_workbasket_for_withdrawal($id)
+    {
+        //h1 ("getting workbasket");
+        global $conn;
+        $sql = "select title, reason, type, status, user_id, id from workbaskets w where id = $1;";
+        pg_prepare($conn, "get_workbasket_for_withdrawal", $sql);
+        $result = pg_execute($conn, "get_workbasket_for_withdrawal", array($id));
+        $row_count = pg_num_rows($result);
+        if (($result) && ($row_count > 0)) {
+            $row = pg_fetch_row($result);
+            $workbasket = new workbasket();
+            $workbasket->title = $row[0];
+            $workbasket->reason = $row[1];
+            $workbasket->type = $row[2];
+            $workbasket->status = $row[3];
+            $workbasket->user_id = $row[4];
+            $workbasket->id = $row[5];
+            
+            return ($workbasket);
+        }
+    }
+
     public function set_workbasket_id($id, $title)
     {
         $_SESSION["workbasket_id"] = $id;
@@ -161,10 +183,32 @@ class session
         }
     }
 
-    public function close_workbasket() {
+    public function close_workbasket()
+    {
         $this->workbasket = null;
         $_SESSION["workbasket_id"] = "";
         $_SESSION["workbasket_title"] = "";
+        $url = "/#workbaskets";
+        header("Location: " . $url);
+    }
+
+    public function open_workbasket($id)
+    {
+        $_SESSION["workbasket_id"] = $id;
+        $this->get_workbasket();
+        $url = "/#workbaskets";
+        header("Location: " . $url);
+    }
+
+    public function withdraw_workbasket($workbasket_id) {
+        global $conn;
+        if ($workbasket_id == $_SESSION["workbasket_id"]) {
+            $this->close_workbasket();
+        }
+        $sql = "delete from workbaskets where id = $1";
+        $stmt = "delete_workbasket";
+        pg_prepare($conn, $stmt, $sql);
+        pg_execute($conn, $stmt, array($workbasket_id));
         $url = "/#workbaskets";
         header("Location: " . $url);
     }
@@ -174,4 +218,47 @@ class session
         $this->cookies_accepted = 1;
         $_SESSION["cookies_accepted"] = 1;
     }
+
+    public function create_workbasket()
+    {
+        global $conn, $application;
+        $errors = array();
+
+        //prend($_SESSION);
+
+        $this->title = get_formvar("title");
+        $this->reason = get_formvar("reason");
+        //$this->user_id = get_formvar("user_id");
+
+        if ($this->title == "") {
+            array_push($errors, "workbasket_title");
+        }
+
+        if ($this->title == "") {
+            array_push($errors, "workbasket_reason");
+        }
+
+        if (count($errors) > 0) {
+            $error_string = serialize($errors);
+            setcookie("errors", $error_string, time() + (86400 * 30), "/");
+            $url = "create_edit.html?err=1";
+        } else {
+            $operation_date = $application->get_operation_date();
+            $sql = "insert into workbaskets (title, reason, user_id, status, created_at) values ($1, $2, $3, 'in progress', $4) RETURNING id;";
+            pg_prepare($conn, "workbasket_insert", $sql);
+            $result = pg_execute($conn, "workbasket_insert", array($this->title, $this->reason, $this->uid, $operation_date));
+            if ($result) {
+                $row = pg_fetch_row($result);
+                $this->id = $row[0];
+                $this->set_workbasket_id($this->id, $this->title);
+            } else {
+                h1("No result");
+            }
+
+
+            $url = "workbasket_confirmation.html";
+        }
+        header("Location: " . $url);
+    }
 }
+?>

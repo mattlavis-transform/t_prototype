@@ -437,7 +437,8 @@ class application
                 );
                 $geographical_area->geographical_code_description = $this->geographical_codes[$geographical_area->geographical_code]->string;
                 $geographical_area->geographical_code_id_description = $geographical_area->geographical_code . ' ' . $geographical_area->geographical_code_description;
-                $geographical_area->geographical_description_url = '<a class="govuk-link" href="./create_edit.html?mode=update&geographical_area_id=' . $geographical_area->geographical_area_id . '&geographical_area_sid=' . $geographical_area->geographical_area_sid . '">' . $geographical_area->description . '</a>';
+                //$geographical_area->geographical_description_url = '<a class="govuk-link" href="./create_edit.html?mode=update&geographical_area_id=' . $geographical_area->geographical_area_id . '&geographical_area_sid=' . $geographical_area->geographical_area_sid . '">' . $geographical_area->description . '</a>';
+                $geographical_area->geographical_description_url = '<a class="govuk-link" href="./view.html?mode=view&geographical_area_id=' . $geographical_area->geographical_area_id . '&geographical_area_sid=' . $geographical_area->geographical_area_sid . '">' . $geographical_area->description . '</a>';
                 array_push($temp, $geographical_area);
             }
             $this->geographical_areas = $temp;
@@ -663,7 +664,8 @@ class application
                 $measure_type->measure_type_series_id_description = $measure_type_series_id . '&nbsp;' . $measure_type_series_description;
 
                 $measure_type->measure_type_series_url = '<a class="govuk-link" href="/measure_type_series/create_edit.html?mode=update&measure_type_series_id=' . $measure_type_series_id . '">' . $measure_type->measure_type_series_id_description . '</a>';
-                $measure_type->measure_type_url = '<a class="govuk-link" href="/measure_types/create_edit.html?mode=update&measure_type_id=' . $measure_type_id . '">' . $measure_type->description . '</a>';
+                //$measure_type->measure_type_url = '<a class="govuk-link" href="/measure_types/create_edit.html?mode=update&measure_type_id=' . $measure_type_id . '">' . $measure_type->description . '</a>';
+                $measure_type->measure_type_url = '<a class="govuk-link" href="/measure_types/view.html?mode=view&measure_type_id=' . $measure_type_id . '">' . $measure_type->description . '</a>';
 
                 $url = "/measures/?filter_measures_measure_type_id=" . $measure_type_id;
                 $measure_type->measure_url = '<a class="govuk-link" href="' . $url . '">View measures</a>';
@@ -742,7 +744,8 @@ class application
                 $footnote->description = $row['description'];
                 $footnote->footnote_type_description = $row['footnote_type_description'];
                 $footnote->footnote_type_id_description = $footnote->footnote_type_id . ' ' . $footnote->footnote_type_description;
-                $footnote->footnote_description_url = '<a class="govuk-link" href="./create_edit.html?mode=update&footnote_id=' . $footnote->footnote_id . '&footnote_type_id=' . $footnote->footnote_type_id . '">' . $footnote->description . '</a>';
+                //$footnote->footnote_description_url = '<a class="govuk-link" href="./create_edit.html?mode=update&footnote_id=' . $footnote->footnote_id . '&footnote_type_id=' . $footnote->footnote_type_id . '">' . $footnote->description . '</a>';
+                $footnote->footnote_description_url = '<a class="govuk-link" href="./view.html?mode=view&footnote_id=' . $footnote->footnote_id . '&footnote_type_id=' . $footnote->footnote_type_id . '">' . $footnote->description . '</a>';
 
                 array_push($temp, $footnote);
             }
@@ -864,7 +867,8 @@ class application
                 $additional_code_type->id = $additional_code_type->additional_code_type_id;
                 $additional_code_type->string = $additional_code_type->additional_code_type_id . " - " . $additional_code_type->description;
 
-                $url = "/additional_code_types/create_edit.html?mode=update&additional_code_type_id=" . $additional_code_type->additional_code_type_id;
+                //$url = "/additional_code_types/create_edit.html?mode=update&additional_code_type_id=" . $additional_code_type->additional_code_type_id;
+                $url = "/additional_code_types/view.html?mode=view&additional_code_type_id=" . $additional_code_type->additional_code_type_id;
                 $additional_code_type->description_url = '<a class="govuk-link" href="' . $url . '">' . $additional_code_type->description . '</a>';
 
                 $url = "/additional_codes/?filter_additional_codes_additional_code_type_id=" . $additional_code_type->additional_code_type_id;
@@ -915,7 +919,8 @@ class application
                 $footnote_type->optgroup = $application_code_description;
                 $footnote_type->string = "<b>" . $footnote_type->footnote_type_id . "</b> - " . $footnote_type->description;
 
-                $url = "/footnote_types/create_edit.html?mode=update&footnote_type_id=" . $footnote_type->footnote_type_id;
+                //$url = "/footnote_types/create_edit.html?mode=update&footnote_type_id=" . $footnote_type->footnote_type_id;
+                $url = "/footnote_types/view.html?mode=view&footnote_type_id=" . $footnote_type->footnote_type_id;
                 $footnote_type->footnote_type_url = '<a class="govuk-link" href="' . $url . '">' . $footnote_type->description . '</a>';
 
                 $url = "/footnotes/?filter_footnotes_footnote_type_id=" . $footnote_type->footnote_type_id;
@@ -1054,7 +1059,8 @@ class application
                 $certificate_type->string = "<b>" . $certificate_type_code . "</b> " . $certificate_type->description;
                 $certificate_type->validity_start_date = $validity_start_date;
                 $certificate_type->validity_end_date = $validity_end_date;
-                $url = "/certificate_types/create_edit.html?mode=update&certificate_type_code=" . $certificate_type_code;
+                //$url = "/certificate_types/create_edit.html?mode=update&certificate_type_code=" . $certificate_type_code;
+                $url = "/certificate_types/view.html?mode=view&certificate_type_code=" . $certificate_type_code;
                 $certificate_type->certificate_type_url = "<a class='govuk-link' href='" . $url . "'>" . $certificate_type->description . "</a>";
 
                 $url = "/certificates/?filter_certificates_certificate_type_code=" . $certificate_type_code;
@@ -1233,14 +1239,19 @@ class application
         return ($date);
     }
 
-    function show_page_controls($show_paging = true)
+    function show_page_controls($show_paging = true, $dataset = null)
     {
+        //pre ($dataset);
         $control_count = 7;
         if ($this->row_count == 0) {
             return;
         }
         $page_count = ceil($this->row_count / $this->page_size);
-        echo ('<p class="govuk-body-s">Page ' . $this->page . ' of ' . $page_count . ' - showing ' . min($this->page_size, $this->row_count) . ' records of ' . $this->row_count . '</p>');
+        echo ('<p class="govuk-body-s">Page ' . $this->page . ' of ' . $page_count . ' - showing ' . min($this->page_size, $this->row_count) . ' records of ' . $this->row_count . '. ');
+        if ($dataset != null) {
+            echo ('<a class="govuk-link" href=""><img src="/assets/images/export.png" style="margin:0px 0.2em 0px 0.5em;top:3px;position:relative;" />Export data to CSV</a>');
+        }
+        echo ('</p>');
         if ($show_paging) {
             echo ('<nav style="display:block"><ul class="pagination">');
             if ($page_count > 20) {
@@ -1507,7 +1518,7 @@ class application
     {
         global $conn;
         $users = array();
-        $sql = "select  uid, name from users where uid != $1 order by name";
+        $sql = "select uid, name from users where uid != $1 order by name";
         pg_prepare($conn, "get_other_users", $sql);
         $result = pg_execute($conn, "get_other_users", array($this->session->user_id));
         $row_count = pg_num_rows($result);
@@ -1646,6 +1657,15 @@ class application
         array_push($this->workbasket_statuses, new simple_object("New - in progress", "New - in progress", "New - in progress", ""));
         array_push($this->workbasket_statuses, new simple_object("Awaiting approval", "Awaiting approval", "Awaiting approval", ""));
         array_push($this->workbasket_statuses, new simple_object("Sent to CDS", "Sent to CDS", "Sent to CDS", ""));
+    }
+
+
+    public function get_yes_no()
+    {
+        $yes_no = array();
+        array_push($yes_no, new simple_object("Yes", "Yes", "Yes", ""));
+        array_push($yes_no, new simple_object("No", "No", "No", ""));
+        return ($yes_no);
     }
 
 

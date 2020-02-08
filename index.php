@@ -210,7 +210,7 @@ require("includes/metadata.php");
                                             echo ("<a title='Close this workbasket' href='/workbaskets/actions.php?action=close'><img src='/assets/images/close.png' /></a>");
                                         } else {
                                             if ($workbasket->status == 'In Progress') {
-                                                echo ("<a title='Open this workbasket' href='/workbaskets/actions.php?action=open'><img src='/assets/images/open.png' /></a>");
+                                                echo ("<a title='Open this workbasket' href='/workbaskets/actions.php?action=open&id=" . $workbasket->id . "'><img src='/assets/images/open.png' /></a>");
                                             } elseif ($workbasket->status == 'Published') {
                                                 echo ("<a title='Archive this workbasket' href='/workbaskets/actions.php?action=archive'><img src='/assets/images/archive.png' /></a>");
                                             } else {
@@ -219,7 +219,7 @@ require("includes/metadata.php");
                                         }
                                         # Withdraw icon
                                         if (($workbasket->status == 'In Progress') || ($workbasket->status == 'Awaiting Approval') || ($workbasket->status == 'Approval Rejected') || ($workbasket->status == 'Re-editing')) {
-                                            echo ("<a title='Withdraw this workbasket' href=''><img src='/assets/images/withdraw.png' /></a>");
+                                            echo ("<a title='Withdraw this workbasket' href='/workbaskets/withdraw.html?id=" . $workbasket->id . "'><img src='/assets/images/withdraw.png' /></a>");
                                         } else {
                                             echo ("<img src='/assets/images/blank.png' />");
                                         }

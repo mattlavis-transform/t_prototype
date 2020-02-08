@@ -395,12 +395,14 @@ class measure_type
     function populate_from_db()
     {
         global $conn;
-        $sql = "SELECT description, validity_start_date, validity_end_date, trade_movement_code,
+        $sql = "SELECT mtd.description as description, validity_start_date, validity_end_date, trade_movement_code,
         priority_code, measure_component_applicable_code, origin_dest_code,
-        order_number_capture_code, measure_explosion_level, measure_type_series_id
-        FROM measure_types mt, measure_type_descriptions mtd
+        order_number_capture_code, measure_explosion_level, mt.measure_type_series_id, mtsd.description as measure_type_series_description
+        FROM measure_types mt, measure_type_descriptions mtd, measure_type_series_descriptions mtsd
         WHERE mt.measure_type_id = mtd.measure_type_id
+        and mt.measure_type_series_id = mtsd.measure_type_series_id
         AND mt.measure_type_id = $1";
+        //prend ($sql);
         pg_prepare($conn, "get_measure_type", $sql);
         $result = pg_execute($conn, "get_measure_type", array($this->measure_type_id));
         $row_count = pg_num_rows($result);
@@ -429,8 +431,10 @@ class measure_type
             $this->measure_component_applicable_code = $row[5];
             $this->order_number_capture_code = $row[7];
             $this->measure_type_series_id = $row[9];
+            $this->measure_type_series_description = $row[10];
 
             $this->id_disabled = true;
+            $this->get_descriptive_fields();
             return (true);
         } else {
             return (false);

@@ -16,6 +16,7 @@ require (dirname(__FILE__) . "../../controls/filter.php");
 require (dirname(__FILE__) . "../../controls/table.php");
 require (dirname(__FILE__) . "../../controls/search_form.php");
 require (dirname(__FILE__) . "../../controls/data_entry_form.php");
+require (dirname(__FILE__) . "../../controls/view_form.php");
 require (dirname(__FILE__) . "../../controls/include.php");
 require (dirname(__FILE__) . "../../controls/hidden.php");
 require (dirname(__FILE__) . "../../controls/workbasket.php");

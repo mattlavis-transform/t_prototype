@@ -23,7 +23,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Additional codes are used in the creation of measures that cannot be fulfilled solely with the use of commodity codes. Their primary use is in the management of trade remedies (anti-dumping and anti-subsidy measures). An additional code is made up of a single letter or digit (<a class='govuk-link' href='/additional_code_types'>additional code type</a>), followed by three alpha-numeric digits (the code) to make a four digit phrase."
+                "text": "Additional codes are used in the creation of measures that cannot be fulfilled solely with the use of commodity codes. Their primary use is in the management of trade remedies (anti-dumping and anti-subsidy measures). An additional code is made up of a single letter or digit (<a class='govuk-link' href='/additional_code_types'>additional code type</a>), followed by three alpha-numeric digits (the code) to make a four digit phrase. <br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

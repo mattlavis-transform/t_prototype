@@ -76,7 +76,8 @@ class search_form
                         <div class="govuk-grid-column-four-fifths">
                             <?php
                             // Order number capture code control
-                            $application->show_page_controls($show_paging = false);
+                            //pre ($this->dataset);
+                            $application->show_page_controls($show_paging = false, $this->dataset);
                             new table_control(
                                 $dataset = $this->dataset
                             );

@@ -5,6 +5,8 @@
             "title": "Find and edit footnote types",
             "title_create": "Create a new footnote type",
             "title_edit": "Edit footnote type {footnote_type_id}",
+            "url_edit": "./create_edit.html?mode=update&footnote_type_id={footnote_type_id}",
+            "title_view": "Footnote type {footnote_type_id}",
             "validate": false,
             "inset": "Enter criteria to help find a footnote type. Alternatively, <a class='govuk-link' href='create_edit.html'>create a new footnote type</a>.",
             "freetext_fields": "",
@@ -17,6 +19,32 @@
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
             }
+        },
+        "view": {
+            "fields": [
+                {
+                    "label": "Footnote type",
+                    "value": "{footnote_type_id}"
+                },
+                {
+                    "label": "Application code",
+                    "value": "{application_code} - {application_code_description}"
+                },
+                {
+                    "label": "Description",
+                    "value": "{description}"
+                },
+                {
+                    "label": "Start date",
+                    "value": "{validity_start_date}"
+                },
+                {
+                    "label": "End date",
+                    "value": "{validity_end_date}"
+                }
+            ],
+            "controls": [
+            ]
         },
         "form": [
             {
@@ -91,7 +119,6 @@
                 "group_by": "",
                 "required": true
             },
-
             {
                 "control_type": "button_cluster_control"
             }

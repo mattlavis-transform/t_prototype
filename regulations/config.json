@@ -23,19 +23,19 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Use this form to create a new regulation. All measures need to be associated with a regulation which has a start date no later than the start date of the measures."
+                "text": "Use this form to create a new regulation. All measures need to be associated with a regulation which has a start date no later than the start date of the measures.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Use this form to update a new regulation."
+                "text": "Use this form to update an existing regulation.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
             },
             {
                 "control_type": "input_control",
-                "label": "Regulation ID",
+                "label": "Internal regulation ID",
                 "label_style": "govuk-label--m",
                 "hint_text": "This must be exactly 8 characters long",
                 "control_name": "base_regulation_id",
@@ -86,6 +86,11 @@
                 "default": "",
                 "disabled_on_edit": false,
                 "custom_errors": ""
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/regulations/help_regulation_public_id.html"
             },
             {
                 "control_type": "character_count_control",

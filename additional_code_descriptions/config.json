@@ -23,7 +23,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "You are editing an additional code description for additional code <b>{additional_code_type_id}{additional_code}</b>."
+                "text": "You are editing an additional code description for additional code <b>{additional_code_type_id}{additional_code}</b>. <br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

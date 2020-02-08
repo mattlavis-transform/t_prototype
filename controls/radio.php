@@ -63,7 +63,7 @@ class radio_control
         } else {
             $label_class = "govuk-label govuk-radios__label";
         }
-
+        //prend ($this->error_key);
 ?>
         <!-- Start radio control <?= $this->control_name ?> //-->
         <div id="heading_<?= $this->control_name ?>" class="govuk-form-group <?= $error_handler->get_error($this->error_key); ?>">

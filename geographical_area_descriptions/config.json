@@ -23,7 +23,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "You are editing an geographical area description for geographical area <b>{geographical_area_id}</b><b>{description}</b>."
+                "text": "You are editing an geographical area description for geographical area <b>{geographical_area_id}</b><b>{description}</b>.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

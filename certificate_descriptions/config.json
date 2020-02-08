@@ -23,7 +23,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "You are editing an certificate description for certificate <b>{certificate_type_code}{certificate_code}</b>."
+                "text": "You are editing an certificate description for certificate <b>{certificate_type_code}{certificate_code}</b>. <br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"

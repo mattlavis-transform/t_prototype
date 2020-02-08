@@ -5,6 +5,8 @@
             "title": "Find and edit additional code types",
             "title_create": "Create a new additional code type",
             "title_edit": "Edit additional code type",
+            "url_edit": "./create_edit.html?mode=update&additional_code_type_id={additional_code_type_id}",
+            "title_view": "Additional code type {additional_code_type_id}",
             "validate": false,
             "inset": "View existing additional code types. Alternatively, <a class='govuk-link' href='create_edit.html'>create a new additional code type</a>.",
             "freetext_fields": "acd.description|ac.additional_code_type_id",
@@ -19,16 +21,49 @@
                 "cancel_button_href": "./"
             }
         },
+        "view": {
+            "fields": [
+                {
+                    "label": "Additional code type ID",
+                    "value": "{additional_code_type_id}"
+                },
+                {
+                    "label": "Description",
+                    "value": "{description}"
+                },
+                {
+                    "label": "Application code",
+                    "value": "{application_code} - {application_code_description}"
+                },
+                {
+                    "label": "Start date",
+                    "value": "{validity_start_date}"
+                },
+                {
+                    "label": "End date",
+                    "value": "{validity_end_date}"
+                }
+            ],
+            "controls": [
+                {
+                    "control_type": "additional_code_measure_type_table_control",
+                    "control_name": "measure_types",
+                    "control_scope": "view",
+                    "caption": "Measure types that permit additional codes of this type <span class='caption2'>An additional code may only be used on a measure type if the additional code type has been explicitly assigned to the measure type.</span>"
+                }
+            ]
+        },
         "form": [
             {
                 "control_type": "inset_control",
                 "control_scope": "insert",
-                "text": "Use this form to create a new additional code type. In order to ensure that additional codes of this type can be assigned to measure, you will also need to specify which measures are associated with this additional code type. This can be done once the additional code is initially set up."
+                "text": "Use this form to create a new additional code type. In order to ensure that additional codes of this type can be assigned to measure, you will also need to specify which measures are associated with this additional code type. This can be done once the additional code is initially set up. <br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "inset_control",
                 "control_scope": "update",
-                "text": "Use this form to manage an existing additional code type and to <a class='govuk-link' href='#measure_types'>assign the additional code to measure types</a>."
+                "text": "Use this form to manage an existing additional code type. <br /><br />This activity will be added to workbasket {workbasket_name}.",
+                "xtext": "Use this form to manage an existing additional code type and to <a class='govuk-link' href='#measure_types'>assign the additional code to measure types</a>. <br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -37,7 +72,7 @@
                 "control_type": "input_control",
                 "label": "What is the ID of this additional code type?",
                 "label_style": "govuk-label--m",
-                "hint_text": "Please enter a unique one-digit alpha-numeric string. Click here to view <a class='govuk-link' href='/additional_code_types/'>existing additional code types</a>.",
+                "hint_text": "Please enter a unique one-digit alpha-numeric string.",
                 "control_name": "additional_code_type_id",
                 "control_style": "govuk-input--width-4",
                 "size": 1,
@@ -96,7 +131,7 @@
                 "control_type": "button_cluster_control"
             },
             {
-                "control_type": "additional_code_measure_type_table_control",
+                "control_type": "xadditional_code_measure_type_table_control",
                 "control_name": "measure_types",
                 "control_scope": "update",
                 "caption": "Measure types that permit additional codes of this type <span class='caption2'>An additional code may only be used on a measure type if the additional code type has been explicitly assigned to the measure type.</span>"

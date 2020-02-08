@@ -117,7 +117,7 @@ class additional_code_type
             $this->application_code = $row[3];
             $this->id_disabled = true;
             $this->get_measure_types();
-
+            $this->get_descriptive_fields();
             return (true);
         } else {
             return (false);

@@ -607,14 +607,15 @@ class footnote
     function populate_from_db()
     {
         global $conn;
-        $sql = "SELECT description, f.validity_start_date, f.validity_end_date, ft.application_code,
+        $sql = "SELECT f.description, f.validity_start_date, f.validity_end_date, ft.application_code,
         case
         when ft.application_code in ('1', '2') then 'Nomenclature-related footnote'
         when ft.application_code in ('6', '7') then 'Measure-related footnote'
         else 'Not recommended'
-        end as application_code_description
-        FROM ml.ml_footnotes f, footnote_types ft
+        end as application_code_description, ftd.description as footnote_type_description
+        FROM ml.ml_footnotes f, footnote_types ft, footnote_type_descriptions ftd
         where f.footnote_type_id = ft.footnote_type_id
+        and f.footnote_type_id = ftd.footnote_type_id
         and f.footnote_id = $1 and f.footnote_type_id = $2 ";
         pg_prepare($conn, "get_footnote", $sql);
         $result = pg_execute($conn, "get_footnote", array($this->footnote_id, $this->footnote_type_id));
@@ -639,6 +640,7 @@ class footnote
             }
             $this->application_code = $row[3];
             $this->application_code_description = $row[4];
+            $this->footnote_type_description = $row[5];
             $this->get_descriptions();
             $this->get_assignments();
             return (true);
