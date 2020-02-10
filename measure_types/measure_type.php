@@ -343,21 +343,31 @@ class measure_type
             $this->order_number_capture_code, $this->measure_explosion_level, $this->measure_type_series_id,
             $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
-        $application->insert_workbasket_item($result, "measure_type", $status, "C", $operation_date);
+        if (($result) && (pg_num_rows($result) > 0)) {
+            $row = pg_fetch_row($result);
+            $oid = $row[0];
+        }
+        
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "measure_type", $status, "C", $operation_date);
 
-
+        // Then upate the measure type record with oid of the workbasket item record
+        $sql = "UPDATE measure_types_oplog set workbasket_item_id = $1 where oid = $2";
+        pg_prepare($conn, "update_measure_type", $sql);
+        $result = pg_execute($conn, "update_measure_type", array(
+            $workbasket_item_id, $oid
+        ));
+ 
         $sql = "INSERT INTO measure_type_descriptions_oplog (measure_type_id, language_id, description,
-        operation, operation_date, workbasket_id, status)
-        VALUES ($1, 'EN', $2, $3, $4, $5, $6)
+        operation, operation_date, workbasket_id, status, workbasket_item_id)
+        VALUES ($1, 'EN', $2, $3, $4, $5, $6, $7)
         RETURNING oid;";
 
         pg_prepare($conn, "create_measure_type_description", $sql);
 
         $result = pg_execute($conn, "create_measure_type_description", array(
             $this->measure_type_id, $this->description,
-            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
-        $application->insert_workbasket_item($result, "measure_type_description", $status, "C", $operation_date);
     }
 
     function update()

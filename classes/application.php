@@ -301,6 +301,7 @@ class application
     public function get_all_regulations()
     {
         global $conn;
+        $workbasket = new workbasket();
         $filter_clause = $this->get_filter_clause();
         $offset = ($this->page - 1) * $this->page_size;
         $sql = "with cte as 
@@ -315,7 +316,7 @@ class application
             case
             	when (officialjournal_number = '1' and officialjournal_page = '1') then 'UK'
             	else 'EU'
-            end as regulation_scope
+            end as regulation_scope, br.status
             from base_regulations br, regulation_group_descriptions rgd
             where br.regulation_group_id = rgd.regulation_group_id
             
@@ -327,7 +328,7 @@ class application
             case
                 when (mr.validity_end_date is not null or mr.effective_end_date is not null) then 'Terminated'
             else 'Active'
-            end as active_state, '' as trade_remedies_case, 'EU' as regulation_scope
+            end as active_state, '' as trade_remedies_case, 'EU' as regulation_scope, mr.status
             from modification_regulations mr, base_regulations br, regulation_group_descriptions rgd
             where mr.base_regulation_id = br.base_regulation_id 
             and mr.base_regulation_role = br.base_regulation_role
@@ -349,7 +350,6 @@ class application
                 $this->row_count = $row['full_count'];
                 $base_regulation = new base_regulation;
                 $base_regulation->base_regulation_id = $row['base_regulation_id'];
-                //$base_regulation->base_regulation_url = "<a class='govuk-link' href='create_edit.html?base_regulation_id=" . $row['base_regulation_id'] . "'>" . $row['base_regulation_id'] . "</a>";
                 $base_regulation->base_regulation_url = "<a class='govuk-link' href='view.html?mode=view&base_regulation_id=" . $row['base_regulation_id'] . "'>" . $row['base_regulation_id'] . "</a>";
                 $base_regulation->information_text = $row['information_text'];
                 $base_regulation->regulation_type = $row['regulation_type'];
@@ -363,7 +363,8 @@ class application
 
                 $url = "/measures/?filter_measures_freetext=" . $base_regulation->base_regulation_id;
                 $base_regulation->measures_url = "<a class='govuk-link' href='" . $url . "'>View measures</a>";
-
+                $workbasket->status = ucwords($row['status']);
+                $base_regulation->status = $workbasket->status_image();
                 array_push($temp, $base_regulation);
             }
             $this->base_regulations = $temp;
@@ -450,6 +451,7 @@ class application
     public function get_additional_codes()
     {
         global $conn;
+        $workbasket = new workbasket();
         $filter_clause = $this->get_filter_clause();
         $offset = ($this->page - 1) * $this->page_size;
 
@@ -459,7 +461,7 @@ class application
         case
 	        when ac.validity_end_date is not null then 'Terminated'
 	        else 'Active'
-	    end as active_state
+	    end as active_state, ac.status
         from ml.ml_additional_codes ac, additional_code_type_descriptions actd 
         where ac.additional_code_type_id = actd.additional_code_type_id )
         select *, count(*) OVER() AS full_count from cte where 1 > 0 ";
@@ -490,6 +492,8 @@ class application
 
                 $measures_url = "#";
                 $additional_code->measures_link = '<a class="govuk-link" href="' . $measures_url . '">View measures</a>';
+                $workbasket->status = ucwords($row['status']);
+                $additional_code->status = $workbasket->status_image();
 
                 array_push($temp, $additional_code);
             }
@@ -512,7 +516,6 @@ class application
 
     public function get_goods_nomenclatures()
     {
-        h1("here");
         global $conn;
         $filter_clause = $this->get_filter_clause();
         $offset = ($this->page - 1) * $this->page_size;
@@ -2075,21 +2078,4 @@ class application
         }
     }
 
-    public function insert_workbasket_item($result, $record_type, $status, $operation, $operation_date) {
-        global $conn, $application;
-        $row_count = pg_num_rows($result);
-        if (($result) && ($row_count > 0)) {
-            $row = pg_fetch_row($result);
-            $oid = $row[0];
-            $sql = "INSERT INTO workbasket_items (
-                workbasket_id, record_id, record_type, status, operation, created_at
-                )
-                VALUES ($1, $2, $3, $4, $5, $6)
-                ";
-            pg_prepare($conn, "insert_workbasket_item" . $oid, $sql);
-            $result = pg_execute($conn, "insert_workbasket_item" . $oid, array(
-                $application->session->workbasket->workbasket_id, $oid, $record_type, $status, $operation, $operation_date, 
-            ));
-        }
-    }
 }

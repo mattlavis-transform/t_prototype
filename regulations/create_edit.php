@@ -28,6 +28,7 @@ require("../includes/metadata.php");
         <?php
         require("../includes/phase_banner.php");
         $control_content = array();
+        $control_content["regulation_group_id"] = $application->regulation_groups;
         new data_entry_form($control_content, $base_regulation, $left_nav = "");
         ?>
     </div>

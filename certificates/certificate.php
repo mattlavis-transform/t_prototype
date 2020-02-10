@@ -300,38 +300,54 @@ class certificate
             $this->validity_end_date = Null;
         }
 
+        $status = 'awaiting approval';
         # Create the certificate record
         $sql = "INSERT INTO certificates_oplog (certificate_code, certificate_type_code, 
-        validity_start_date, operation, operation_date)
-        VALUES ($1, $2, $3, $4, $5)";
+        validity_start_date, operation, operation_date, workbasket_id, status)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING oid;";
         pg_prepare($conn, "create_certificate", $sql);
         $result = pg_execute($conn, "create_certificate", array(
             $this->certificate_code, $this->certificate_type_code,
-            $this->validity_start_date, $operation, $operation_date
+            $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        if (($result) && (pg_num_rows($result) > 0)) {
+            $row = pg_fetch_row($result);
+            $oid = $row[0];
+        }
 
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "certificate", $status, "C", $operation_date);
+
+        // Then upate the certificate record with oid of the workbasket item record
+        $sql = "UPDATE certificates_oplog set workbasket_item_id = $1 where oid = $2";
+        pg_prepare($conn, "update_certificate", $sql);
+        $result = pg_execute($conn, "update_certificate", array(
+            $workbasket_item_id, $oid
+        ));
+ 
         # Create the certificate description period record
         $sql = "INSERT INTO certificate_description_periods_oplog (certificate_description_period_sid, certificate_code,
-        certificate_type_code, validity_start_date, operation, operation_date)
-        VALUES ($1, $2, $3, $4, $5, $6)";
+        certificate_type_code, validity_start_date, operation, operation_date, workbasket_id, status, workbasket_item_id)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            RETURNING oid;";
         pg_prepare($conn, "create_certificate_description_period", $sql);
         $result = pg_execute($conn, "create_certificate_description_period", array(
             $this->certificate_description_period_sid, $this->certificate_code,
-            $this->certificate_type_code, $this->validity_start_date, $operation, $operation_date
+            $this->certificate_type_code, $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
+        //$application->session->workbasket->insert_workbasket_item($oid, "certificate_description_period", $status, "C", $operation_date);
 
         # Create the certificate description record
         $sql = "INSERT INTO certificate_descriptions_oplog (certificate_description_period_sid, certificate_code,
-        certificate_type_code, language_id, description, operation, operation_date)
-        VALUES ($1, $2, $3, 'EN', $4, $5, $6)";
+        certificate_type_code, language_id, description, operation, operation_date, workbasket_id, status, workbasket_item_id)
+        VALUES ($1, $2, $3, 'EN', $4, $5, $6, $7, $8, $9)
+            RETURNING oid;";
         pg_prepare($conn, "create_certificate_description", $sql);
         $result = pg_execute($conn, "create_certificate_description", array(
             $this->certificate_description_period_sid, $this->certificate_code,
-            $this->certificate_type_code, $this->description, $operation, $operation_date
+            $this->certificate_type_code, $this->description, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
-        #echo ($result);
-        #exit();
-
+        die();
     }
 
     public function old_delete_description()

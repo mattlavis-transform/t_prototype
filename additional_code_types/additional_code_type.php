@@ -266,23 +266,34 @@ class additional_code_type
             $this->additional_code_type_id, $this->application_code,
             $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        if (($result) && (pg_num_rows($result) > 0)) {
+            $row = pg_fetch_row($result);
+            $oid = $row[0];
+        }
 
-        $application->insert_workbasket_item($result, "additional_code_type", $status, "C", $operation_date);
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "additional_code_type", $status, "C", $operation_date);
 
+        // Then upate the additional code type record with oid of the workbasket item record
+        $sql = "UPDATE additional_code_types_oplog set workbasket_item_id = $1 where oid = $2";
+        pg_prepare($conn, "update_additional_code_type", $sql);
+        $result = pg_execute($conn, "update_additional_code_type", array(
+            $workbasket_item_id, $oid
+        ));
+ 
         # Create the additional_code_type description record
         $sql = "INSERT INTO additional_code_type_descriptions_oplog (
             additional_code_type_id, language_id, description,
-            operation, operation_date, workbasket_id, status
+            operation, operation_date, workbasket_id, status, workbasket_item_id
             )
-            VALUES ($1, 'EN', $2, $3, $4, $5, $6)
+            VALUES ($1, 'EN', $2, $3, $4, $5, $6, $7)
             RETURNING oid;";
 
         pg_prepare($conn, "create_additional_code_type_description", $sql);
         $result = pg_execute($conn, "create_additional_code_type_description", array(
             $this->additional_code_type_id, $this->description,
-            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
-        $application->insert_workbasket_item($result, "additional_code_type_description", $status, "C", $operation_date);
+        //die();
     }
 
 

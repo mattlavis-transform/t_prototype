@@ -44,7 +44,6 @@ class base_regulation
 
     function validate_form()
     {
-        h1 ("here");
         global $application;
         $errors = array();
         $this->base_regulation_id = strtoupper(get_formvar("base_regulation_id", "", True));
@@ -134,26 +133,41 @@ class base_regulation
         global $conn, $application;
         $operation = "C";
         $operation_date = $application->get_operation_date();
-        
+        $status = 'awaiting approval';
+
         # Create the certificate record
         $sql = "INSERT INTO base_regulations_oplog (
             base_regulation_id, base_regulation_role, validity_start_date, community_code,
             regulation_group_id, replacement_indicator, stopped_flag, information_text,
             approved_flag, published_date, officialjournal_number, officialjournal_page,
             public_identifier, url, trade_remedies_case,
-            operation, operation_date, status)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)";
+            operation, operation_date, workbasket_id, status)
+            VALUES (
+            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
+            RETURNING oid;";
+
+
         pg_prepare($conn, "create_base_regulation", $sql);
         $result = pg_execute($conn, "create_base_regulation", array(
-            $this->base_regulation_id, "1", $this->validity_start_date, 1, 
+            $this->base_regulation_id, "1", $this->validity_start_date, 1,
             $this->regulation_group_id, 0, 'f', $this->information_text,
             't', $this->validity_start_date, "1", 1,
             $this->public_identifier, $this->url, $this->trade_remedies_case,
-            $operation, $operation_date, 'Awaiting approval'
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        if (($result) && (pg_num_rows($result) > 0)) {
+            $row = pg_fetch_row($result);
+            $oid = $row[0];
+        }
 
-        prend($this);
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "regulation", $status, "C", $operation_date);
 
+        // Then upate the measure type record with oid of the workbasket item record
+        $sql = "UPDATE base_regulations_oplog set workbasket_item_id = $1 where oid = $2";
+        pg_prepare($conn, "update_base_regulation", $sql);
+        $result = pg_execute($conn, "update_base_regulation", array(
+            $workbasket_item_id, $oid
+        ));
     }
 
     function exists()

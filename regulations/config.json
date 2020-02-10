@@ -161,7 +161,7 @@
                 "control_type": "input_control",
                 "label": "Trade remedies case number",
                 "label_style": "govuk-label--m",
-                "hint_text": "If this regulation covers anti-dumping or anti-subsidy duties as a result of a trade remedies provisional or definitive judgment, please enter the Trade Remedies case number here, in the format XXNNNN (where x=letter and N=number).",
+                "hint_text": "Optionally, if this regulation covers anti-dumping or anti-subsidy duties as a result of a trade remedies provisional or definitive judgment, please enter the Trade Remedies case number here, in the format XXNNNN (where x=letter and N=number).",
                 "control_name": "trade_remedies_case",
                 "size": 6,
                 "maxlength": 6,
@@ -278,6 +278,13 @@
                 "sort_field": "validity_end_date",
                 "tooltip": "",
                 "align": "l"
+            },
+            {
+                "column_name": "Status",
+                "data_column": "status",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
             },
             {
                 "column_name": "Measures",

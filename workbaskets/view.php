@@ -96,13 +96,17 @@ $application->session->workbasket->workbasket_get_certificate_types();
 $application->session->workbasket->workbasket_get_additional_code_types();
 $application->session->workbasket->workbasket_get_measure_types();
 $application->session->workbasket->workbasket_get_footnotes();
+$application->session->workbasket->workbasket_get_certificates();
+$application->session->workbasket->workbasket_get_additional_codes();
+$application->session->workbasket->workbasket_get_regulations();
 ?>
-                        <!-- Start accordion section - footnote associations with measures //-->
+
+<!-- Start accordion section - footnote associations with measures //-->
                         <div class="govuk-accordion__section ">
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
                                     <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
-                                        Footnote associations with measures (2)
+                                        *** Footnote associations with measures (2)
                                     </span>
                                 </h2>
                             </div>
@@ -152,7 +156,7 @@ $application->session->workbasket->workbasket_get_footnotes();
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
                                     <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
-                                        Footnote associations with commodities (2)
+                                        *** Footnote associations with commodities (2)
                                     </span>
                                 </h2>
                             </div>
@@ -196,89 +200,6 @@ $application->session->workbasket->workbasket_get_footnotes();
                             </div>
                         </div>
                         <!-- End accordion section - footnote associations with commodities //-->
-
-                        <!-- Start accordion section - certificates //-->
-                        <div class="govuk-accordion__section ">
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
-                                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
-                                        Certificates (4)
-                                    </span>
-                                </h2>
-                            </div>
-                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
-                                <table class="govuk-table">
-                                    <thead class="govuk-table__head">
-                                        <tr class="govuk-table__row">
-                                            <th scope="col" class="govuk-table__header">Action</th>
-                                            <th scope="col" class="govuk-table__header">Type code</th>
-                                            <th scope="col" class="govuk-table__header" nowrap>Certificate code</th>
-                                            <th scope="col" class="govuk-table__header" nowrap>Start date</th>
-                                            <th scope="col" class="govuk-table__header" nowrap>End date</th>
-                                            <th scope="col" class="govuk-table__header">Description</th>
-                                            <th scope="col" class="govuk-table__header r">Next step</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="govuk-table__body">
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">Create</td>
-                                            <td class="govuk-table__cell">A Certificate of Authenticity</td>
-                                            <td class="govuk-table__cell">A901</td>
-                                            <td class="govuk-table__cell">01 Jan 21</td>
-                                            <td class="govuk-table__cell">-</td>
-                                            <td class="govuk-table__cell">
-                                                Interdum et malesuada fames ac ante ipsum primis in faucibus.</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">Update</td>
-                                            <td class="govuk-table__cell">A Certificate of Authenticity</td>
-                                            <td class="govuk-table__cell">A902</td>
-                                            <td class="govuk-table__cell">01 Jan 70</td>
-                                            <td class="govuk-table__cell">31 Dec 20</td>
-                                            <td class="govuk-table__cell">
-                                                Interdum et malesuada fames ac ante ipsum primis in faucibus.</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">New description</td>
-                                            <td class="govuk-table__cell">A Certificate of Authenticity</td>
-                                            <td class="govuk-table__cell">A903</td>
-                                            <td class="govuk-table__cell">01 Jan 21</td>
-                                            <td class="govuk-table__cell">-</td>
-                                            <td class="govuk-table__cell">
-                                                Interdum et malesuada fames ac ante ipsum primis in faucibus.</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">Updated description</td>
-                                            <td class="govuk-table__cell">A Certificate of Authenticity</td>
-                                            <td class="govuk-table__cell">A904</td>
-                                            <td class="govuk-table__cell">01 Jan 70</td>
-                                            <td class="govuk-table__cell">-</td>
-                                            <td class="govuk-table__cell">
-                                                Interdum et malesuada fames ac ante ipsum primis in faucibus.</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End accordion section - certificates //-->
-
-
 
                         <!-- Start accordion section - additional codes //-->
                         <div class="govuk-accordion__section ">

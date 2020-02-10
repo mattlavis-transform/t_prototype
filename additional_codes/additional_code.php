@@ -121,48 +121,52 @@ class additional_code
             $this->validity_end_date = Null;
         }
 
+        $status = 'awaiting approval';
         # Create the additional_code record
         $sql = "INSERT INTO additional_codes_oplog (
                 additional_code_sid, additional_code, additional_code_type_id,
-                validity_start_date, operation, operation_date
-                )
-                VALUES ($1, $2, $3, $4, $5, $6)";
+                validity_start_date, operation, operation_date, workbasket_id, status)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING oid;";
 
         pg_prepare($conn, "create_additional_code", $sql);
         $result = pg_execute($conn, "create_additional_code", array(
             $this->additional_code_sid, $this->additional_code, $this->additional_code_type_id,
-            $this->validity_start_date, $operation, $operation_date
+            $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        $application->session->workbasket->insert_workbasket_item($oid, "additional_code", $status, "C", $operation_date);
 
         # Create the additional_code description period record
         $sql = "INSERT INTO additional_code_description_periods_oplog (
             additional_code_description_period_sid, additional_code_sid, additional_code,
             additional_code_type_id, validity_start_date,
-            operation, operation_date
-            )
-            VALUES ($1, $2, $3, $4, $5, $6, $7)";
+            operation, operation_date, workbasket_id, status)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            RETURNING oid;";
 
         pg_prepare($conn, "create_additional_code_description_period", $sql);
         $result = pg_execute($conn, "create_additional_code_description_period", array(
             $this->additional_code_description_period_sid, $this->additional_code_sid, $this->additional_code,
             $this->additional_code_type_id, $this->validity_start_date,
-            $operation, $operation_date
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        //$application->session->workbasket->insert_workbasket_item($oid, "additional_code_description_period", $status, "C", $operation_date);
 
         # Create the additional_code description record
         $sql = "INSERT INTO additional_code_descriptions_oplog (
             additional_code_description_period_sid, additional_code_sid, additional_code,
             additional_code_type_id, language_id, description,
-            operation, operation_date
-            )
-            VALUES ($1, $2, $3, $4, 'EN', $5, $6, $7)";
+            operation, operation_date, workbasket_id, status)
+            VALUES ($1, $2, $3, $4, 'EN', $5, $6, $7, $8, $9)
+            RETURNING oid;";
 
         pg_prepare($conn, "create_additional_code_description", $sql);
         $result = pg_execute($conn, "create_additional_code_description", array(
             $this->additional_code_description_period_sid, $this->additional_code_sid, $this->additional_code,
             $this->additional_code_type_id, $this->description,
-            $operation, $operation_date
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        //$application->session->workbasket->insert_workbasket_item($oid, "additional_code_description", $status, "C", $operation_date);
     }
 
     function exists()

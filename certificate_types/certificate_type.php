@@ -207,23 +207,33 @@ class certificate_type
             $this->certificate_type_code,
             $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        if (($result) && (pg_num_rows($result) > 0)) {
+            $row = pg_fetch_row($result);
+            $oid = $row[0];
+        }
 
-        $application->insert_workbasket_item($result, "certificate_type", $status, "C", $operation_date);
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "certificate_type", $status, "C", $operation_date);
 
+        // Then upate the certificate type record with oid of the workbasket item record
+        $sql = "UPDATE certificate_types_oplog set workbasket_item_id = $1 where oid = $2";
+        pg_prepare($conn, "update_certificate_type", $sql);
+        $result = pg_execute($conn, "update_certificate_type", array(
+            $workbasket_item_id, $oid
+        ));
+        
         # Create the certificate_type description record
         $sql = "INSERT INTO certificate_type_descriptions_oplog (
             certificate_type_code, language_id, description,
-            operation, operation_date, workbasket_id, status
+            operation, operation_date, workbasket_id, status, workbasket_item_id
             )
-            VALUES ($1, 'EN', $2, $3, $4, $5, $6)
+            VALUES ($1, 'EN', $2, $3, $4, $5, $6, $7)
             RETURNING oid;";
 
         pg_prepare($conn, "create_certificate_type_description", $sql);
         $result = pg_execute($conn, "create_certificate_type_description", array(
             $this->certificate_type_code, $this->description,
-            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
-        $application->insert_workbasket_item($result, "certificate_type_description", $status, "C", $operation_date);
     }
 
 

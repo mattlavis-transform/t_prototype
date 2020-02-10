@@ -199,6 +199,13 @@
                 "align": ""
             },
             {
+                "column_name": "Status",
+                "data_column": "status",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
                 "column_name": "&nbsp;",
                 "data_column": "measures_link",
                 "sort_field": "",

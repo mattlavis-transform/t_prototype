@@ -1548,7 +1548,7 @@ with status_cte as (
         select *, count(*) OVER() AS full_count
         from status_cte f where 1 > 0  limit 20 offset 0;        
 
-update footnotes_oplog set status = 'published' where status is null;
+update certificate_description_periods_oplog set status = 'published' where status is null;
 
 
 
@@ -1562,13 +1562,14 @@ order by wi.created_at
 
 
 select wi.operation, f.footnote_type_id || ' ' || ftd.description as footnote_type_id,
-(f.footnote_type_id || ' ' || f.footnote_id) as footnote_id 
+(f.footnote_type_id || ' ' || f.footnote_id) as footnote_id,
+f.validity_start_date, f.validity_end_date, fd.description 
 from workbasket_items wi, footnotes f, footnote_descriptions fd, footnote_type_descriptions ftd
 where wi.record_id = f.oid
 and f.footnote_id = fd.footnote_id 
 and f.footnote_type_id = fd.footnote_type_id
 and f.footnote_type_id = ftd.footnote_type_id 
 and wi.record_type = 'footnote'
-and wi.workbasket_id = $1
+and wi.workbasket_id = 33
 order by wi.created_at;
 

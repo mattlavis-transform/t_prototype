@@ -803,4 +803,11 @@ function underscore($s) {
     $s = str_replace(' ', '_', $s);
     return ($s);
 }
+
+function db_execute($sql, $array) {
+    global $conn;
+    $stmt = "stmt_" . uniqid();
+    pg_prepare($conn, $stmt, $sql);
+    pg_execute($conn, $stmt, $array);
+}
 ?>

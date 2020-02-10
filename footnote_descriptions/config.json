@@ -26,6 +26,11 @@
                 "text": "You are editing a footnote description for footnote <b>{footnote_type_id}{footnote_id}</b>."
             },
             {
+                "control_type": "hidden_control",
+                "control_name": "footnote_type_id",
+                "value": "{footnote_type_id}"
+            },
+            {
                 "control_type": "error_block"
             },
             {
