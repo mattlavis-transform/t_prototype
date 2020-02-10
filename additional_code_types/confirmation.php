@@ -34,13 +34,14 @@ require("../includes/metadata.php");
                             Additional code type X has been <?= $verb ?>.
                         </h1>
                         <div class="govuk-panel__body">
-                            This change has been added to your workbasket<br /><br />&quot;<?=$application->session->workbasket->title?>&quot;
+                            This change has been added to your workbasket<br /><br />&quot;<?= $application->session->workbasket->title ?>&quot;
                         </div>
                     </div>
                     <!-- End panel //-->
                     <h2 class="govuk-heading-m">Next steps</h2>
                     <ul class="govuk-list">
                         <li><a href="./">Manage more additional code types</a></li>
+                        <li><a href="/workbaskets/view.html">View content of your workbasket</a></li>
                         <li><a href="/">Return to main menu</a></li>
                     </ul>
                 </div>

@@ -266,6 +266,13 @@
                 "align": "l"
             },
             {
+                "column_name": "Status",
+                "data_column": "status",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
                 "column_name": "Measures",
                 "data_column": "measure_url",
                 "sort_field": "",

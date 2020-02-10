@@ -85,18 +85,261 @@ require("../includes/metadata.php");
                             </tr>
                         </tbody>
                     </table>
+                    <!--
+<p class="govuk-body"><a class="govuk-link" href="#">View workbasket detail</a></p>
+//-->
 
-                    
                     <h2 class="govuk-heading-m">Workbasket activities</h2>
                     <p class="govuk-body">This workbasket contains contains the following changes:</p>
                     <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-with-summary-sections">
-<?php
-$application->session->workbasket->workbasket_get_footnote_types();
-$application->session->workbasket->workbasket_get_certificate_types();
-$application->session->workbasket->workbasket_get_additional_code_types();
-$application->session->workbasket->workbasket_get_measure_types();
-$application->session->workbasket->workbasket_get_footnotes();
-?>
+
+                        <!-- Start accordion section - footnote types //-->
+                        <div class="govuk-accordion__section ">
+                            <div class="govuk-accordion__section-header">
+                                <h2 class="govuk-accordion__section-heading">
+                                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
+                                        Footnote types (2)
+                                    </span>
+                                </h2>
+                            </div>
+                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
+                                <table class="govuk-table">
+                                    <thead class="govuk-table__head">
+                                        <tr class="govuk-table__row">
+                                            <th scope="col" class="govuk-table__header">Action</th>
+                                            <th scope="col" class="govuk-table__header">Type</th>
+                                            <th scope="col" class="govuk-table__header">Start date</th>
+                                            <th scope="col" class="govuk-table__header">End date</th>
+                                            <th scope="col" class="govuk-table__header">Description</th>
+                                            <th scope="col" class="govuk-table__header r">Next step</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="govuk-table__body">
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Create</td>
+                                            <td class="govuk-table__cell">FM</td>
+                                            <td class="govuk-table__cell">01 Jan 21</td>
+                                            <td class="govuk-table__cell">-</td>
+                                            <td class="govuk-table__cell">
+                                                Footnote type designated for measures
+                                            </td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Update</td>
+                                            <td class="govuk-table__cell">FX</td>
+                                            <td class="govuk-table__cell">01 Jul 21</td>
+                                            <td class="govuk-table__cell">-</td>
+                                            <td class="govuk-table__cell">
+                                                Footnote type designed for Jersey
+                                            </td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- End accordion section - footnote types //-->
+
+
+                        <!-- Start accordion section - certificate types //-->
+                        <div class="govuk-accordion__section ">
+                            <div class="govuk-accordion__section-header">
+                                <h2 class="govuk-accordion__section-heading">
+                                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
+                                        Certificate types (2)
+                                    </span>
+                                </h2>
+                            </div>
+                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
+                                <table class="govuk-table">
+                                    <thead class="govuk-table__head">
+                                        <tr class="govuk-table__row">
+                                            <th scope="col" class="govuk-table__header">Action</th>
+                                            <th scope="col" class="govuk-table__header">Code</th>
+                                            <th scope="col" class="govuk-table__header">Start date</th>
+                                            <th scope="col" class="govuk-table__header">End date</th>
+                                            <th scope="col" class="govuk-table__header">Description</th>
+                                            <th scope="col" class="govuk-table__header r">Next step</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="govuk-table__body">
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Create</td>
+                                            <td class="govuk-table__cell">X</td>
+                                            <td class="govuk-table__cell">01 Jan 21</td>
+                                            <td class="govuk-table__cell">-</td>
+                                            <td class="govuk-table__cell">
+                                                Particular provisions - Jersey & Guernsey
+                                            </td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Update</td>
+                                            <td class="govuk-table__cell">Y</td>
+                                            <td class="govuk-table__cell">01 Jan 21</td>
+                                            <td class="govuk-table__cell">-</td>
+                                            <td class="govuk-table__cell">
+                                                Particular provisions - Jersey & Guernsey
+                                            </td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- End accordion section - certificate types //-->
+
+                        <!-- Start accordion section - additional code types //-->
+                        <div class="govuk-accordion__section ">
+                            <div class="govuk-accordion__section-header">
+                                <h2 class="govuk-accordion__section-heading">
+                                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
+                                        Additional code types (2)
+                                    </span>
+                                </h2>
+                            </div>
+                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
+                                <table class="govuk-table">
+                                    <thead class="govuk-table__head">
+                                        <tr class="govuk-table__row">
+                                            <th scope="col" class="govuk-table__header">Action</th>
+                                            <th scope="col" class="govuk-table__header">Type</th>
+                                            <th scope="col" class="govuk-table__header">Start date</th>
+                                            <th scope="col" class="govuk-table__header">End date</th>
+                                            <th scope="col" class="govuk-table__header">Description</th>
+                                            <th scope="col" class="govuk-table__header r">Next step</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="govuk-table__body">
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Create</td>
+                                            <td class="govuk-table__cell">C</td>
+                                            <td class="govuk-table__cell">01 Jan 21</td>
+                                            <td class="govuk-table__cell">-</td>
+                                            <td class="govuk-table__cell">
+                                                Anti-dumping / anti-subsidy measures
+                                            </td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Update</td>
+                                            <td class="govuk-table__cell">C</td>
+                                            <td class="govuk-table__cell">01 Jan 70</td>
+                                            <td class="govuk-table__cell">30 Dec 20</td>
+                                            <td class="govuk-table__cell">
+                                                Anti-dumping / anti-subsidy measures
+                                            </td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- End accordion section - additional code types //-->
+
+
+                        <!-- Start accordion section - footnotes //-->
+                        <div class="govuk-accordion__section ">
+                            <div class="govuk-accordion__section-header">
+                                <h2 class="govuk-accordion__section-heading">
+                                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
+                                        Footnotes (4)
+                                    </span>
+                                </h2>
+                            </div>
+                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
+                                <table class="govuk-table">
+                                    <thead class="govuk-table__head">
+                                        <tr class="govuk-table__row">
+                                            <th scope="col" class="govuk-table__header">Action</th>
+                                            <th scope="col" class="govuk-table__header">Type</th>
+                                            <th scope="col" class="govuk-table__header" nowrap>Footnote ID</th>
+                                            <th scope="col" class="govuk-table__header" nowrap>Start date</th>
+                                            <th scope="col" class="govuk-table__header" nowrap>End date</th>
+                                            <th scope="col" class="govuk-table__header">Description</th>
+                                            <th scope="col" class="govuk-table__header r">Next step</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="govuk-table__body">
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Create</td>
+                                            <td class="govuk-table__cell">TR Torture and repression</td>
+                                            <td class="govuk-table__cell">TR101</td>
+                                            <td class="govuk-table__cell" nowrap>01 Jan 21</td>
+                                            <td class="govuk-table__cell" nowrap>-</td>
+                                            <td class="govuk-table__cell">
+                                                The export of these items may be controlled under Retained Regulation (EU) /125. Please refer to the Goods Checker to determine whether your items are controlled and whether you need a licence from the Export Control Joint Unit .</td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Update</td>
+                                            <td class="govuk-table__cell">TR Torture and repression</td>
+                                            <td class="govuk-table__cell">TR101</td>
+                                            <td class="govuk-table__cell" nowrap>01 Jan 70</td>
+                                            <td class="govuk-table__cell" nowrap>31 Dec 20</td>
+                                            <td class="govuk-table__cell">
+                                                The export of these items may be controlled under Retained Regulation (EU) /125. Please refer to the Goods Checker to determine whether your items are controlled and whether you need a licence from the Export Control Joint Unit .</td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">New description</td>
+                                            <td class="govuk-table__cell">TR Torture and repression</td>
+                                            <td class="govuk-table__cell">TR109</td>
+                                            <td class="govuk-table__cell" nowrap>01 Jul 21</td>
+                                            <td class="govuk-table__cell" nowrap>-</td>
+                                            <td class="govuk-table__cell">
+                                                This is a new description</td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Updated description</td>
+                                            <td class="govuk-table__cell">TR Torture and repression</td>
+                                            <td class="govuk-table__cell">TR108</td>
+                                            <td class="govuk-table__cell" nowrap>01 Jul 21</td>
+                                            <td class="govuk-table__cell" nowrap>-</td>
+                                            <td class="govuk-table__cell">
+                                                This is an updated description</td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- End accordion section - footnotes //-->
+
+
+
                         <!-- Start accordion section - footnote associations with measures //-->
                         <div class="govuk-accordion__section ">
                             <div class="govuk-accordion__section-header">
@@ -278,6 +521,67 @@ $application->session->workbasket->workbasket_get_footnotes();
                         </div>
                         <!-- End accordion section - certificates //-->
 
+
+                        <!-- Start accordion section - measure types //-->
+                        <div class="govuk-accordion__section ">
+                            <div class="govuk-accordion__section-header">
+                                <h2 class="govuk-accordion__section-heading">
+                                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
+                                        Measure types (2)
+                                    </span>
+                                </h2>
+                            </div>
+                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
+                                <table class="govuk-table">
+                                    <thead class="govuk-table__head">
+                                        <tr class="govuk-table__row">
+                                            <th scope="col" class="govuk-table__header">Action</th>
+                                            <th scope="col" class="govuk-table__header">Measure type</th>
+                                            <th scope="col" class="govuk-table__header" nowrap>Start date</th>
+                                            <th scope="col" class="govuk-table__header">Series</th>
+                                            <th scope="col" class="govuk-table__header">Trade movement</th>
+                                            <th scope="col" class="govuk-table__header">Components applicable</th>
+                                            <th scope="col" class="govuk-table__header">Order number applicable</th>
+                                            <th scope="col" class="govuk-table__header">Description</th>
+                                            <th scope="col" class="govuk-table__header r">Next step</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="govuk-table__body">
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Create</td>
+                                            <td class="govuk-table__cell">130</td>
+                                            <td class="govuk-table__cell" nowrap>01 Jan 21</td>
+                                            <td class="govuk-table__cell">C Applicable duty</td>
+                                            <td class="govuk-table__cell">Import</td>
+                                            <td class="govuk-table__cell">Mandatory</td>
+                                            <td class="govuk-table__cell">Not permitted</td>
+                                            <td class="govuk-table__cell">
+                                                Interdum et malesuada fames ac ante ipsum primis in faucibus.</td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">Update</td>
+                                            <td class="govuk-table__cell">131</td>
+                                            <td class="govuk-table__cell" nowrap>01 Jan 21</td>
+                                            <td class="govuk-table__cell">C Applicable duty</td>
+                                            <td class="govuk-table__cell">Import</td>
+                                            <td class="govuk-table__cell">Mandatory</td>
+                                            <td class="govuk-table__cell">Not permitted</td>
+                                            <td class="govuk-table__cell">
+                                                Interdum et malesuada fames ac ante ipsum primis in faucibus.</td>
+                                            <td class="govuk-table__cell r" nowrap>
+                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
+                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- End accordion section - measure types //-->
 
 
                         <!-- Start accordion section - additional codes //-->

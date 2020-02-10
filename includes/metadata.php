@@ -1,6 +1,6 @@
 <?php
 // Get the page title
-$title = "Tariff Application";
+$title = "Manage the UK Tariff";
 //var_dump ($application->data);
 if ($application->tariff_object != "") {
     $config = $application->data[$application->tariff_object]["config"];

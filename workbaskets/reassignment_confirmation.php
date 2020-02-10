@@ -38,6 +38,7 @@ require("../includes/metadata.php");
                     </div>
                     <!-- End panel //-->
                     <h2 class="govuk-heading-m">Next steps</h2>
+                    <li><a href="/workbaskets/view.html">View content of your workbasket</a></li>
                     <p class="govuk-body">Return to main menu to <a class='govuk-link' href="/">begin making changes</a>.</p>
                 </div>
             </div>

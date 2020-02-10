@@ -136,6 +136,13 @@
                 "align": "c"
             },
             {
+                "column_name": "Status",
+                "data_column": "status",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
                 "column_name": "&nbsp;",
                 "data_column": "certificate_url",
                 "sort_field": "",

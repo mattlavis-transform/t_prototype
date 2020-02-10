@@ -12,6 +12,8 @@ class footnote_type
     public $application_code = "";
     public $application_code_description = "";
     public $next_id = null;
+    public $workbasket_id = null;
+    public $status = null;
 
     public function __construct()
     {
@@ -85,7 +87,6 @@ class footnote_type
         $this->description = get_cookie("description");
         $this->application_code = get_cookie("application_code");
         $this->id_disabled = false;
-
     }
 
     function populate_from_db()
@@ -137,6 +138,7 @@ class footnote_type
     // Validate form
     function validate_form()
     {
+        global $application;
         $errors = array();
         $this->footnote_type_id = get_formvar("footnote_type_id", "", True);
         $this->description = get_formvar("description", "", True);
@@ -158,7 +160,7 @@ class footnote_type
         $this->set_dates();
 
         # Check on the measure type series id
-        if (strlen($this->footnote_type_id) != 1) {
+        if (strlen($this->footnote_type_id) != 2) {
             array_push($errors, "footnote_type_id");
         }
 
@@ -212,17 +214,66 @@ class footnote_type
             $error_string = serialize($errors);
             setcookie("errors", $error_string, time() + (86400 * 30), "/");
             $url = "create_edit.html?err=1&mode=" . $this->mode . "&measure_type_id=" . $this->measure_type_id;
-        } else {/*
- if ($create_edit == "create") {
- // Do create scripts
- $this->create();
- } else {
- // Do edit scripts
- $this->update();
- }*/
-            $url = "./";
+        } else {
+            if ($application->mode == "insert") {
+                // Do create scripts
+                $this->create();
+            } else {
+                // Do edit scripts
+                $this->update();
+            }
+            $url = "./confirmation.html?mode=" . $application->mode;
         }
         header("Location: " . $url);
+    }
+
+
+    function create()
+    {
+        global $conn, $application;
+        $operation = "C";
+        $operation_date = $application->get_operation_date();
+
+        if ($this->validity_end_date == "") {
+            $this->validity_end_date = Null;
+        }
+
+        $status = 'awaiting approval';
+        # Create the footnote_type record
+        $sql = "INSERT INTO footnote_types_oplog (
+            footnote_type_id, application_code,
+            validity_start_date, operation, operation_date, workbasket_id, status
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING oid;";
+
+        pg_prepare($conn, "create_footnote_type", $sql);
+        $result = pg_execute($conn, "create_footnote_type", array(
+            $this->footnote_type_id, $this->application_code,
+            $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+        ));
+
+        $application->insert_workbasket_item($result, "footnote_type", $status, "C", $operation_date);
+
+        # Create the footnote_type description record
+        $sql = "INSERT INTO footnote_type_descriptions_oplog (
+            footnote_type_id, language_id, description,
+            operation, operation_date, workbasket_id, status
+            )
+            VALUES ($1, 'EN', $2, $3, $4, $5, $6)
+            RETURNING oid;";
+
+        pg_prepare($conn, "create_footnote_type_description", $sql);
+        $result = pg_execute($conn, "create_footnote_type_description", array(
+            $this->footnote_type_id, $this->description,
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+        ));
+        $application->insert_workbasket_item($result, "footnote_type_description", $status, "C", $operation_date);
+    }
+
+
+    function update()
+    {
     }
 
     function set_dates()
@@ -244,9 +295,9 @@ class footnote_type
     {
         global $conn;
         $exists = false;
-        $sql = "SELECT footnote_type_id FROM measure_type_series WHERE footnote_type_id = $1";
-        pg_prepare($conn, "measure_type_series_exists", $sql);
-        $result = pg_execute($conn, "measure_type_series_exists", array($this->footnote_type_id));
+        $sql = "SELECT footnote_type_id FROM footnote_types WHERE footnote_type_id = $1";
+        pg_prepare($conn, "footnote_type_exists", $sql);
+        $result = pg_execute($conn, "footnote_type_exists", array($this->footnote_type_id));
         if ($result) {
             if (pg_num_rows($result) > 0) {
                 $exists = true;

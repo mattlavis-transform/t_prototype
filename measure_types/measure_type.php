@@ -94,12 +94,16 @@ class measure_type
         setcookie("validity_end_date_string", $this->validity_end_date_string, time() + (86400 * 30), "/");
 
         $this->trade_movement_code = get_formvar("trade_movement_code", "", True);
-        $this->priority_code = get_formvar("priority_code", "", True);
+        $this->priority_code = 1;
         $this->measure_component_applicable_code = get_formvar("measure_component_applicable_code", "", True);
-        $this->origin_dest_code = get_formvar("origin_dest_code", "", True);
+        $this->origin_dest_code = $this->trade_movement_code;
         $this->order_number_capture_code = get_formvar("order_number_capture_code", "", True);
         $this->measure_type_series_id = get_formvar("measure_type_series_id", "", True);
-        $this->measure_explosion_level = get_formvar("measure_explosion_level", "", True);
+        if ($this->trade_movement_code == '1') {
+            $this->measure_explosion_level = 8;
+        } else {
+            $this->measure_explosion_level = 10;
+        }
         $this->set_dates();
 
         # Check on the measure type id
@@ -171,14 +175,14 @@ class measure_type
             $error_string = serialize($errors);
             setcookie("errors", $error_string, time() + (86400 * 30), "/");
             $url = "create_edit.html?err=1&mode=" . $application->mode . "&measure_type_id=" . $this->measure_type_id;
-        } else {/*
- if ($create_edit == "create") {
- // Do create scripts
- $this->create();
- } else {
- // Do edit scripts
- $this->update();
- }*/
+        } else {
+            if ($application->mode == "insert") {
+                // Do create scripts
+                $this->create();
+            } else {
+                // Do edit scripts
+                $this->update();
+            }
             $url = "./confirmation.html?mode=" . $application->mode;
         }
         header("Location: " . $url);
@@ -321,11 +325,14 @@ class measure_type
             $this->validity_end_date = Null;
         }
 
+        $status = 'awaiting approval';
         $sql = "INSERT INTO measure_types_oplog (measure_type_id, validity_start_date,
- validity_end_date, trade_movement_code, priority_code,
- measure_component_applicable_code, origin_dest_code,
- order_number_capture_code, measure_explosion_level, measure_type_series_id,
- operation, operation_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)";
+        validity_end_date, trade_movement_code, priority_code,
+        measure_component_applicable_code, origin_dest_code,
+        order_number_capture_code, measure_explosion_level, measure_type_series_id,
+        operation, operation_date, workbasket_id, status)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+        RETURNING oid;";
 
         pg_prepare($conn, "create_measure_type", $sql);
 
@@ -334,21 +341,23 @@ class measure_type
             $this->validity_end_date, $this->trade_movement_code, $this->priority_code,
             $this->measure_component_applicable_code, $this->origin_dest_code,
             $this->order_number_capture_code, $this->measure_explosion_level, $this->measure_type_series_id,
-            $operation, $operation_date
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        $application->insert_workbasket_item($result, "measure_type", $status, "C", $operation_date);
 
 
         $sql = "INSERT INTO measure_type_descriptions_oplog (measure_type_id, language_id, description,
- operation, operation_date) VALUES ($1, 'EN', $2, $3, $4)";
+        operation, operation_date, workbasket_id, status)
+        VALUES ($1, 'EN', $2, $3, $4, $5, $6)
+        RETURNING oid;";
 
         pg_prepare($conn, "create_measure_type_description", $sql);
 
         $result = pg_execute($conn, "create_measure_type_description", array(
             $this->measure_type_id, $this->description,
-            $operation, $operation_date
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
-        #echo ($result);
-        #exit();
+        $application->insert_workbasket_item($result, "measure_type_description", $status, "C", $operation_date);
     }
 
     function update()

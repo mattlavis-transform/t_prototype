@@ -40,6 +40,7 @@ require("../includes/metadata.php");
                     <h2 class="govuk-heading-m">Next steps</h2>
                     <ul class="govuk-list">
                         <li><a href="./">Manage more measure types</a></li>
+                        <li><a href="/workbaskets/view.html">View content of your workbasket</a></li>
                         <li><a href="/">Return to main menu</a></li>
                     </ul>
                 </div>

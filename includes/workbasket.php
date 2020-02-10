@@ -9,7 +9,7 @@
     <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header nopad" style="width:25%">Workbasket ID</th>
-            <td class="govuk-table__cell" style="width:75%"><?= $application->session->workbasket->id ?></td>
+            <td class="govuk-table__cell" style="width:75%"><?= $application->session->workbasket->workbasket_id ?></td>
         </tr>
         <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header nopad" style="width:25%">Workbasket name</th>

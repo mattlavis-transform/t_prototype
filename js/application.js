@@ -834,14 +834,13 @@ $(document).ready(function () {
         //console.log("select_all_footnotes");
         var label_text = $("#label_select_all_footnotes").text();
         //console.log($("#label_select_all_footnotes").text());
-        if (label_text == "Select all measures") {
+        if (label_text == "Select all") {
             $('.govuk-checkboxes__input').prop('checked', true);
-            $("#label_select_all_footnotes").text("Unselect all measures");
+            $("#label_select_all_footnotes").text("Unselect all");
         } else {
             $('.govuk-checkboxes__input').prop('checked', false);
-            $("#label_select_all_footnotes").text("Select all measures");
+            $("#label_select_all_footnotes").text("Select all");
         }
-
     });
     // END - select all footnotes
     /***************************************************************************************************************/

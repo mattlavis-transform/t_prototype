@@ -1,10 +1,10 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <?php
-        global $measure_prototype, $application;
+        global $measure, $application;
         $application->get_measure_condition_codes();
         $application->get_measure_actions();
-        new table_control($measure_prototype->condition_list, "condition_table", "<p class='govuk-body' style='margin-top:2em;margin-bottom:2em'>There are currently no conditions assigned to the current measure(s).</p>");
+        new table_control($measure->condition_list, "condition_table", "<p class='govuk-body' style='margin-top:2em;margin-bottom:2em'>There are currently no conditions assigned to the current measure(s).</p>");
         ?>
         <form>
             <?php

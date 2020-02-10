@@ -59,7 +59,7 @@ require("../includes/metadata.php");
 
                         ?>
                         <?php
-                        new hidden_control("workbasket_id", $workbasket->id);
+                        new hidden_control("workbasket_id", $workbasket->workbasket_id);
                         new hidden_control("action", "withdraw");
                         $btn = new button_control("Continue", "withdraw", "primary");
                         $btn = new button_control("Cancel", "cancel", "text", "", "/");

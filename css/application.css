@@ -1227,6 +1227,9 @@ td.vertical_align_middle {
 .govuk-accordion__section-content table tbody tr.noborder td.govuk-table__cell {
     border:0px !important;
 }
+tr.noborder td.govuk-table__cell {
+    border:0px !important;
+}
 .govuk-accordion__section-content table tbody tr td.govuk-table__cell {
     font-size: 14px !important;
 }
@@ -1243,10 +1246,8 @@ td.vertical_align_middle {
     padding:0px
 }
 table.workbaskets tbody tr td.govuk-table__cell img {
-    xpadding:0px 0px 0px 6px;
     margin:0px 0px 0px 4px;
     padding:0px;
-    xborder-left:1px #c0c0c0 solid;
 }
 .govuk-accordion__section-content table tbody tr td.govuk-table__cell a {
     margin:0px;

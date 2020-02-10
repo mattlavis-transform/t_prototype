@@ -1,16 +1,9 @@
 <?php
 require(dirname(__FILE__) . "../../includes/db.php");
 $application = new application;
-$application->init("measures_conditions");
-$error_handler = new error_handler();
-$submitted = intval(get_formvar("submitted"));
-if ($submitted == 1) {
-    $measure = new measure();
-    $measure->validate_form_conditions();
-} else {
-    $measure = new measure();
-    //$measure->get_parameters();
-}
+$application->init("regulations");
+$base_regulation = new base_regulation();
+$base_regulation->get_parameters();
 ?>
 
 <!DOCTYPE html>
@@ -26,9 +19,12 @@ require("../includes/metadata.php");
     <div class="govuk-width-container">
         <?php
         require("../includes/phase_banner.php");
+
         $control_content = array();
-        new data_entry_form($control_content, $measure, $left_nav = "");
+        //prend ($measure_type);
+        new view_form($control_content, $base_regulation);
         ?>
+
     </div>
     <?php
     require("../includes/footer.php");

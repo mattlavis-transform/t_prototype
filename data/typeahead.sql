@@ -703,7 +703,7 @@ and m.geographical_area_id = 'CN'
 --group by 1, 2, additional_code_type_id, additional_code_id, m.geographical_area_id
 order by 1 desc, 2;
 
-insert into ml.measure_prototype (workbasket_sid) values (22);
+insert into ml.measure_prototype (workbasket_id) values (22);
 
 
 select f.footnote_type_id, f.footnote_id, f.description
@@ -1503,4 +1503,72 @@ SELECT mtd.description as description, validity_start_date, validity_end_date, t
         
        
        
-       SELECT c.description, validity_start_date, validity_end_date, ctd.description as certificate_type_description FROM certificates c, certificate_descriptions cd, certificate_type_descriptions ctd WHERE c.certificate_code = cd.certificate_code and c.certificate_type_code = ctd.certificate_type_code AND c.certificate_type_code = $1 AND c.certificate_code = $2
+SELECT cd.description, validity_start_date, validity_end_date, ctd.description as certificate_type_description
+FROM certificates c, certificate_descriptions cd, certificate_type_descriptions ctd
+WHERE c.certificate_code = cd.certificate_code and c.certificate_type_code = ctd.certificate_type_code
+AND c.certificate_type_code = 'Y' AND c.certificate_code = '902'
+
+
+SELECT validity_start_date, regulation_group_id, information_text,
+public_identifier, trade_remedies_case, url, validity_end_date
+FROM base_regulations WHERE base_regulation_id = 'A0302360';
+with association_cte as (
+        select distinct on (goods_nomenclature_sid)
+        fagn.goods_nomenclature_sid, fagn.validity_start_date, fagn.validity_end_date, gnd.goods_nomenclature_item_id, gnd.description
+        from footnote_association_goods_nomenclatures fagn, goods_nomenclature_descriptions gnd, goods_nomenclature_description_periods gndp
+        where fagn.goods_nomenclature_sid = gndp.goods_nomenclature_sid
+        and gnd.goods_nomenclature_sid = gndp.goods_nomenclature_sid
+        and footnote_type = 'TN' and footnote_id = '701'
+        order by goods_nomenclature_sid, gndp.validity_start_date
+        )  select *, count(*) over() as full_count from association_cte;
+        
+-- Workbasket - get footnote type items       
+select wi.operation, act.additional_code_type_id, act.validity_start_date, act.validity_end_date, actd.description 
+        from workbasket_items wi, additional_code_types_oplog act, additional_code_type_descriptions_oplog actd
+        where wi.record_id = act.oid
+        and act.additional_code_type_id = actd.additional_code_type_id 
+        and wi.record_type = 'additional_code_type'
+        and wi.workbasket_id = 33
+        order by wi.created_at
+
+        
+        
+with status_cte as (
+            select f.footnote_type_id, f.footnote_id, f.description, f.validity_start_date, f.validity_end_date,
+            ftd.description as footnote_type_description, ft.application_code,
+            date_part('year', f.validity_start_date) as start_year,
+            case
+                when f.validity_end_date is not null then 'Terminated'
+                else 'Active'
+            end as active_state, f.status
+            from ml.ml_footnotes f, footnote_type_descriptions ftd, footnote_types ft
+            where f.footnote_type_id = ftd.footnote_type_id
+            and f.footnote_type_id = ft.footnote_type_id
+        )
+        select *, count(*) OVER() AS full_count
+        from status_cte f where 1 > 0  limit 20 offset 0;        
+
+update footnotes_oplog set status = 'published' where status is null;
+
+
+
+select wi.operation, act.additional_code_type_id, act.validity_start_date, act.validity_end_date, actd.description 
+from workbasket_items wi, additional_code_types_oplog act, additional_code_type_descriptions_oplog actd
+where wi.record_id = act.oid
+and act.additional_code_type_id = actd.additional_code_type_id 
+and wi.record_type = 'additional_code_type'
+and wi.workbasket_id = $1
+order by wi.created_at
+
+
+select wi.operation, f.footnote_type_id || ' ' || ftd.description as footnote_type_id,
+(f.footnote_type_id || ' ' || f.footnote_id) as footnote_id 
+from workbasket_items wi, footnotes f, footnote_descriptions fd, footnote_type_descriptions ftd
+where wi.record_id = f.oid
+and f.footnote_id = fd.footnote_id 
+and f.footnote_type_id = fd.footnote_type_id
+and f.footnote_type_id = ftd.footnote_type_id 
+and wi.record_type = 'footnote'
+and wi.workbasket_id = $1
+order by wi.created_at;
+

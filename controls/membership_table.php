@@ -42,7 +42,6 @@ class membership_table_control
         if ($this->suppress_control == false) {
 ?>
             <!-- Start detail table control //-->
-            <hr />
             <table class="govuk-table sticky" id="<?=$this->control_name?>">
                 <caption class="govuk-table__caption--m"><?= $this->caption ?> </caption>
                 <thead class="govuk-table__head">

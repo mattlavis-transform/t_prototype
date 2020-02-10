@@ -1,9 +1,9 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <?php
-        global $measure_prototype;
-        //pre ($measure_prototype->additional_code_list);
-        foreach ($measure_prototype->additional_code_list as $additional_code) {
+        global $measure_activity;
+        //pre ($measure_activity->additional_code_list);
+        foreach ($measure_activity->additional_code_list as $additional_code) {
             if ($additional_code->additional_code == "999") {
         ?>
                 <script>
@@ -17,7 +17,8 @@
 
 
         $code_count = 0;
-        foreach ($measure_prototype->additional_code_list as $additional_code) {
+        prend ($measure_activity->additional_code_list);
+        foreach ($measure_activity->additional_code_list as $additional_code) {
             $row_count = 0;
             $code_count++;
             ?>
@@ -35,9 +36,9 @@
                     </tr>
                     <?php
 
-                    foreach ($measure_prototype->commodity_code_list as $commodity_code) {
+                    foreach ($measure_activity->commodity_code_list as $commodity_code) {
                         $row_count++;
-                        if (($measure_prototype->duties_same_for_all_commodities) && ($row_count > 1)) {
+                        if (($measure_activity->duties_same_for_all_commodities) && ($row_count > 1)) {
                     ?>
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell vertical_align_middle"><?= $row_count ?></td>
@@ -60,7 +61,7 @@
                                     <input class="govuk-input govuk-input--width-40 duty" id="duty_<?= $commodity_code->goods_nomenclature_item_id ?>" name="duty_<?= $commodity_code->goods_nomenclature_item_id ?>" type="text">
                                 </td>
                                 <?php
-                                if (!$measure_prototype->duties_same_for_all_commodities) {
+                                if (!$measure_activity->duties_same_for_all_commodities) {
                                 ?>
                                     <td class="govuk-table__cell vertical_align_middle">
                                         <a class="govuk-link copy_to_all_rows" href="#">Copy to all rows</a>

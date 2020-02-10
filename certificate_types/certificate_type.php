@@ -170,18 +170,67 @@ class certificate_type
             $error_string = serialize($errors);
             setcookie("errors", $error_string, time() + (86400 * 30), "/");
             $url = "create_edit.html?err=1&mode=" . $application->mode . "&certificate_type_code=" . $this->certificate_type_code;
-        } else {/*
- if ($create_edit == "create") {
- // Do create scripts
- $this->create();
- } else {
- // Do edit scripts
- $this->update();
- }*/
+        } else {
+            if ($application->mode == "insert") {
+                // Do create scripts
+                $this->create();
+            } else {
+                // Do edit scripts
+                $this->update();
+            }
             $url = "./confirmation.html?mode=" . $application->mode;
         }
         header("Location: " . $url);
     }
+
+    function create()
+    {
+        global $conn, $application;
+        $operation = "C";
+        $operation_date = $application->get_operation_date();
+
+        if ($this->validity_end_date == "") {
+            $this->validity_end_date = Null;
+        }
+
+        $status = 'awaiting approval';
+        # Create the certificate_type record
+        $sql = "INSERT INTO certificate_types_oplog (
+            certificate_type_code,
+            validity_start_date, operation, operation_date, workbasket_id, status
+            )
+            VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING oid;";
+
+        pg_prepare($conn, "create_certificate_type", $sql);
+        $result = pg_execute($conn, "create_certificate_type", array(
+            $this->certificate_type_code,
+            $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+        ));
+
+        $application->insert_workbasket_item($result, "certificate_type", $status, "C", $operation_date);
+
+        # Create the certificate_type description record
+        $sql = "INSERT INTO certificate_type_descriptions_oplog (
+            certificate_type_code, language_id, description,
+            operation, operation_date, workbasket_id, status
+            )
+            VALUES ($1, 'EN', $2, $3, $4, $5, $6)
+            RETURNING oid;";
+
+        pg_prepare($conn, "create_certificate_type_description", $sql);
+        $result = pg_execute($conn, "create_certificate_type_description", array(
+            $this->certificate_type_code, $this->description,
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+        ));
+        $application->insert_workbasket_item($result, "certificate_type_description", $status, "C", $operation_date);
+    }
+
+
+    function update()
+    {
+    }
+
 
     function set_dates()
     {

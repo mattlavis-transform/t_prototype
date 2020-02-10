@@ -56,10 +56,11 @@
                     "caption": "Existing footnote descriptions"
                 },
                 {
-                    "control_type": "xfootnote_assignment_table_control",
-                    "control_scope": "update",
+                    "control_type": "footnote_assignment_table_control",
+                    "control_scope": "view",
                     "control_name": "footnote_assignments",
-                    "caption": "Footnote assignments<span class='caption2'>This footnote has been assigned to the following measures.</span>"
+                    "caption": "Footnote assignments",
+                    "subcaption": "This footnote has been assigned to the following measures."
                 }    
             ]
         },
@@ -160,8 +161,9 @@
                 "control_type": "xfootnote_assignment_table_control",
                 "control_scope": "update",
                 "control_name": "footnote_assignments",
-                "caption": "Footnote assignments<span class='caption2'>This footnote has been assigned to the following measures.</span>"
-            }
+                "caption": "Footnote assignments",
+                "subcaption": "This footnote has been assigned to the following measures."
+        }
         ],
         "filters": [
             {
@@ -231,6 +233,13 @@
                 "sort_field": "f.validity_end_date",
                 "tooltip": "",
                 "align": ""
+            },
+            {
+                "column_name": "Status",
+                "data_column": "status",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
             }
         ]
     }

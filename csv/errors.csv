@@ -60,3 +60,4 @@
 "introductory_period_option","Please identify if there are any introductory periods","introductory_period_option"
 "period_type","Please select the quota recurrence type","period_type"
 "year_count","Please identify how many years the recurring period is to be set up for","year_count"
+"activity_name","Please enter a valid activity name","activity_name"

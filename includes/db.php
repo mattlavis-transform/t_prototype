@@ -74,7 +74,7 @@ require(dirname(__FILE__) . "../../classes/extract/extract_footnotes.php");
 require(dirname(__FILE__) . "../../classes/extract/extract_certificates.php");
 
 /* Prototype classes */
-require(dirname(__FILE__) . "../../measures/measure_prototype.php");
+require(dirname(__FILE__) . "../../measures/measure_activity.php");
 
 
 
@@ -796,6 +796,11 @@ function string_before($s, $term) {
 function put_spaces_round_slashes($s) {
     $s = str_replace("/", " / ", $s);
     $s = str_replace("  ", " ", $s);
+    return ($s);
+}
+
+function underscore($s) {
+    $s = str_replace(' ', '_', $s);
     return ($s);
 }
 ?>

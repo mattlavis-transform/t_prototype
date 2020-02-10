@@ -321,9 +321,11 @@ class base_regulation
     function populate_from_db()
     {
         global $conn;
-        $sql = "SELECT validity_start_date, regulation_group_id, information_text,
-        public_identifier, trade_remedies_case, url
-        FROM base_regulations WHERE base_regulation_id = $1";
+        $sql = "SELECT validity_start_date, br.regulation_group_id, information_text,
+        public_identifier, trade_remedies_case, url, validity_end_date, rgd.description as regulation_group_description
+        FROM base_regulations br, regulation_group_descriptions rgd
+        WHERE rgd.regulation_group_id = br.regulation_group_id
+        and base_regulation_id = $1";
         pg_prepare($conn, "get_specific_description", $sql);
         $result = pg_execute($conn, "get_specific_description", array($this->base_regulation_id));
         if ($result) {
@@ -334,6 +336,8 @@ class base_regulation
             $this->public_identifier = $row[3];
             $this->trade_remedies_case = $row[4];
             $this->url = $row[5];
+            $this->validity_end_date = $row[6];
+            $this->regulation_group_description = $row[7];
             $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
             $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
             $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));

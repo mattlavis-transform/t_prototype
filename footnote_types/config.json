@@ -141,7 +141,7 @@
             },
             {
                 "column_name": "Application code",
-                "data_column": "application_code",
+                "data_column": "application_code_plus_description",
                 "sort_field": "",
                 "tooltip": "Application code denotes the overarching purpose of footnote types that can be created. In general, all except for &quot;1&nbsp;-&nbsp;additional&nbsp;codes&quot; are legacy codes and are not to be used in the future.",
                 "align": ""
@@ -161,6 +161,12 @@
                 "align": "c"
             },
             {
+                "column_name": "Status",
+                "data_column": "status",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },            {
                 "column_name": "&nbsp;",
                 "data_column": "footnote_url",
                 "sort_field": "",

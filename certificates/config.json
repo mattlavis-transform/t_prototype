@@ -201,6 +201,13 @@
                 "align": ""
             },
             {
+                "column_name": "Status",
+                "data_column": "status",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
                 "column_name": "Actions",
                 "data_column": "measures_url",
                 "sort_field": "",

@@ -349,7 +349,8 @@ class application
                 $this->row_count = $row['full_count'];
                 $base_regulation = new base_regulation;
                 $base_regulation->base_regulation_id = $row['base_regulation_id'];
-                $base_regulation->base_regulation_url = "<a class='govuk-link' href='create_edit.html?base_regulation_id=" . $row['base_regulation_id'] . "'>" . $row['base_regulation_id'] . "</a>";
+                //$base_regulation->base_regulation_url = "<a class='govuk-link' href='create_edit.html?base_regulation_id=" . $row['base_regulation_id'] . "'>" . $row['base_regulation_id'] . "</a>";
+                $base_regulation->base_regulation_url = "<a class='govuk-link' href='view.html?mode=view&base_regulation_id=" . $row['base_regulation_id'] . "'>" . $row['base_regulation_id'] . "</a>";
                 $base_regulation->information_text = $row['information_text'];
                 $base_regulation->regulation_type = $row['regulation_type'];
                 $base_regulation->regulation_group_id = $row['regulation_group_id'];
@@ -464,8 +465,7 @@ class application
         select *, count(*) OVER() AS full_count from cte where 1 > 0 ";
         $sql .= $filter_clause;
         $sql .= $this->sort_clause;
-        //$sql .= " order by 1, 2 limit $this->page_size offset $offset";
-        //pre($sql);
+        $sql .= " limit $this->page_size offset $offset";
 
         $result = pg_query($conn, $sql);
         $temp = array();
@@ -478,7 +478,8 @@ class application
                 $additional_code->additional_code = $row['additional_code'];
                 $additional_code->additional_code_plus_type = $additional_code->additional_code_type_id . $additional_code->additional_code;
                 $additional_code->description = $row['description'];
-                $additional_code->description_url = '<a class="govuk-link" href="./create_edit.html?mode=update&additional_code_type_id=' . $additional_code->additional_code_type_id . '&additional_code=' . $additional_code->additional_code . '&additional_code_sid=' . $additional_code->additional_code_sid . '">' . $additional_code->description . '</a>';
+                //$additional_code->description_url = '<a class="govuk-link" href="./create_edit.html?mode=update&additional_code_type_id=' . $additional_code->additional_code_type_id . '&additional_code=' . $additional_code->additional_code . '&additional_code_sid=' . $additional_code->additional_code_sid . '">' . $additional_code->description . '</a>';
+                $additional_code->description_url = '<a class="govuk-link" href="./view.html?mode=view&additional_code_type_id=' . $additional_code->additional_code_type_id . '&additional_code=' . $additional_code->additional_code . '&additional_code_sid=' . $additional_code->additional_code_sid . '">' . $additional_code->description . '</a>';
                 $additional_code->additional_code_type_description = $row['additional_code_type_description'];
                 $additional_code->additional_code_type_description = str_replace("/", " / ", $additional_code->additional_code_type_description);
                 $additional_code->additional_code_type_description = str_replace("  ", " ", $additional_code->additional_code_type_description);
@@ -552,12 +553,13 @@ class application
     public function get_certificates($api = false)
     {
         global $conn;
+        $workbasket = new workbasket();
         $sql = "with cte as (select c.certificate_type_code, c.certificate_code, c.code, c.description, c.validity_start_date, c.validity_end_date,
         ctd.description as certificate_type_description,
         case
             when c.validity_end_date is not null then 'Terminated'
             else 'Active'
-	    end as active_state
+	    end as active_state, c.status
         from ml.ml_certificate_codes c, certificate_type_descriptions ctd
         where c.certificate_type_code = ctd.certificate_type_code)
         select *, count(*) OVER() AS full_count from cte where 1 > 0 ";
@@ -583,14 +585,14 @@ class application
                 $certificate->certificate_code = $row['certificate_code'];
                 $certificate->certificate_code_plus_type = $certificate->certificate_type_code . $certificate->certificate_code;
                 $certificate->description = $row['description'];
-                //$certificate->description_url = '<a class="govuk-link" href="create_edit.html?mode=update&certificate_type_code=' . $certificate->certificate_type_code . '&certificate_code=' . $certificate->certificate_code . '">' . $certificate->description . '</a>';
                 $certificate->description_url = '<a class="govuk-link" href="view.html?mode=view&certificate_type_code=' . $certificate->certificate_type_code . '&certificate_code=' . $certificate->certificate_code . '">' . $certificate->description . '</a>';
                 $certificate->certificate_type_description = $row['certificate_type_description'];
                 $certificate->certificate_type_code_description = $certificate->certificate_type_code . "&nbsp;" . $certificate->certificate_type_description;
                 $certificate->validity_start_date = short_date($row['validity_start_date']);
                 $certificate->validity_end_date = short_date($row['validity_end_date']);
                 $certificate->measures_url = "<a class='govuk-link' href=''>View measures</a>";
-
+                $workbasket->status = ucwords($row['status']);
+                $certificate->status = $workbasket->status_image();
                 array_push($temp, $certificate);
             }
             $this->certificates = $temp;
@@ -600,6 +602,7 @@ class application
     public function get_measure_types()
     {
         global $conn;
+        $workbasket = new workbasket();
         $filter_clause = $this->get_filter_clause();
         $offset = ($this->page - 1) * $this->page_size;
         $sql = "with cte as (SELECT mt.measure_type_id, validity_start_date, validity_end_date, trade_movement_code, priority_code,
@@ -608,7 +611,7 @@ class application
         case
             when mt.validity_end_date is not null then 'Terminated'
             else 'Active'
-        end as active_state
+        end as active_state, mt.status
         FROM measure_types mt, measure_type_descriptions mtd, measure_type_series_descriptions mtsd
         WHERE mt.measure_type_id = mtd.measure_type_id
         AND mt.measure_type_series_id = mtsd.measure_type_series_id )
@@ -660,7 +663,8 @@ class application
                     $description,
                     $is_quota
                 );
-
+                $workbasket->status = ucwords($row['status']);
+                $measure_type->status = $workbasket->status_image();
                 $measure_type->measure_type_series_description = $measure_type_series_description;
                 $measure_type->measure_type_series_id_description = $measure_type_series_id . '&nbsp;' . $measure_type_series_description;
 
@@ -699,6 +703,7 @@ class application
     {
         global $conn;
 
+        $workbasket = new workbasket();
         $filter_clause = $this->get_filter_clause();
         $offset = ($this->page - 1) * $this->page_size;
         $sql = "with status_cte as (
@@ -708,7 +713,7 @@ class application
             case
                 when f.validity_end_date is not null then 'Terminated'
                 else 'Active'
-            end as active_state
+            end as active_state, f.status
             from ml.ml_footnotes f, footnote_type_descriptions ftd, footnote_types ft
             where f.footnote_type_id = ftd.footnote_type_id
             and f.footnote_type_id = ft.footnote_type_id
@@ -744,6 +749,8 @@ class application
                 $footnote->validity_end_date = short_date($row['validity_end_date']);
                 $footnote->description = $row['description'];
                 $footnote->footnote_type_description = $row['footnote_type_description'];
+                $workbasket->status = ucwords($row['status']);
+                $footnote->status = $workbasket->status_image();
                 $footnote->footnote_type_id_description = $footnote->footnote_type_id . ' ' . $footnote->footnote_type_description;
                 //$footnote->footnote_description_url = '<a class="govuk-link" href="./create_edit.html?mode=update&footnote_id=' . $footnote->footnote_id . '&footnote_type_id=' . $footnote->footnote_type_id . '">' . $footnote->description . '</a>';
                 $footnote->footnote_description_url = '<a class="govuk-link" href="./view.html?mode=view&footnote_id=' . $footnote->footnote_id . '&footnote_type_id=' . $footnote->footnote_type_id . '">' . $footnote->description . '</a>';
@@ -839,8 +846,9 @@ class application
     public function get_additional_code_types()
     {
         global $conn;
+        $workbasket = new workbasket();
         $sql = "select act.additional_code_type_id, actd.description,
-        act.validity_start_date, act.validity_end_date, act.application_code
+        act.validity_start_date, act.validity_end_date, act.application_code, act.status
         from additional_code_types act, additional_code_type_descriptions actd 
         where act.additional_code_type_id = actd.additional_code_type_id
         and act.validity_end_date is null
@@ -867,7 +875,8 @@ class application
                 $additional_code_type->application_code = $application_code;
                 $additional_code_type->id = $additional_code_type->additional_code_type_id;
                 $additional_code_type->string = $additional_code_type->additional_code_type_id . " - " . $additional_code_type->description;
-
+                $workbasket->status = ucwords($row['status']);
+                $additional_code_type->status = $workbasket->status_image();
                 //$url = "/additional_code_types/create_edit.html?mode=update&additional_code_type_id=" . $additional_code_type->additional_code_type_id;
                 $url = "/additional_code_types/view.html?mode=view&additional_code_type_id=" . $additional_code_type->additional_code_type_id;
                 $additional_code_type->description_url = '<a class="govuk-link" href="' . $url . '">' . $additional_code_type->description . '</a>';
@@ -892,16 +901,17 @@ class application
         case
         when application_code in ('1', '2') then 'Nomenclature-related footnote'
         when application_code in ('6', '7') then 'Measure-related footnote'
-        end as application_code_description
+        end as application_code_description, ft.status, ft.workbasket_id
         from footnote_types ft, footnote_type_descriptions ftd
         where ft.footnote_type_id = ftd.footnote_type_id
         and application_code not in ('3', '4', '5', '8', '9')
         and ft.footnote_type_id not in ('01', '02', '03', 'MX') and validity_end_date is null order by 1)
-        select * from footnote_types_cte order by application_code_description, footnote_type_id
+        select * from footnote_types_cte order by application_code, footnote_type_id
         ";
 
         $result = pg_query($conn, $sql);
         $temp = array();
+        $workbasket = new workbasket();
         if ($result) {
             while ($row = pg_fetch_array($result)) {
                 $footnote_type_id = $row['footnote_type_id'];
@@ -910,12 +920,19 @@ class application
                 $validity_end_date = short_date($row['validity_end_date']);
                 $application_code = $row['application_code'];
                 $application_code_description = $row['application_code_description'];
+                $workbasket->status = ucwords($row['status']);
+                $image = $workbasket->status_image();
+                $workbasket_id = $row['workbasket_id'];
+
                 $footnote_type = new footnote_type;
                 $footnote_type->footnote_type_id = $footnote_type_id;
                 $footnote_type->description = $description;
                 $footnote_type->validity_start_date = $validity_start_date;
                 $footnote_type->validity_end_date = $validity_end_date;
                 $footnote_type->application_code = $application_code;
+                $footnote_type->application_code_plus_description = $application_code . " - " . $application_code_description;
+                $footnote_type->status = $image; // . $workbasket->status;
+                $footnote_type->workbasket_id = $workbasket_id;
                 $footnote_type->id = $footnote_type->footnote_type_id;
                 $footnote_type->optgroup = $application_code_description;
                 $footnote_type->string = "<b>" . $footnote_type->footnote_type_id . "</b> - " . $footnote_type->description;
@@ -1041,7 +1058,9 @@ class application
     public function get_certificate_types()
     {
         global $conn;
-        $sql = "select ct.certificate_type_code, ctd.description, ct.validity_start_date, ct.validity_end_date
+        $workbasket = new workbasket();
+
+        $sql = "select ct.certificate_type_code, ctd.description, ct.validity_start_date, ct.validity_end_date, ct.status
         from certificate_types ct, certificate_type_descriptions ctd 
         where ct.certificate_type_code = ctd.certificate_type_code and validity_end_date is null
         order by 1";
@@ -1060,6 +1079,8 @@ class application
                 $certificate_type->string = "<b>" . $certificate_type_code . "</b> " . $certificate_type->description;
                 $certificate_type->validity_start_date = $validity_start_date;
                 $certificate_type->validity_end_date = $validity_end_date;
+                $workbasket->status = ucwords($row['status']);
+                $certificate_type->status = $workbasket->status_image();
                 //$url = "/certificate_types/create_edit.html?mode=update&certificate_type_code=" . $certificate_type_code;
                 $url = "/certificate_types/view.html?mode=view&certificate_type_code=" . $certificate_type_code;
                 $certificate_type->certificate_type_url = "<a class='govuk-link' href='" . $url . "'>" . $certificate_type->description . "</a>";
@@ -1608,7 +1629,7 @@ class application
                 $workbasket->type = $row[6];
                 $workbasket->status = ucwords($row[7]);
                 $workbasket->updated_at = $row[8];
-                $workbasket->id = $row[9];
+                $workbasket->workbasket_id = $row[9];
                 $workbasket->actions = "<a class='govuk-link' href='reassign.html'>Reassign workbasket</a><br /><a class='govuk-link' href='view.html'>View workbasket</a><br /><a class='govuk-link' href='view.html'>Approve workbasket</a>";
                 array_push($this->workbaskets, $workbasket);
             }
@@ -1617,7 +1638,7 @@ class application
     }
 
 
-    public function get_my_workbaskets()
+    public function get_all_workbaskets()
     {
         global $conn;
         //pre ($this->session);
@@ -1627,8 +1648,43 @@ class application
         w.title, w.reason, w.type, w.status, w.created_at, w.updated_at, w.id,
         count(*) OVER() AS full_count
         from workbaskets w, users  u
-        where w.user_id = u.id and w.user_id = '" . $this->session->uid . "' order by w.created_at desc";
+        where w.user_id = u.id order by w.created_at desc";
 
+        pg_prepare($conn, "get_all_workbaskets", $sql);
+        $result = pg_execute($conn, "get_all_workbaskets", array());
+        $row_count = pg_num_rows($result);
+        if (($result) && ($row_count > 0)) {
+            while ($row = pg_fetch_array($result)) {
+                $workbasket = new workbasket();
+                $workbasket->user_name = $row[0];
+                $workbasket->uid = $row[1];
+                $workbasket->user_id = $row[2];
+                $workbasket->user_email = $row[3];
+                $workbasket->title = $row[4];
+                $workbasket->reason = $row[5];
+                $workbasket->type = $row[6];
+                $workbasket->status = ucwords($row[7]);
+                $workbasket->created_at = string_to_time($row[8]);
+                $workbasket->updated_at = string_to_time($row[9]);
+                $workbasket->workbasket_id = $row[10];
+                array_push($this->workbaskets, $workbasket);
+            }
+            return ($this->workbaskets);
+        }
+    }
+
+    public function get_my_workbaskets()
+    {
+        global $conn;
+        //pre ($this->session);
+        $offset = ($this->page - 1) * $this->page_size;
+        $this->workbaskets = array();
+        $sql = "select u.name as user_name, u.id as uid, u.uid as user_id, u.email as user_email,
+        w.title, w.reason, w.type, w.status, w.created_at, w.updated_at, w.workbasket_id,
+        count(*) OVER() AS full_count
+        from workbaskets w, users  u
+        where w.user_id = u.id and w.user_id = '" . $this->session->uid . "' order by w.created_at desc";
+        //prend ($sql);
         pg_prepare($conn, "get_my_workbaskets", $sql);
         $result = pg_execute($conn, "get_my_workbaskets", array());
         $row_count = pg_num_rows($result);
@@ -1645,7 +1701,7 @@ class application
                 $workbasket->status = ucwords($row[7]);
                 $workbasket->created_at = string_to_time($row[8]);
                 $workbasket->updated_at = string_to_time($row[9]);
-                $workbasket->id = $row[10];
+                $workbasket->workbasket_id = $row[10];
                 array_push($this->workbaskets, $workbasket);
             }
             return ($this->workbaskets);
@@ -2013,10 +2069,27 @@ class application
                 $measure->ordernumber = $row['ordernumber'];
                 $measure->active_state = $row['active_state'];
 
-
                 array_push($temp, $measure);
             }
             $this->measures = $temp;
+        }
+    }
+
+    public function insert_workbasket_item($result, $record_type, $status, $operation, $operation_date) {
+        global $conn, $application;
+        $row_count = pg_num_rows($result);
+        if (($result) && ($row_count > 0)) {
+            $row = pg_fetch_row($result);
+            $oid = $row[0];
+            $sql = "INSERT INTO workbasket_items (
+                workbasket_id, record_id, record_type, status, operation, created_at
+                )
+                VALUES ($1, $2, $3, $4, $5, $6)
+                ";
+            pg_prepare($conn, "insert_workbasket_item" . $oid, $sql);
+            $result = pg_execute($conn, "insert_workbasket_item" . $oid, array(
+                $application->session->workbasket->workbasket_id, $oid, $record_type, $status, $operation, $operation_date, 
+            ));
         }
     }
 }

@@ -102,7 +102,7 @@ class additional_code
                 $this->create();
             } else {
                 // Do edit scripts
-                $this->update();
+                //$this->update();
             }
             $url = "./confirmation.html?mode=" . $application->mode;
         }
@@ -316,8 +316,11 @@ class additional_code
     function populate_from_db()
     {
         global $conn;
-        $sql = "select additional_code_type_id, additional_code, validity_start_date, validity_end_date, code, description
-        from ml.ml_additional_codes ac where additional_code_sid = $1;";
+        $sql = "select ac.additional_code_type_id, additional_code, validity_start_date,
+        validity_end_date, code, ac.description, actd.description as additional_code_type_description
+        from ml.ml_additional_codes ac, additional_code_type_descriptions actd
+        where ac.additional_code_type_id = actd.additional_code_type_id
+        and ac.additional_code_sid = $1;";
         pg_prepare($conn, "get_additional_code", $sql);
         $result = pg_execute($conn, "get_additional_code", array($this->additional_code_sid));
 
@@ -329,6 +332,7 @@ class additional_code
             $this->validity_end_date = $row[3];
             $this->code = $row[4];
             $this->description = $row[5];
+            $this->additional_code_type_description = $row[6];
             $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
             $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
             $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));

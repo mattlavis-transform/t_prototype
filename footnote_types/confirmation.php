@@ -2,12 +2,14 @@
 require(dirname(__FILE__) . "../../includes/db.php");
 $error_handler = new error_handler();
 $application = new application;
-$submitted = get_formvar("submitted");
-$workbasket = new workbasket();
-if ($submitted) {
-    $application->session->create_workbasket();
+if ($application->mode == "insert") {
+    $verb = "created";
+} else {
+    $verb = "updated";
 }
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en" class="govuk-template">
 <?php
@@ -25,20 +27,23 @@ require("../includes/metadata.php");
 
         <main class="govuk-main-wrapper" id="main-content" role="main">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-three-quarters">
                     <!-- Start panel //-->
                     <div class="govuk-panel govuk-panel--confirmation">
                         <h1 class="govuk-panel__title">
-                            Your workbasket has been created.
+                            Footnote type X has been <?= $verb ?>.
                         </h1>
                         <div class="govuk-panel__body">
-                            Workbasket name<br><strong><?=$application->session->workbasket->title?></strong>
+                            This change has been added to your workbasket<br /><br />&quot;<?=$application->session->workbasket->title?>&quot;
                         </div>
                     </div>
                     <!-- End panel //-->
                     <h2 class="govuk-heading-m">Next steps</h2>
-                    <li><a href="/workbaskets/view.html">View content of your workbasket</a></li>
-                    <p class="govuk-body">Return to main menu to <a class='govuk-link' href="/">begin making changes</a>.</p>
+                    <ul class="govuk-list">
+                        <li><a href="./">Manage more footnote types</a></li>
+                        <li><a href="/workbaskets/view.html">View content of your workbasket</a></li>
+                        <li><a href="/">Return to main menu</a></li>
+                    </ul>
                 </div>
             </div>
         </main>

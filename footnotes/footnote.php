@@ -24,10 +24,15 @@ class footnote
         $errors = array();
         $this->footnote_type_id = strtoupper(get_formvar("footnote_type_id", "", True));
         $this->footnote_id = strtoupper(get_formvar("footnote_id", "", True));
-
-
-        //pre ($_REQUEST);
-        //die();
+        //pre ($this->footnote_id);
+        /*
+        $hyphen_pos = strpos($this->footnote_id, "-");
+        if ($hyphen_pos !== -1) {
+            $this->footnote_id = trim(substr($this->footnote_id, 0, $hyphen_pos - 1));
+        }
+        $this->footnote_id = str_replace($this->footnote_type_id, "", $this->footnote_id);
+        */
+        //prend ($this->footnote_id);
 
         $this->description = get_formvar("description", "", True);
 
@@ -45,13 +50,13 @@ class footnote
 
         $this->set_dates();
 
-        //prend ($_REQUEST);
         # Check on the footnote_type_id
         if (strlen($this->footnote_type_id) != 2) {
             array_push($errors, "footnote_type_id");
         }
 
-        # Check on the additional code
+        # Check on the footnote_id code
+        h1 (strlen($this->footnote_id));
         if ((strlen($this->footnote_id) != 3) && (strlen($this->footnote_id) != 5)) {
             array_push($errors, "footnote_id");
         }
@@ -300,38 +305,43 @@ class footnote
             $this->validity_end_date = Null;
         }
 
+        $status = 'awaiting approval';
         # Create the footnote record
         $sql = "INSERT INTO footnotes_oplog (
-                footnote_id, footnote_type_id, validity_start_date,
-                operation, operation_date)
-                VALUES ($1, $2, $3, $4, $5)";
+            footnote_id, footnote_type_id, validity_start_date,
+            operation, operation_date, workbasket_id, status)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING oid;";
         pg_prepare($conn, "create_footnote", $sql);
         $result = pg_execute($conn, "create_footnote", array(
             $this->footnote_id, $this->footnote_type_id, $this->validity_start_date,
-            $operation, $operation_date
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        $application->insert_workbasket_item($result, "footnote", $status, "C", $operation_date);
 
         # Create the footnote description period record
         $sql = "INSERT INTO footnote_description_periods_oplog (footnote_description_period_sid, footnote_id,
-        footnote_type_id, validity_start_date, operation, operation_date)
-        VALUES ($1, $2, $3, $4, $5, $6)";
+            footnote_type_id, validity_start_date, operation, operation_date, workbasket_id, status)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING oid;";
         pg_prepare($conn, "create_footnote_description_period", $sql);
         $result = pg_execute($conn, "create_footnote_description_period", array(
             $this->footnote_description_period_sid, $this->footnote_id,
-            $this->footnote_type_id, $this->validity_start_date, $operation, $operation_date
+            $this->footnote_type_id, $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        $application->insert_workbasket_item($result, "footnote_description_period", $status, "C", $operation_date);
 
         # Create the footnote description record
         $sql = "INSERT INTO footnote_descriptions_oplog (footnote_description_period_sid, footnote_id,
-        footnote_type_id, language_id, description, operation, operation_date)
-        VALUES ($1, $2, $3, 'EN', $4, $5, $6)";
+            footnote_type_id, language_id, description, operation, operation_date, workbasket_id, status)
+            VALUES ($1, $2, $3, 'EN', $4, $5, $6, $7, $8)
+            RETURNING oid;";
         pg_prepare($conn, "create_footnote_description", $sql);
         $result = pg_execute($conn, "create_footnote_description", array(
             $this->footnote_description_period_sid, $this->footnote_id,
-            $this->footnote_type_id, $this->description, $operation, $operation_date
+            $this->footnote_type_id, $this->description, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
-        #echo ($result);
-        #exit();
+        $application->insert_workbasket_item($result, "footnote_description", $status, "C", $operation_date);
 
     }
 
@@ -653,12 +663,13 @@ class footnote
     {
         global $conn;
         $sql = "select m.measure_sid, m.measure_type_id, mtd.description as measure_type_description, m.geographical_area_id,
-        m.validity_start_date, m.validity_end_date, m.goods_nomenclature_item_id, m.goods_nomenclature_sid
-        from footnote_association_measures fam, measures m, measure_type_descriptions mtd 
+        m.validity_start_date, m.validity_end_date, m.goods_nomenclature_item_id, m.goods_nomenclature_sid, m.geographical_area_sid
+        from footnote_association_measures fam, measures m, measure_type_descriptions mtd
         where m.measure_sid = fam.measure_sid
         and m.measure_type_id = mtd.measure_type_id
         and m.validity_end_date is null
         and footnote_type_id = $1 and footnote_id = $2 order by m.goods_nomenclature_item_id;";
+        //pre($sql);
         pg_prepare($conn, "get_assignments_measure_related", $sql);
         $result = pg_execute($conn, "get_assignments_measure_related", array($this->footnote_type_id, $this->footnote_id));
         $row_count = pg_num_rows($result);
@@ -669,13 +680,16 @@ class footnote
                 $fam->measure_type_id = $row[1];
                 $fam->measure_type_description = $row[2];
                 $fam->measure_type_id_description = "<b>" . $fam->measure_type_id . "</b> " . $fam->measure_type_description;
-                $fam->measure_type_id_description_url = "<a class='govuk-link' href=/measure_types/create_edit.html?mode=update&measure_type_id=" . $fam->measure_type_id . "><b>" . $fam->measure_type_id . "</b> " . $fam->measure_type_description . "</a>";
                 $fam->geographical_area_id = $row[3];
                 $fam->validity_start_date = $row[4];
                 $fam->validity_end_date = $row[5];
                 $fam->goods_nomenclature_item_id = $row[6];
                 $fam->goods_nomenclature_sid = $row[7];
+                $fam->geographical_area_sid = $row[8];
+
                 $fam->goods_nomenclature_url = "<a class='nodecorate' href='/goods_nomenclatures/goods_nomenclature_item_view.html?goods_nomenclature_sid=" . $fam->goods_nomenclature_sid . "&productline_suffix=80&goods_nomenclature_item_id=" . $fam->goods_nomenclature_item_id . "'>" . format_goods_nomenclature_item_id($fam->goods_nomenclature_item_id) . "</a>";
+                $fam->measure_type_id_description_url = "<a class='govuk-link' href=/measure_types/view.html?mode=view&measure_type_id=" . $fam->measure_type_id . "><b>" . $fam->measure_type_id . "</b> " . $fam->measure_type_description . "</a>";
+                $fam->geographical_area_id_url = "<a class='govuk-link' href=/geographical_areas/view.html?mode=view&geographical_area_id=" . $fam->geographical_area_id . "&geographical_area_sid=" . $fam->geographical_area_sid . ">" . $fam->geographical_area_id . "</a>";
 
                 array_push($this->footnote_assignments, $fam);
                 //pre ($fam);
@@ -686,16 +700,35 @@ class footnote
 
     function get_assignments_nomenclature_related()
     {
+        global $conn;
         $sql = "with association_cte as (
         select distinct on (goods_nomenclature_sid)
-        fagn.goods_nomenclature_sid, fagn.validity_start_date, fagn.validity_end_date, gnd.description
+        fagn.goods_nomenclature_sid, fagn.validity_start_date, fagn.validity_end_date, gnd.goods_nomenclature_item_id, gnd.description
         from footnote_association_goods_nomenclatures fagn, goods_nomenclature_descriptions gnd, goods_nomenclature_description_periods gndp
         where fagn.goods_nomenclature_sid = gndp.goods_nomenclature_sid
         and gnd.goods_nomenclature_sid = gndp.goods_nomenclature_sid
-        and footnote_type = 'TN' and footnote_id = '702'
+        and footnote_type = $1 and footnote_id = $2
         order by goods_nomenclature_sid, gndp.validity_start_date
         )  select *, count(*) over() as full_count from association_cte;";
-    }
+        //prend ($sql);
+        pg_prepare($conn, "get_assignments_nomenclature_related", $sql);
+        $result = pg_execute($conn, "get_assignments_nomenclature_related", array($this->footnote_type_id, $this->footnote_id));
+        $row_count = pg_num_rows($result);
+        if (($result) && ($row_count > 0)) {
+            while ($row = pg_fetch_array($result)) {
+                $fagn = new footnote_association_goods_nomenclature;
+                $fagn->goods_nomenclature_sid = $row[0];
+                $fagn->validity_start_date = $row[1];
+                $fagn->validity_end_date = $row[2];
+                $fagn->goods_nomenclature_item_id = $row[3];
+                $fagn->goods_nomenclature_description = $row[4];
+
+                $fagn->goods_nomenclature_url = "<a class='nodecorate' href='/goods_nomenclatures/goods_nomenclature_item_view.html?goods_nomenclature_sid=" . $fagn->goods_nomenclature_sid . "&productline_suffix=80&goods_nomenclature_item_id=" . $fagn->goods_nomenclature_item_id . "'>" . format_goods_nomenclature_item_id($fagn->goods_nomenclature_item_id) . "</a>";
+
+                array_push($this->footnote_assignments, $fagn);
+            }
+        }
+        return ($row_count);    }
 
     function get_assignments()
     {

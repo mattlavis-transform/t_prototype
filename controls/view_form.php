@@ -108,7 +108,7 @@ class view_form
 
         <main class="govuk-main-wrapper" id="main-content" role="main">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-four-fifths">
+                <div class="govuk-grid-column-full">
                     <!-- Start main title //-->
                     <h1 class="govuk-heading-xl"><?= $this->page_title ?></h1>
                     <!-- End main title //-->
@@ -116,133 +116,130 @@ class view_form
                     <?php
                     new inset_control($this->workbasket_advisory, "");
                     ?>
-                    <div class="govuk-grid-row">
-                        <div class="govuk-grid-column-full">
 
-                            <div class="govuk-tabs" data-module="govuk-tabs">
-                                <h2 class="govuk-tabs__title">
-                                    Contents
-                                </h2>
-                                <ul class="govuk-tabs__list">
-                                    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-                                        <a class="govuk-tabs__tab" href="#core">
-                                            Core <?= $this->singularise($config["object_name"]) ?> data
-                                        </a>
-                                    </li>
+                    <div class="govuk-tabs" data-module="govuk-tabs">
+                        <h2 class="govuk-tabs__title">
+                            Contents
+                        </h2>
+                        <ul class="govuk-tabs__list">
+                            <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+                                <a class="govuk-tabs__tab" href="#core">
+                                    Core <?= $this->singularise($config["object_name"]) ?> data
+                                </a>
+                            </li>
+                            <?php
+                            foreach ($my_control_content as $item) {
+                            ?>
+                                <li class="govuk-tabs__list-item">
+                                    <a class="govuk-tabs__tab" href="#tab_<?= $item["control_name"] ?>">
+                                        <?= $item["caption"] ?>
+                                    </a>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                        <section class="govuk-tabs__panel" id="core">
+                            <h2 class="govuk-heading-l">Core <?= $this->singularise($config["object_name"]) ?> data</h2>
+                            <!-- Start primary fields //-->
+                            <table class="govuk-table">
+                                <thead class="govuk-table__head">
+                                    <tr class="govuk-table__row">
+                                        <th scope="col" class="govuk-table__header govuk-visually-hidden">Field</th>
+                                        <th scope="col" class="govuk-table__header govuk-visually-hidden">Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="govuk-table__body">
                                     <?php
-                                    foreach ($my_control_content as $item) {
+                                    foreach ($my_field_content as $item) {
+                                        $label = $item["label"];
+                                        $value = $item["value"];
+                                        $value = $this->detokenise($value);
+
                                     ?>
-                                    <li class="govuk-tabs__list-item">
-                                        <a class="govuk-tabs__tab" href="#tab_<?=$item["control_name"]?>">
-                                            <?=$item["caption"]?>
-                                        </a>
-                                    </li>
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell b" style="width:30%"><?= $label ?></td>
+                                            <td class="govuk-table__cell" style="width:70%"><?= $value ?></td>
+                                        </tr>
                                     <?php
                                     }
                                     ?>
-                                </ul>
-                                <section class="govuk-tabs__panel" id="core">
-                                    <h2 class="govuk-heading-l">Core <?= $this->singularise($config["object_name"]) ?> data</h2>
-                                    <!-- Start primary fields //-->
-                                    <table class="govuk-table">
-                                        <thead class="govuk-table__head">
-                                            <tr class="govuk-table__row">
-                                                <th scope="col" class="govuk-table__header govuk-visually-hidden">Field</th>
-                                                <th scope="col" class="govuk-table__header govuk-visually-hidden">Value</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="govuk-table__body">
-                                            <?php
-                                            foreach ($my_field_content as $item) {
-                                                $label = $item["label"];
-                                                $value = $item["value"];
-                                                $value = $this->detokenise($value);
+                                </tbody>
+                            </table>
+                            <p class='govuk-body'><a class="govuk-link" href="<?= $this->url_edit ?>">Edit this <?= $this->singularise($config["object_name"]) ?></a></p>
+                            <!-- End primary fields //-->
 
-                                            ?>
-                                                <tr class="govuk-table__row">
-                                                    <td class="govuk-table__cell b" style="width:30%"><?= $label ?></td>
-                                                    <td class="govuk-table__cell" style="width:70%"><?= $value ?></td>
-                                                </tr>
-                                            <?php
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                    <p class='govuk-body'><a class="govuk-link" href="<?= $this->url_edit ?>">Edit this <?= $this->singularise($config["object_name"]) ?></a></p>
-                                    <!-- End primary fields //-->
-
-                                </section>
+                        </section>
 
 
 
-                                <!-- Start secondary fields //-->
+                        <!-- Start secondary fields //-->
+                        <?php
+                        foreach ($my_control_content as $item) {
+                        ?>
+                            <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tab_<?= $item["control_name"] ?>">
+                                <!--<h2 class="govuk-heading-l">Past year</h2>//-->
                                 <?php
-                                foreach ($my_control_content as $item) {
-                                ?>
-                                    <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tab_<?= $item["control_name"] ?>">
-                                        <!--<h2 class="govuk-heading-l">Past year</h2>//-->
-                                        <?php
-                                        $control_type = $item["control_type"];
-                                        switch ($control_type) {
-                                            case "detail_table_control":
-                                                new detail_table_control(
-                                                    $control_name = $item["control_name"],
-                                                    $control_scope = $item["control_scope"],
-                                                    $caption = $item["caption"],
-                                                    $dataset = $this->control_content[$control_name],
-                                                    $description_keys = $config["description_keys"]
-                                                );
-                                                break;
+                                $control_type = $item["control_type"];
+                                switch ($control_type) {
+                                    case "detail_table_control":
+                                        new detail_table_control(
+                                            $control_name = $item["control_name"],
+                                            $control_scope = $item["control_scope"],
+                                            $caption = $item["caption"],
+                                            $dataset = $this->control_content[$control_name],
+                                            $description_keys = $config["description_keys"]
+                                        );
+                                        break;
 
-                                            case "additional_code_measure_type_table_control":
-                                                new additional_code_measure_type_table_control(
-                                                    $control_name = $item["control_name"],
-                                                    $control_scope = $item["control_scope"],
-                                                    $caption = $item["caption"],
-                                                    $dataset = $this->control_content[$control_name],
-                                                    $description_keys = $config["description_keys"]
-                                                );
-                                                break;
+                                    case "additional_code_measure_type_table_control":
+                                        new additional_code_measure_type_table_control(
+                                            $control_name = $item["control_name"],
+                                            $control_scope = $item["control_scope"],
+                                            $caption = $item["caption"],
+                                            $dataset = $this->control_content[$control_name],
+                                            $description_keys = $config["description_keys"]
+                                        );
+                                        break;
 
-                                            case "membership_table_control":
-                                                new membership_table_control(
-                                                    $control_name = $item["control_name"],
-                                                    $control_scope = $item["control_scope"],
-                                                    $caption = $item["caption"],
-                                                    $dataset = $this->control_content[$control_name],
-                                                    $description_keys = $config["description_keys"]
-                                                );
-                                                break;
+                                    case "membership_table_control":
+                                        new membership_table_control(
+                                            $control_name = $item["control_name"],
+                                            $control_scope = $item["control_scope"],
+                                            $caption = $item["caption"],
+                                            $dataset = $this->control_content[$control_name],
+                                            $description_keys = $config["description_keys"]
+                                        );
+                                        break;
 
-                                            case "roo_membership_table_control":
-                                                new roo_membership_table_control(
-                                                    $control_name = $item["control_name"],
-                                                    $control_scope = $item["control_scope"],
-                                                    $caption = $item["caption"],
-                                                    $dataset = $this->control_content[$control_name],
-                                                    $description_keys = $config["description_keys"]
-                                                );
-                                                break;
+                                    case "roo_membership_table_control":
+                                        new roo_membership_table_control(
+                                            $control_name = $item["control_name"],
+                                            $control_scope = $item["control_scope"],
+                                            $caption = $item["caption"],
+                                            $dataset = $this->control_content[$control_name],
+                                            $description_keys = $config["description_keys"]
+                                        );
+                                        break;
 
 
-                                            case "footnote_assignment_table_control":
-                                                new footnote_assignment_table_control(
-                                                    $control_name = $item["control_name"],
-                                                    $control_scope = $item["control_scope"],
-                                                    $caption = $item["caption"],
-                                                    $dataset = $this->control_content[$control_name],
-                                                    $description_keys = $config["description_keys"]
-                                                );
-                                                break;
-                                        }
-                                        ?>
-                                    </section>
-                                <?php
+                                    case "footnote_assignment_table_control":
+                                        new footnote_assignment_table_control(
+                                            $control_name = $item["control_name"],
+                                            $control_scope = $item["control_scope"],
+                                            $caption = $item["caption"],
+                                            $dataset = $this->control_content[$control_name],
+                                            $application_code_description = $this->control_content["application_code_description"],
+                                            $description_keys = $config["description_keys"]
+                                        );
+                                        break;
                                 }
                                 ?>
-                                <!-- End secondary fields //-->
-                            </div>
-                        </div>
+                            </section>
+                        <?php
+                        }
+                        ?>
+                        <!-- End secondary fields //-->
                     </div>
                 </div>
             </div>

@@ -35,9 +35,8 @@ require("../includes/metadata.php");
                     <!-- End panel //-->
                     <h2 class="govuk-heading-m">Next steps</h2>
                     <ul class="govuk-list">
-                        <li><a href="/">View / edit Antigua and Barbuda</a></li>
-                        <li><a href="/">View / edit Cariforum</a></li>
                         <li><a href="/geographical_areas/">Manage more geographical areas</a></li>
+                        <li><a href="/workbaskets/view.html">View content of your workbasket</a></li>
                         <li><a href="/">Return to main menu</a></li>
                     </ul>
                 </div>

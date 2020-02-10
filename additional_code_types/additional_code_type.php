@@ -152,6 +152,7 @@ class additional_code_type
     // Validate form
     function validate_form()
     {
+        global $application;
         $errors = array();
         $this->additional_code_type_id = get_formvar("additional_code_type_id", "", True);
         $this->description = get_formvar("description", "", True);
@@ -227,18 +228,68 @@ class additional_code_type
             $error_string = serialize($errors);
             setcookie("errors", $error_string, time() + (86400 * 30), "/");
             $url = "create_edit.html?err=1&mode=" . $this->mode . "&measure_type_id=" . $this->measure_type_id;
-        } else {/*
- if ($create_edit == "create") {
- // Do create scripts
- $this->create();
- } else {
- // Do edit scripts
- $this->update();
- }*/
-            $url = "./";
+        } else {
+            if ($application->mode == "insert") {
+                // Do create scripts
+                $this->create();
+            } else {
+                // Do edit scripts
+                $this->update();
+            }
+            $url = "./confirmation.html?mode=" . $application->mode;
         }
         header("Location: " . $url);
     }
+
+
+    function create()
+    {
+        global $conn, $application;
+        $operation = "C";
+        $operation_date = $application->get_operation_date();
+
+        if ($this->validity_end_date == "") {
+            $this->validity_end_date = Null;
+        }
+
+        $status = 'awaiting approval';
+        # Create the additional_code_type record
+        $sql = "INSERT INTO additional_code_types_oplog (
+            additional_code_type_id, application_code,
+            validity_start_date, operation, operation_date, workbasket_id, status
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING oid;";
+
+        pg_prepare($conn, "create_additional_code_type", $sql);
+        $result = pg_execute($conn, "create_additional_code_type", array(
+            $this->additional_code_type_id, $this->application_code,
+            $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+        ));
+
+        $application->insert_workbasket_item($result, "additional_code_type", $status, "C", $operation_date);
+
+        # Create the additional_code_type description record
+        $sql = "INSERT INTO additional_code_type_descriptions_oplog (
+            additional_code_type_id, language_id, description,
+            operation, operation_date, workbasket_id, status
+            )
+            VALUES ($1, 'EN', $2, $3, $4, $5, $6)
+            RETURNING oid;";
+
+        pg_prepare($conn, "create_additional_code_type_description", $sql);
+        $result = pg_execute($conn, "create_additional_code_type_description", array(
+            $this->additional_code_type_id, $this->description,
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+        ));
+        $application->insert_workbasket_item($result, "additional_code_type_description", $status, "C", $operation_date);
+    }
+
+
+    function update()
+    {
+    }
+    
 
     function set_dates()
     {

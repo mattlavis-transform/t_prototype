@@ -177,6 +177,13 @@
                 "align": "l"
             },
             {
+                "column_name": "Status",
+                "data_column": "status",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "c"
+            },
+            {
                 "column_name": "&nbsp;",
                 "data_column": "additional_code_url",
                 "sort_field": "",

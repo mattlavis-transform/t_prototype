@@ -4,6 +4,7 @@ class session
     public $session_id = "";
     public $user_id = "";
     public $name = "";
+    public $permissions = "";
     public $email = "";
     public $workbasket = null;
     public $cookies_accepted = 0;
@@ -20,6 +21,7 @@ class session
                 $this->uid = $_SESSION["uid"];
                 $this->user_id = $_SESSION["user_id"];
                 $this->name = $_SESSION["name"];
+                $this->permissions = $_SESSION["permissions"];
             } else {
                 $this->bounce_to_sign_in();
             }
@@ -41,7 +43,6 @@ class session
         //pre($_SERVER);
     }
 
-
     function sign_in()
     {
         global $conn;
@@ -51,22 +52,24 @@ class session
         $first_name = get_formvar("first_name");
         $last_name = get_formvar("last_name");
 
-        $sql = "select id, uid, name, email from users where uid = $1;";
+        $sql = "select id, uid, name, email, permissions from users where uid = $1;";
         pg_prepare($conn, "get_user", $sql);
         $result = pg_execute($conn, "get_user", array($user_id));
         $row_count = pg_num_rows($result);
-        //var_dump($result);
+
         if (($result) && ($row_count > 0)) {
             $row = pg_fetch_row($result);
             $this->uid = $row[0];
             $this->user_id = $row[1];
             $this->name = $row[2];
             $this->email = $row[3];
+            $this->permissions = $row[4];
 
             $_SESSION["uid"] = $this->uid;
             $_SESSION["user_id"] = $this->user_id;
             $_SESSION["name"] = $this->name;
             $_SESSION["email"] = $this->email;
+            $_SESSION["permissions"] = $this->permissions;
 
 
             // Check for any incomplete workbaskets associated with this user
@@ -131,7 +134,7 @@ class session
     {
         //h1 ("getting workbasket");
         global $conn;
-        $sql = "select title, reason, type, status, user_id, id from workbaskets w where id = $1;";
+        $sql = "select title, reason, type, status, user_id, workbasket_id from workbaskets w where workbasket_id = $1;";
         pg_prepare($conn, "get_workbasket", $sql);
         $result = pg_execute($conn, "get_workbasket", array($_SESSION["workbasket_id"]));
         $row_count = pg_num_rows($result);
@@ -143,7 +146,7 @@ class session
             $workbasket->type = $row[2];
             $workbasket->status = $row[3];
             $workbasket->user_id = $row[4];
-            $workbasket->id = $row[5];
+            $workbasket->workbasket_id = $row[5];
             $this->workbasket = $workbasket;
             $_SESSION["workbasket_title"] = $workbasket->title;
             $_SESSION["workbasket_title_abbreviated"] = substr($workbasket->title, 0, 25) . " ...";
@@ -166,7 +169,7 @@ class session
             $workbasket->type = $row[2];
             $workbasket->status = $row[3];
             $workbasket->user_id = $row[4];
-            $workbasket->id = $row[5];
+            $workbasket->workbasket_id = $row[5];
             
             return ($workbasket);
         }

@@ -8,12 +8,12 @@ $error_handler = new error_handler();
 
 $submitted = intval(get_formvar("submitted"));
 if ($submitted == 1) {
-    $measure_prototype = new measure_prototype();
-    $measure_prototype->validate_form_commodities();
+    $measure = new measure();
+    $measure->validate_form_commodities();
 } else {
-    $measure_prototype = new measure_prototype();
-    $measure_prototype->get_sid();
-    $measure_prototype->populate_commodity_form();
+    $measure = new measure();
+    $measure->get_sid();
+    $measure->populate_commodity_form();
 }
 ?>
 
@@ -32,7 +32,7 @@ require("../includes/metadata.php");
         require("../includes/phase_banner.php");
         $control_content = array();
         $control_content["duties_same_for_all_commodities"] = $application->duties_same_for_all_commodities;
-        new data_entry_form($control_content, $measure_prototype, $left_nav = "");
+        new data_entry_form($control_content, $measure, $left_nav = "");
         ?>
     </div>
     <?php
