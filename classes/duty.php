@@ -10,6 +10,7 @@ class duty
 
     public function __construct()
     {
+        $this->validity                = 0;
         $this->measure_sid                = 0;
         $this->geographical_area_id        = "";
         $this->additional_code_id        = "";
@@ -24,6 +25,13 @@ class duty
     {
         global $conn;
         $valid = 0;
+
+        // Check on empty
+        if (($this->duty_expression_id == "") or (($this->duty_amount == "") && ($this->measurement_unit_code == ""))) {
+            $valid = 0;
+            return;
+        }
+
         // Check that the duty expression is valid
         $sql = "select duty_expression_id from duty_expressions where duty_expression_id = $1";
         $stmt = "validate_duty_expression_id_" . $this->duty_expression_id . $i;

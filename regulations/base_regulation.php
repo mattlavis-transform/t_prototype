@@ -100,10 +100,12 @@ class base_regulation
             }
         }
 
+        /*
         # Check on the public_identifier
         if ($this->public_identifier == "") {
             array_push($errors, "public_identifier");
         }
+        */
 
 
         # Check on the regulation_group_id
@@ -160,7 +162,7 @@ class base_regulation
             $oid = $row[0];
         }
 
-        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "regulation", $status, "C", $operation_date);
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "regulation", $status, $operation, $operation_date);
 
         // Then upate the measure type record with oid of the workbasket item record
         $sql = "UPDATE base_regulations_oplog set workbasket_item_id = $1 where oid = $2";
@@ -169,6 +171,50 @@ class base_regulation
             $workbasket_item_id, $oid
         ));
     }
+
+
+    function update()
+    {
+        global $conn, $application;
+        $operation = "U";
+        $operation_date = $application->get_operation_date();
+        $status = 'awaiting approval';
+
+        # Create the regulation record
+        $sql = "INSERT INTO base_regulations_oplog (
+            base_regulation_id, base_regulation_role, validity_start_date, community_code,
+            regulation_group_id, replacement_indicator, stopped_flag, information_text,
+            approved_flag, published_date, officialjournal_number, officialjournal_page,
+            public_identifier, url, trade_remedies_case,
+            operation, operation_date, workbasket_id, status)
+            VALUES (
+            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
+            RETURNING oid;";
+
+
+        pg_prepare($conn, "update_base_regulation", $sql);
+        $result = pg_execute($conn, "update_base_regulation", array(
+            $this->base_regulation_id, "1", $this->validity_start_date, 1,
+            $this->regulation_group_id, 0, 'f', $this->information_text,
+            't', $this->validity_start_date, "1", 1,
+            $this->public_identifier, $this->url, $this->trade_remedies_case,
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+        ));
+        if (($result) && (pg_num_rows($result) > 0)) {
+            $row = pg_fetch_row($result);
+            $oid = $row[0];
+        }
+
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "regulation", $status, $operation, $operation_date);
+
+        // Then upate the record with oid of the workbasket item record
+        $sql = "UPDATE base_regulations_oplog set workbasket_item_id = $1 where oid = $2";
+        pg_prepare($conn, "update_base_regulation2", $sql);
+        $result = pg_execute($conn, "update_base_regulation2", array(
+            $workbasket_item_id, $oid
+        ));
+    }
+
 
     function exists()
     {
@@ -249,37 +295,6 @@ class base_regulation
 
             return (True);
         }
-    }
-
-    function update()
-    {
-        global $conn;
-        $application = new application;
-        $operation = "U";
-        $operation_date = $application->get_operation_date();
-
-        $this->published_date = $this->validity_start_date;
-
-        #h1 ("Update" . $this->base_regulation_id);
-        #exit();
-        $sql = "INSERT INTO base_regulations_oplog
- (base_regulation_role, base_regulation_id, validity_start_date, validity_end_date, community_code, regulation_group_id, replacement_indicator,
- stopped_flag, information_text, approved_flag, published_date, officialjournal_number, officialjournal_page, effective_end_date,
- antidumping_regulation_role, related_antidumping_regulation_id, complete_abrogation_regulation_role, complete_abrogation_regulation_id,
- explicit_abrogation_regulation_role, explicit_abrogation_regulation_id, operation, operation_date)
- VALUES (
- 1, $1, $3, Null, 1, $4, 0,
- False, $2, True, $7, '1', '1', Null,
- Null, Null, Null, Null,
- Null, Null, $5, $6)";
-
-        pg_prepare($conn, "base_regulation_insert", $sql);
-        pg_execute($conn, "base_regulation_insert", array(
-            $this->base_regulation_id, $this->information_text,
-            $this->validity_start_date, $this->regulation_group_id, $operation, $operation_date, $this->published_date
-        ));
-
-        return (True);
     }
 
     function conflict_check()

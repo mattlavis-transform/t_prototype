@@ -49,7 +49,7 @@
                     "control_type": "detail_table_control",
                     "control_name": "additional_code_descriptions",
                     "control_scope": "view",
-                    "caption": "Existing additional code descriptions"
+                    "caption": "Descriptions"
                 }    
             ]
         },
@@ -133,7 +133,7 @@
                 "control_type": "detail_table_control",
                 "control_name": "additional_code_descriptions",
                 "control_scope": "update",
-                "caption": "Existing additional code descriptions"
+                "caption": "Descriptions"
             }
         ],
         "filters": [

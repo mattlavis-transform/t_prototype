@@ -11,6 +11,17 @@ class hidden_control
             $application->mode = "insert";
         }
         $this->control_name = $control_name;
+
+        preg_match_all('/{(.*?)}/', $value, $matches);
+        foreach ($matches[1] as $match) {
+            if (isset($_GET[$match])) {
+                $value = str_replace($match, $_GET[$match], $value);
+            } else {
+                $value = str_replace($match, "", $value);
+            }
+        }
+        $value = str_replace("{", "", $value);
+        $value = str_replace("}", "", $value);
         $this->value = $value;
         $this->display();
     }

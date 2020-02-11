@@ -231,21 +231,19 @@ class additional_code_type
         } else {
             if ($application->mode == "insert") {
                 // Do create scripts
-                $this->create();
+                $this->create_update("C");
             } else {
                 // Do edit scripts
-                $this->update();
+                $this->create_update("U");
             }
             $url = "./confirmation.html?mode=" . $application->mode;
         }
         header("Location: " . $url);
     }
 
-
-    function create()
+    function create_update($operation)
     {
         global $conn, $application;
-        $operation = "C";
         $operation_date = $application->get_operation_date();
 
         if ($this->validity_end_date == "") {
@@ -256,27 +254,28 @@ class additional_code_type
         # Create the additional_code_type record
         $sql = "INSERT INTO additional_code_types_oplog (
             additional_code_type_id, application_code,
-            validity_start_date, operation, operation_date, workbasket_id, status
+            validity_start_date, validity_end_date, operation, operation_date, workbasket_id, status
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING oid;";
 
-        pg_prepare($conn, "create_additional_code_type", $sql);
-        $result = pg_execute($conn, "create_additional_code_type", array(
+        pg_prepare($conn, "stmt_1", $sql);
+        $result = pg_execute($conn, "stmt_1", array(
             $this->additional_code_type_id, $this->application_code,
-            $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+            $this->validity_start_date, $this->validity_end_date,
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
         if (($result) && (pg_num_rows($result) > 0)) {
             $row = pg_fetch_row($result);
             $oid = $row[0];
         }
 
-        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "additional_code_type", $status, "C", $operation_date);
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "additional_code_type", $status, $operation, $operation_date);
 
         // Then upate the additional code type record with oid of the workbasket item record
         $sql = "UPDATE additional_code_types_oplog set workbasket_item_id = $1 where oid = $2";
-        pg_prepare($conn, "update_additional_code_type", $sql);
-        $result = pg_execute($conn, "update_additional_code_type", array(
+        pg_prepare($conn, "stmt_2", $sql);
+        $result = pg_execute($conn, "stmt_2", array(
             $workbasket_item_id, $oid
         ));
  
@@ -288,19 +287,12 @@ class additional_code_type
             VALUES ($1, 'EN', $2, $3, $4, $5, $6, $7)
             RETURNING oid;";
 
-        pg_prepare($conn, "create_additional_code_type_description", $sql);
-        $result = pg_execute($conn, "create_additional_code_type_description", array(
+        pg_prepare($conn, "stmt_3", $sql);
+        $result = pg_execute($conn, "stmt_3", array(
             $this->additional_code_type_id, $this->description,
             $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
-        //die();
     }
-
-
-    function update()
-    {
-    }
-    
 
     function set_dates()
     {
@@ -321,7 +313,7 @@ class additional_code_type
     {
         global $conn;
         $exists = false;
-        $sql = "SELECT additional_code_type_id FROM measure_type_series WHERE additional_code_type_id = $1";
+        $sql = "SELECT additional_code_type_id FROM additional_code_types WHERE additional_code_type_id = $1";
         pg_prepare($conn, "measure_type_series_exists", $sql);
         $result = pg_execute($conn, "measure_type_series_exists", array($this->additional_code_type_id));
         if ($result) {

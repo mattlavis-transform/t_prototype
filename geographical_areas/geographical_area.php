@@ -140,18 +140,12 @@ class geographical_area
             array_push($errors, "geographical_area_id");
         }
 
-        # If we are creating, check that the measure type ID does not already exist
-        if ($application->mode == "insert") {
-            if ($this->exists()) {
-                array_push($errors, "footnote_exists");
-            }
-        }
-
         # Check on the validity start date
         $valid_start_date = checkdate($this->validity_start_date_month, $this->validity_start_date_day, $this->validity_start_date_year);
         if ($valid_start_date != 1) {
             array_push($errors, "validity_start_date");
         }
+
         # Check on the validity end date: must either be a valid date or blank
         if ($application->mode == "update") {
             if (($this->validity_end_date_day == "") && ($this->validity_end_date_month == "") && ($this->validity_end_date_year == "")) {
@@ -203,46 +197,61 @@ class geographical_area
             $this->validity_end_date = Null;
         }
 
+        $status = 'awaiting approval';
         # Create the geographical_area record
         $sql = "INSERT INTO geographical_areas_oplog (
-                geographical_area_sid, geographical_area_id, geographical_code, validity_start_date,
-                operation, operation_date)
-                VALUES ($1, $2, $3, $4, $5, $6)";
+            geographical_area_sid, geographical_area_id, geographical_code, validity_start_date,
+            operation, operation_date, workbasket_id, status)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING oid;";
 
         pg_prepare($conn, "create_geographical_area", $sql);
 
         $result = pg_execute($conn, "create_geographical_area", array(
             $this->geographical_area_sid, $this->geographical_area_id, $this->geographical_code, $this->validity_start_date,
-            $operation, $operation_date
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
+        if (($result) && (pg_num_rows($result) > 0)) {
+            $row = pg_fetch_row($result);
+            $oid = $row[0];
+        }
+
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "geographical_area", $status, $operation, $operation_date);
+
+        // Then upate the additional code record with oid of the workbasket item record
+        $sql = "UPDATE geographical_areas_oplog set workbasket_item_id = $1 where oid = $2";
+        pg_prepare($conn, "update_geographical_area", $sql);
+        $result = pg_execute($conn, "update_geographical_area", array(
+            $workbasket_item_id, $oid
+        ));
+
 
         # Create the geographical_area description period record
         $sql = "INSERT INTO geographical_area_description_periods_oplog (
             geographical_area_description_period_sid, geographical_area_sid, geographical_area_id,
-            validity_start_date, operation, operation_date)
-        VALUES ($1, $2, $3, $4, $5, $6)";
+            validity_start_date, operation, operation_date, workbasket_id, status, workbasket_item_id)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)";
 
         pg_prepare($conn, "create_geographical_area_description_period", $sql);
 
         $result = pg_execute($conn, "create_geographical_area_description_period", array(
             $this->geographical_area_description_period_sid, $this->geographical_area_sid, $this->geographical_area_id,
-            $this->validity_start_date, $operation, $operation_date
+            $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
 
         # Create the geographical_area description record
         $sql = "INSERT INTO geographical_area_descriptions_oplog (
             geographical_area_description_period_sid, geographical_area_sid, geographical_area_id,
-            language_id, description, operation, operation_date)
-        VALUES ($1, $2, $3, 'EN', $4, $5, $6)";
+            language_id, description, operation, operation_date, workbasket_id, status, workbasket_item_id)
+        VALUES ($1, $2, $3, 'EN', $4, $5, $6, $7, $8, $9)";
 
         pg_prepare($conn, "create_geographical_area_description", $sql);
 
         $result = pg_execute($conn, "create_geographical_area_description", array(
             $this->geographical_area_description_period_sid, $this->geographical_area_sid, $this->geographical_area_id,
-            $this->description, $operation, $operation_date
+            $this->description, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
-        //echo ($result);
-        //exit();
+        //die();
 
     }
 

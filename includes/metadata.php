@@ -46,6 +46,7 @@ if ($application->tariff_object != "") {
     <script src="/js/select2.js"></script>
     <script src="/js/application.js"></script>
     <script src="/js/date.format.js"></script>
+    <script src="/js/cursor.js"></script>
     <!-- Start JS Grid includes //-->
     <link type="text/css" rel="stylesheet" href="/css/jsgrid.min.css" />
     <link type="text/css" rel="stylesheet" href="/css/jsgrid-theme.min.css" />

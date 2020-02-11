@@ -173,20 +173,19 @@ class certificate_type
         } else {
             if ($application->mode == "insert") {
                 // Do create scripts
-                $this->create();
+                $this->create_update("C");
             } else {
                 // Do edit scripts
-                $this->update();
+                $this->create_update("U");
             }
             $url = "./confirmation.html?mode=" . $application->mode;
         }
         header("Location: " . $url);
     }
-
-    function create()
+    
+    function create_update($operation)
     {
         global $conn, $application;
-        $operation = "C";
         $operation_date = $application->get_operation_date();
 
         if ($this->validity_end_date == "") {
@@ -194,30 +193,32 @@ class certificate_type
         }
 
         $status = 'awaiting approval';
+
         # Create the certificate_type record
         $sql = "INSERT INTO certificate_types_oplog (
             certificate_type_code,
-            validity_start_date, operation, operation_date, workbasket_id, status
+            validity_start_date, validity_end_date, operation, operation_date, workbasket_id, status
             )
-            VALUES ($1, $2, $3, $4, $5, $6)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING oid;";
 
-        pg_prepare($conn, "create_certificate_type", $sql);
-        $result = pg_execute($conn, "create_certificate_type", array(
+        pg_prepare($conn, "stmt_1", $sql);
+        $result = pg_execute($conn, "stmt_1", array(
             $this->certificate_type_code,
-            $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
+            $this->validity_start_date, $this->validity_end_date,
+            $operation, $operation_date, $application->session->workbasket->workbasket_id, $status
         ));
         if (($result) && (pg_num_rows($result) > 0)) {
             $row = pg_fetch_row($result);
             $oid = $row[0];
         }
 
-        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "certificate_type", $status, "C", $operation_date);
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "certificate_type", $status, $operation, $operation_date);
 
         // Then upate the certificate type record with oid of the workbasket item record
         $sql = "UPDATE certificate_types_oplog set workbasket_item_id = $1 where oid = $2";
-        pg_prepare($conn, "update_certificate_type", $sql);
-        $result = pg_execute($conn, "update_certificate_type", array(
+        pg_prepare($conn, "stmt_2", $sql);
+        $result = pg_execute($conn, "stmt_2", array(
             $workbasket_item_id, $oid
         ));
         
@@ -229,16 +230,11 @@ class certificate_type
             VALUES ($1, 'EN', $2, $3, $4, $5, $6, $7)
             RETURNING oid;";
 
-        pg_prepare($conn, "create_certificate_type_description", $sql);
-        $result = pg_execute($conn, "create_certificate_type_description", array(
+        pg_prepare($conn, "stmt_3", $sql);
+        $result = pg_execute($conn, "stmt_3", array(
             $this->certificate_type_code, $this->description,
             $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
-    }
-
-
-    function update()
-    {
     }
 
 

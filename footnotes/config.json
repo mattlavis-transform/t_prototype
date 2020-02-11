@@ -53,13 +53,13 @@
                     "control_type": "detail_table_control",
                     "control_scope": "view",
                     "control_name": "footnote_descriptions",
-                    "caption": "Existing footnote descriptions"
+                    "caption": "Descriptions"
                 },
                 {
                     "control_type": "footnote_assignment_table_control",
                     "control_scope": "view",
                     "control_name": "footnote_assignments",
-                    "caption": "Footnote assignments",
+                    "caption": "Assignments",
                     "subcaption": "This footnote has been assigned to the following measures."
                 }    
             ]
@@ -155,7 +155,7 @@
                 "control_type": "detail_table_control",
                 "control_scope": "update",
                 "control_name": "footnote_descriptions",
-                "caption": "Existing footnote descriptions"
+                "caption": "Descriptions"
             },
             {
                 "control_type": "xfootnote_assignment_table_control",

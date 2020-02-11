@@ -8,19 +8,19 @@ $error_handler = new error_handler();
 $submitted = intval(get_formvar("submitted"));
 $action = get_querystring("action");
 if ($submitted == 1) {
-    $measure = new measure();
-    $measure->get_sid();
+    $measure_activity = new measure_activity();
+    $measure_activity->get_sid();
     $add_condition = get_formvar("add_condition");
     if ($add_condition == 'add_condition') {
-        //$measure->add_condition();
+        $measure_activity->add_condition();
     }
 } else {
-    $measure = new measure();
-    $measure->get_sid();
+    $measure_activity = new measure_activity();
+    $measure_activity->get_sid();
     if ($action == "remove_condition") {
         //$measure->delete_condition();
     }
-    $measure->populate_conditions_form();
+    $measure_activity->populate_conditions_form();
 }
 ?>
 
@@ -38,7 +38,7 @@ require("../includes/metadata.php");
         <?php
         require("../includes/phase_banner.php");
         $control_content = array();
-        new data_entry_form($control_content, $measure, $left_nav = "");
+        new data_entry_form($control_content, $measure_activity, $left_nav = "");
         ?>
     </div>
     <?php

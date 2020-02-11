@@ -1548,28 +1548,54 @@ with status_cte as (
         select *, count(*) OVER() AS full_count
         from status_cte f where 1 > 0  limit 20 offset 0;        
 
-update certificate_description_periods_oplog set status = 'published' where status is null;
+       
+       
+update modification_regulations_oplog set status = 'published' where status is null;
+
+
 
 
 
 select wi.operation, act.additional_code_type_id, act.validity_start_date, act.validity_end_date, actd.description 
-from workbasket_items wi, additional_code_types_oplog act, additional_code_type_descriptions_oplog actd
-where wi.record_id = act.oid
-and act.additional_code_type_id = actd.additional_code_type_id 
-and wi.record_type = 'additional_code_type'
-and wi.workbasket_id = $1
-order by wi.created_at
+        from workbasket_items wi, additional_code_types_oplog act, additional_code_type_descriptions_oplog actd
+        where wi.record_id = act.oid
+        and act.additional_code_type_id = actd.additional_code_type_id 
+        and wi.record_type = 'additional_code_type'
+        and wi.workbasket_id = $1
+        order by wi.created_at
+        
+        
+        select wi.operation, ft.footnote_type_id, ft.validity_start_date, ft.validity_end_date, ftd.description --, wi.id
+        from workbasket_items wi, footnote_types ft, footnote_type_descriptions ftd
+        where wi.id = ft.oid
+        and ft.footnote_type_id = ftd.footnote_type_id 
+        and wi.record_type = 'footnote_type'
+        and wi.workbasket_id = 33
+        order by wi.created_at     
+        
+select record_id, record_type from workbasket_items wi where id = 43;
 
-
-select wi.operation, f.footnote_type_id || ' ' || ftd.description as footnote_type_id,
-(f.footnote_type_id || ' ' || f.footnote_id) as footnote_id,
-f.validity_start_date, f.validity_end_date, fd.description 
-from workbasket_items wi, footnotes f, footnote_descriptions fd, footnote_type_descriptions ftd
-where wi.record_id = f.oid
-and f.footnote_id = fd.footnote_id 
-and f.footnote_type_id = fd.footnote_type_id
-and f.footnote_type_id = ftd.footnote_type_id 
-and wi.record_type = 'footnote'
+select wi.operation, ga.geographical_area_id, ga.validity_start_date, ga.validity_end_date,
+ga.geographical_code || ' - ' || gc.description as geographical_code, gad.description,
+wi.id, wi.record_id, '' as view_url
+from workbasket_items wi, geographical_areas ga, geographical_area_descriptions gad, geographical_codes gc 
+where wi.record_id = ga.oid
+and wi.record_type = 'geographical_area'
+and ga.geographical_code = gc.geographical_code 
+and ga.geographical_area_sid = gad.geographical_area_sid 
 and wi.workbasket_id = 33
-order by wi.created_at;
+order by wi.created_at
+        
+        
 
+
+br.base_regulation_id, br.validity_start_date, br.information_text,
+        br.url, br.public_identifier, br.trade_remedies_case,
+        (br.regulation_group_id || ' - ' || rgd.description) as regulation_group_id, wi.id, wi.record_id,
+        '' as view_url   
+        
+        
+select * from measures where ordernumber = '090059' order by validity_start_date desc, goods_nomenclature_item_id 
+select * from quota_order_numbers qon where quota_order_number_id = '090059'
+
+select * from measures_oplog where goods_nomenclature_item_id = '2309109000' and ordernumber is not null

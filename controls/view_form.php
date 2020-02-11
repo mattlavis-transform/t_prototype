@@ -62,11 +62,14 @@ class view_form
         $this->page_title = $text;
     }
 
-    private function singularise($s)
+    private function singularise($s, $replace_spaces = false)
     {
         $s = strtolower($s);
         if (substr($s, -1) == "s") {
             $s = substr($s, 0, -1);
+        }
+        if ($replace_spaces) {
+            $s = str_replace(" ", "_", $s);
         }
         return ($s);
     }
@@ -166,6 +169,24 @@ class view_form
                                     ?>
                                 </tbody>
                             </table>
+                            <?php
+                                $warning_array = array("Footnotes", "Additional codes", "Geographical areas", "Certificates");
+                                if (in_array($config["object_name"], $warning_array)) {
+                                    $tab_name = "#tab_" . $this->singularise($config["object_name"], true) . "_descriptions";
+                            ?>
+                            <!-- Start warning //-->
+                            <div class="govuk-warning-text">
+                                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                                <strong class="govuk-warning-text__text">
+                                    <span class="govuk-warning-text__assistive">Warning</span>
+                                    Please note that you are unable to modify descriptions on this tab.
+                                    Please select the '<a href="<?= $tab_name ?>">Descriptions</a>' tab to create and modify descriptions.
+                                </strong>
+                            </div>
+                            <!-- End warning //-->
+                            <?php
+                                }
+                            ?>
                             <p class='govuk-body'><a class="govuk-link" href="<?= $this->url_edit ?>">Edit this <?= $this->singularise($config["object_name"]) ?></a></p>
                             <!-- End primary fields //-->
 

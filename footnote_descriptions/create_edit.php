@@ -6,7 +6,7 @@ $error_handler = new error_handler();
 $submitted = intval(get_formvar("submitted"));
 if ($submitted == 1) {
     $footnote = new footnote();
-    $footnote->validate_form();
+    $footnote->validate_description_form();
 } else {
     $footnote = new footnote();
     $footnote->get_parameters($description = true);

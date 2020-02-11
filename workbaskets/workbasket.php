@@ -126,7 +126,6 @@ class workbasket
                                 $field = pg_field_name($result, $i);
                                 echo ('<td class="govuk-table__cell">' . $this->format_value($row, $field) . '</td>');
                             }
-                            //$view_url = $this->get_view_url($object_type, $row->record_id);
                             $delete_url = "actions.php?action=delete_workbasket_item&id=" . $row->id;
                             echo ('<td class="govuk-table__cell r" nowrap>');
                             echo ('<a title="View or edit this item" href="' . $row->view_url . '"><img src="/assets/images/view.png" /></a>');
@@ -182,6 +181,8 @@ class workbasket
 
     public function format_field_name($s)
     {
+        $s = str_replace('base_regulation_id', 'Regulation id', $s);
+        $s = str_replace('regulation_group_id', 'regulation_group', $s);
         $s = str_replace('trade_movement_code', 'Trade movement', $s);
         $s = str_replace('measure_component_applicable_code', 'Components applicable', $s);
         $s = str_replace('order_number_capture_code', 'Order number applicable', $s);
@@ -373,6 +374,28 @@ class workbasket
     }
 
 
+    public function workbasket_get_geographical_areas()
+    {
+        global $conn;
+        $sql = "select wi.operation, ga.geographical_area_id, ga.validity_start_date, ga.validity_end_date,
+        ga.geographical_code || ' - ' || gc.description as geographical_code, gad.description,
+        wi.id, wi.record_id,
+        '/geographical_areas/view.html?mode=view&geographical_area_id=' || ga.geographical_area_id || '&geographical_area_sid=' || ga.geographical_area_sid  as view_url
+        from workbasket_items wi, geographical_areas ga, geographical_area_descriptions gad, geographical_codes gc 
+        where wi.record_id = ga.oid
+        and wi.record_type = 'geographical_area'
+        and ga.geographical_code = gc.geographical_code 
+        and ga.geographical_area_sid = gad.geographical_area_sid 
+        and wi.workbasket_id = $1
+        order by wi.created_at";
+        pg_prepare($conn, "workbasket_get_geographical_areas", $sql);
+        $result = pg_execute($conn, "workbasket_get_geographical_areas", array(
+            $this->workbasket_id
+        ));
+        $this->show_section("geographical areas", $result);
+    }
+
+
     public function insert_workbasket_item($oid, $record_type, $status, $operation, $operation_date)
     {
         global $conn, $application;
@@ -469,6 +492,17 @@ class workbasket
                 $sql = "delete from certificates_descriptions_oplog where workbasket_item_id = $1;";
                 db_execute($sql, array($workbasket_item_id));
                 $sql = "delete from certificates_description_periods_oplog where workbasket_item_id = $1;";
+                db_execute($sql, array($workbasket_item_id));
+                $sql = "delete from workbasket_items where id = $1;";
+                db_execute($sql, array($workbasket_item_id));
+                break;
+
+            case "geographical_area":
+                $sql = "delete from geographical_areas_oplog where workbasket_item_id = $1;";
+                db_execute($sql, array($workbasket_item_id));
+                $sql = "delete from geographical_area_descriptions_oplog where workbasket_item_id = $1;";
+                db_execute($sql, array($workbasket_item_id));
+                $sql = "delete from geographical_area_description_periods_oplog where workbasket_item_id = $1;";
                 db_execute($sql, array($workbasket_item_id));
                 $sql = "delete from workbasket_items where id = $1;";
                 db_execute($sql, array($workbasket_item_id));

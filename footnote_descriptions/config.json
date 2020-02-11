@@ -31,6 +31,11 @@
                 "value": "{footnote_type_id}"
             },
             {
+                "control_type": "hidden_control",
+                "control_name": "footnote_id",
+                "value": "{footnote_id}"
+            },
+            {
                 "control_type": "error_block"
             },
             {

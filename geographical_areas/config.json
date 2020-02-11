@@ -49,7 +49,7 @@
                     "control_type": "detail_table_control",
                     "control_scope": "view",
                     "control_name": "geographical_area_descriptions",
-                    "caption": "Existing geographical area descriptions"
+                    "caption": "Descriptions"
                 },
                 {
                     "control_type": "membership_table_control",
@@ -149,24 +149,6 @@
             },
             {
                 "control_type": "button_cluster_control"
-            },
-            {
-                "control_type": "detail_table_control",
-                "control_scope": "update",
-                "control_name": "geographical_area_descriptions",
-                "caption": "Existing geographical area descriptions"
-            },
-            {
-                "control_type": "membership_table_control",
-                "control_scope": "update",
-                "control_name": "geographical_area_memberships",
-                "caption": "Area memberships"
-            },
-            {
-                "control_type": "roo_membership_table_control",
-                "control_scope": "update",
-                "control_name": "roo_scheme_memberships",
-                "caption": "Rules of origin schemes"
             }
         ],
         "filters": [

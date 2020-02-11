@@ -316,7 +316,7 @@ class certificate
             $oid = $row[0];
         }
 
-        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "certificate", $status, "C", $operation_date);
+        $workbasket_item_id = $application->session->workbasket->insert_workbasket_item($oid, "certificate", $status, $operation, $operation_date);
 
         // Then upate the certificate record with oid of the workbasket item record
         $sql = "UPDATE certificates_oplog set workbasket_item_id = $1 where oid = $2";
@@ -335,7 +335,7 @@ class certificate
             $this->certificate_description_period_sid, $this->certificate_code,
             $this->certificate_type_code, $this->validity_start_date, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
-        //$application->session->workbasket->insert_workbasket_item($oid, "certificate_description_period", $status, "C", $operation_date);
+        //$application->session->workbasket->insert_workbasket_item($oid, "certificate_description_period", $status, $operation, $operation_date);
 
         # Create the certificate description record
         $sql = "INSERT INTO certificate_descriptions_oplog (certificate_description_period_sid, certificate_code,
@@ -347,7 +347,7 @@ class certificate
             $this->certificate_description_period_sid, $this->certificate_code,
             $this->certificate_type_code, $this->description, $operation, $operation_date, $application->session->workbasket->workbasket_id, $status, $workbasket_item_id
         ));
-        die();
+        //die();
     }
 
     public function old_delete_description()
@@ -751,5 +751,17 @@ class certificate
             }
         }
         return ($succeeds);
+    }
+
+    public function parse($s) {
+        $this->code = trim($s);
+        $hyphen_pos = strpos($this->code, "-");
+        if ($hyphen_pos !== -1) {
+            $this->code = trim(substr($this->code, 0, $hyphen_pos - 1));
+        }
+        if (strlen($this->code) == 4) {
+            $this->certificate_type_code = substr($this->code, 0, 1);
+            $this->certificate_code = substr($this->code, 1, 3);
+        }
     }
 }

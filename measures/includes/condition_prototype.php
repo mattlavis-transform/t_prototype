@@ -1,10 +1,10 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <?php
-        global $measure, $application;
+        global $measure_activity, $application;
         $application->get_measure_condition_codes();
         $application->get_measure_actions();
-        new table_control($measure->condition_list, "condition_table", "<p class='govuk-body' style='margin-top:2em;margin-bottom:2em'>There are currently no conditions assigned to the current measure(s).</p>");
+        new table_control($measure_activity->condition_list, "condition_table", "<p class='govuk-body' style='margin-top:2em;margin-bottom:2em'>There are currently no conditions assigned to the current measure(s).</p>");
         ?>
         <form>
             <?php
@@ -13,7 +13,7 @@
                 "Add a measure condition",
                 $label_style = "govuk-label--m for_measure_condition",
                 $hint_text = "Please select the condition code from the list below.",
-                $control_name = "measure_condition_code",
+                $control_name = "condition_code",
                 $dataset = $application->measure_condition_codes,
                 $default_value = 0,
                 $default_string = "-- Please select a condition code --",
@@ -31,7 +31,7 @@
                 $label = "Enter the reference price (where applicable)",
                 $label_style = "govuk-label",
                 $hint_text = "",
-                $control_name = "user_id",
+                $control_name = "condition_duty_amount",
                 $control_style = "govuk-input govuk-input--width-30 condition_mechanic_reference_duty duty",
                 $size = 100,
                 $maxlength = 100,
@@ -65,7 +65,7 @@
                 $label = "What action should take place in response?",
                 $label_style = "govuk-label for_measure_action",
                 $hint_text = "",
-                $control_name = "measure_action_code",
+                $control_name = "action_code",
                 $dataset = $application->measure_actions,
                 $default_value = 0,
                 $default_string = "-- Please select an action code --",
@@ -83,7 +83,7 @@
                 $label = "Enter the applicable duty",
                 $label_style = "govuk-label",
                 $hint_text = "",
-                $control_name = "user_id",
+                $control_name = "applicable_duty",
                 $control_style = "govuk-input govuk-input--width-30 condition_mechanic_applicable_duty duty",
                 $size = 100,
                 $maxlength = 100,

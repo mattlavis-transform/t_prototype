@@ -99,6 +99,7 @@ $application->session->workbasket->workbasket_get_footnotes();
 $application->session->workbasket->workbasket_get_certificates();
 $application->session->workbasket->workbasket_get_additional_codes();
 $application->session->workbasket->workbasket_get_regulations();
+$application->session->workbasket->workbasket_get_geographical_areas();
 ?>
 
 <!-- Start accordion section - footnote associations with measures //-->

@@ -348,7 +348,7 @@
             },
             {
                 "control_type": "radio_control",
-                "label": "Will the applicable in-quota duties be the same for all commodities?",
+                "label": "Will the applicable duties be the same for all commodities?",
                 "label_style": "govuk-fieldset__legend--m",
                 "hint_text": "If all combinations of commodity codes and additional codes will have the precise same duties, please select&nbsp;'Yes'. Otherwise, please select&nbsp;'No' and modify the duties on the following screen.",
                 "control_name": "duties_same_for_all_commodities",

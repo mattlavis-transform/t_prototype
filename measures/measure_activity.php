@@ -305,8 +305,7 @@ class measure_activity
         if (($result) && ($row_count > 0)) {
             $row = pg_fetch_row($result);
             $_SESSION["measure_activity_sid"] = $row[0];
-        }
-        else {
+        } else {
             die();
         }
     }
@@ -350,23 +349,33 @@ class measure_activity
 
         // Save new additional codes
         foreach ($this->additional_code_list as $additional_code) {
-            $sql = "insert into measure_activity_additional_codes (measure_activity_sid, additional_code_type_id, additional_code) values ($1, $2, $3)";
             $code = $additional_code->code;
-            $additional_code_type_id = substr($code, 0, 1);
-            $additional_code = substr($code, 1, 3);
-            $stmt = "persist_additional_codes" . $code;
-            pg_prepare($conn, $stmt, $sql);
-            pg_execute($conn, $stmt, array(
-                $this->measure_activity_sid,
-                $additional_code_type_id,
-                $additional_code
-            ));
+            $additional_code_type_id = substr($code, 0, 1) . "";
+            $additional_code = substr($code, 1, 3). "";
+            if (($additional_code_type_id != "") && ($additional_code != "")) {
+                h1 ("Inserting");
+                $sql = "insert into measure_activity_additional_codes (measure_activity_sid, additional_code_type_id, additional_code) values ($1, $2, $3)";
+                $stmt = "persist_additional_codes" . $code;
+                pg_prepare($conn, $stmt, $sql);
+                pg_execute($conn, $stmt, array(
+                    $this->measure_activity_sid,
+                    $additional_code_type_id,
+                    $additional_code
+                ));
+            }
+            die();
         }
     }
 
     public function get_sid()
     {
         $this->measure_activity_sid = $_SESSION["measure_activity_sid"];
+        $this->populate();
+    }
+
+    public function populate()
+    {
+        // will go here;
     }
 
 
@@ -481,11 +490,13 @@ class measure_activity
         if (($result) && ($row_count > 0)) {
             while ($row = pg_fetch_array($result)) {
                 $ac = new additional_code;
-                $ac->code = $row['additional_code'];
-                $ac->spilt_code();
-                $ac->get_details_from_id();
-                array_push($this->additional_code_list, $ac);
-                $this->additional_codes .= $ac->code . "\n";
+                $ac->code = trim($row['additional_code']);
+                if ($ac->code != "") {
+                    $ac->spilt_code();
+                    $ac->get_details_from_id();
+                    array_push($this->additional_code_list, $ac);
+                    $this->additional_codes .= $ac->code . "\n";
+                }
             }
         }
         $this->additional_codes = rtrim($this->additional_codes);
@@ -530,11 +541,11 @@ class measure_activity
         $sql = "select component_sequence_number, condition_monetary_unit_code, condition_measurement_unit_code,
         condition_measurement_unit_qualifier_code, action_code,
         certificate_type_code || certificate_code as code, certificate_type_code, certificate_code
-        from ml.measure_conditions mpc where measure_sid = $1
+        from measure_activity_conditions where measure_activity_sid = $1
         order by component_sequence_number;";
         pg_prepare($conn, "populate_conditions_form", $sql);
         $result = pg_execute($conn, "populate_conditions_form", array(
-            $this->measure_sid
+            $this->measure_activity_sid
         ));
 
         $row_count = pg_num_rows($result);
@@ -633,7 +644,6 @@ class measure_activity
     public function validate_form_duties()
     {
         global $application;
-        //prend ($_REQUEST);
         $errors = array();
         if (count($errors) > 0) {
             $error_string = serialize($errors);
@@ -1635,6 +1645,37 @@ class measure_activity
  $this->combined_duty = preg_replace("/ \+ /", " + (", $this->combined_duty, 1);
  }
  */
+    }
+
+    public function add_condition () {
+        global $conn;
+        $condition_code = get_formvar("condition_code");
+        $action_code = get_formvar("action_code");
+        $condition_duty_amount = get_formvar("condition_duty_amount");
+        $condition_monetary_unit_code = get_formvar("condition_monetary_unit_code");
+        $condition_measurement_unit_code = get_formvar("condition_measurement_unit_code");
+        $condition_measurement_unit_qualifier_code = get_formvar("condition_measurement_unit_qualifier_code");
+        $certificate = new certificate();
+        $certificate->parse(get_formvar("certificate"));
+        $action_code = get_formvar("action_code");
+
+        $sql = "insert into measure_activity_conditions
+        (condition_code, condition_duty_amount, action_code, certificate_type_code, certificate_code, measure_activity_sid)
+        VALUES
+        ($1, $2, $3, $4, $5, $6)";
+        $stmt = "add_condition";
+            pg_prepare($conn, $stmt, $sql);
+            pg_execute($conn, $stmt, array(
+                $condition_code,
+                $condition_duty_amount,
+                $action_code,
+                $certificate->certificate_type_code,
+                $certificate->certificate_code,
+                $this->measure_activity_sid
+            ));
+        
+        h1 ($condition_code);
+        prend ($_REQUEST);
     }
 
     public function add_footnote()

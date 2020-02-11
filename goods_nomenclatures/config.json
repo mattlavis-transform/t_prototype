@@ -125,7 +125,7 @@
                 "control_type": "detail_table_control",
                 "control_name": "goods_nomenclature_descriptions",
                 "control_scope": "update",
-                "caption": "Existing commodity code descriptions"
+                "caption": "Descriptions"
             }
         ],
         "filters": [

@@ -37,10 +37,11 @@ require("../includes/metadata.php");
     require("../includes/header.php");
     ?>
     <div class="govuk-width-container">
+        <h1>If you have selected a quota type, then you will be asked to enter it here</h1>
         <?php
         
         if ($show_trade_remedies_fields == false) {
-            H1("Hide the trade remedies fields.");
+            //H1("Hide the trade remedies fields.");
         ?>
             <script>
                 $(document).ready(function() {
