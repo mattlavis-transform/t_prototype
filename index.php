@@ -131,6 +131,7 @@ require("includes/metadata.php");
 
                     <h2 class="govuk-heading-m govuk-!-margin-0">Reporting and auditing</h2>
                     <ul class="menu">
+                        <li><a href="/reporting/load_history.html">Load history</a></li>
                         <li><a href="">Generate audit report</a></li>
                         <li><a href="/snapshot/">Measure snapshots</a></li>
                     </ul>
@@ -208,7 +209,7 @@ require("includes/metadata.php");
                                     <td class="govuk-table__cell"><?= $workbasket->user_name ?></td>
                                     <td class="govuk-table__cell"><?= $workbasket->created_at ?></td>
                                     <td class="govuk-table__cell"><?= $workbasket->updated_at ?></td>
-                                    <td class="govuk-table__cell nowrap"><?= $workbasket->status_image() ?><?= $workbasket->status ?><?= $active ?></td>
+                                    <td class="govuk-table__cell nowrap"><?= status_image($workbasket->status) ?><?= $workbasket->status ?><?= $active ?></td>
                                     <td class="govuk-table__cell r">
                                         <?php
                                         // The buttons to show for the tariff manager

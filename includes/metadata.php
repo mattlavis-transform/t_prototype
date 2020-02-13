@@ -1,25 +1,27 @@
 <?php
 // Get the page title
-$title = "Manage the UK Tariff";
-//var_dump ($application->data);
 if ($application->tariff_object != "") {
     $config = $application->data[$application->tariff_object]["config"];
     switch ($application->mode) {
         case "insert":
             if (isset($config["title_create"])) {
-                $title = $config["title_create"] . " : " . $title;
+                $title = $config["title_create"] . " : " . $application->name;
             }
             break;
         case "update":
             if (isset($config["title_edit"])) {
-                $title = $config["title_edit"] . " : " . $title;
+                $title = $config["title_edit"] . " : " . $application->name;
             }
             break;
         default:
             if (isset($config["title"])) {
-                $title = $config["title"] . " : " . $title;
+                $title = $config["title"] . " : " . $application->name;
+            } else {
+                $title = $application->name;
             }
     }
+} else {
+    $title = $application->name;
 }
 ?>
 

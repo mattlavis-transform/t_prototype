@@ -34,6 +34,7 @@ class application
 
     public function __construct()
     {
+        $this->name = "Manage the UK tariff";
         $this->create_session();
         // Insert or edit mode
         if (isset($_REQUEST["mode"])) {
@@ -364,7 +365,7 @@ class application
                 $url = "/measures/?filter_measures_freetext=" . $base_regulation->base_regulation_id;
                 $base_regulation->measures_url = "<a class='govuk-link' href='" . $url . "'>View measures</a>";
                 $workbasket->status = ucwords($row['status']);
-                $base_regulation->status = $workbasket->status_image();
+                $base_regulation->status = status_image($workbasket->status);
                 array_push($temp, $base_regulation);
             }
             $this->base_regulations = $temp;
@@ -493,7 +494,7 @@ class application
                 $measures_url = "#";
                 $additional_code->measures_link = '<a class="govuk-link" href="' . $measures_url . '">View measures</a>';
                 $workbasket->status = ucwords($row['status']);
-                $additional_code->status = $workbasket->status_image();
+                $additional_code->status = status_image($workbasket->status);
 
                 array_push($temp, $additional_code);
             }
@@ -595,7 +596,7 @@ class application
                 $certificate->validity_end_date = short_date($row['validity_end_date']);
                 $certificate->measures_url = "<a class='govuk-link' href=''>View measures</a>";
                 $workbasket->status = ucwords($row['status']);
-                $certificate->status = $workbasket->status_image();
+                $certificate->status = status_image($workbasket->status);
                 array_push($temp, $certificate);
             }
             $this->certificates = $temp;
@@ -667,7 +668,7 @@ class application
                     $is_quota
                 );
                 $workbasket->status = ucwords($row['status']);
-                $measure_type->status = $workbasket->status_image();
+                $measure_type->status = status_image($workbasket->status);
                 $measure_type->measure_type_series_description = $measure_type_series_description;
                 $measure_type->measure_type_series_id_description = $measure_type_series_id . '&nbsp;' . $measure_type_series_description;
 
@@ -753,7 +754,7 @@ class application
                 $footnote->description = $row['description'];
                 $footnote->footnote_type_description = $row['footnote_type_description'];
                 $workbasket->status = ucwords($row['status']);
-                $footnote->status = $workbasket->status_image();
+                $footnote->status = status_image($workbasket->status);
                 $footnote->footnote_type_id_description = $footnote->footnote_type_id . ' ' . $footnote->footnote_type_description;
                 //$footnote->footnote_description_url = '<a class="govuk-link" href="./create_edit.html?mode=update&footnote_id=' . $footnote->footnote_id . '&footnote_type_id=' . $footnote->footnote_type_id . '">' . $footnote->description . '</a>';
                 $footnote->footnote_description_url = '<a class="govuk-link" href="./view.html?mode=view&footnote_id=' . $footnote->footnote_id . '&footnote_type_id=' . $footnote->footnote_type_id . '">' . $footnote->description . '</a>';
@@ -879,7 +880,7 @@ class application
                 $additional_code_type->id = $additional_code_type->additional_code_type_id;
                 $additional_code_type->string = $additional_code_type->additional_code_type_id . " - " . $additional_code_type->description;
                 $workbasket->status = ucwords($row['status']);
-                $additional_code_type->status = $workbasket->status_image();
+                $additional_code_type->status = status_image($workbasket->status);
                 //$url = "/additional_code_types/create_edit.html?mode=update&additional_code_type_id=" . $additional_code_type->additional_code_type_id;
                 $url = "/additional_code_types/view.html?mode=view&additional_code_type_id=" . $additional_code_type->additional_code_type_id;
                 $additional_code_type->description_url = '<a class="govuk-link" href="' . $url . '">' . $additional_code_type->description . '</a>';
@@ -924,7 +925,7 @@ class application
                 $application_code = $row['application_code'];
                 $application_code_description = $row['application_code_description'];
                 $workbasket->status = ucwords($row['status']);
-                $image = $workbasket->status_image();
+                $image = status_image($workbasket->status);
                 $workbasket_id = $row['workbasket_id'];
 
                 $footnote_type = new footnote_type;
@@ -1083,7 +1084,7 @@ class application
                 $certificate_type->validity_start_date = $validity_start_date;
                 $certificate_type->validity_end_date = $validity_end_date;
                 $workbasket->status = ucwords($row['status']);
-                $certificate_type->status = $workbasket->status_image();
+                $certificate_type->status = status_image($workbasket->status);
                 //$url = "/certificate_types/create_edit.html?mode=update&certificate_type_code=" . $certificate_type_code;
                 $url = "/certificate_types/view.html?mode=view&certificate_type_code=" . $certificate_type_code;
                 $certificate_type->certificate_type_url = "<a class='govuk-link' href='" . $url . "'>" . $certificate_type->description . "</a>";

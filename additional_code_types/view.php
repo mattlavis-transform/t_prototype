@@ -22,7 +22,7 @@ require("../includes/metadata.php");
 
         $control_content = array();
         $control_content["measure_types"] = $additional_code_type->measure_types;
-        //prend ($measure_type);
+        $control_content["versions"] = $additional_code_type->versions;
         new view_form($control_content, $additional_code_type);
         ?>
 

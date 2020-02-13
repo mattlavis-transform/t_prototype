@@ -785,7 +785,69 @@ function to_required_string($s)
     }
 }
 
-function string_before($s, $term) {
+function format_field_name($s)
+{
+    $s = str_replace('measure_sid', 'Measure', $s);
+    $s = str_replace('goods_nomenclature_item_id', 'Commodity code', $s);
+    $s = str_replace('geographical_area_description', 'Geography', $s);
+    $s = str_replace('measure_type_description', 'Measure type', $s);
+    $s = str_replace('ordernumber', 'Order number', $s);
+    $s = str_replace('base_regulation_id', 'Regulation id', $s);
+    $s = str_replace('regulation_group_id', 'regulation_group', $s);
+    $s = str_replace('trade_movement_code', 'Trade movement', $s);
+    $s = str_replace('measure_component_applicable_code', 'Components applicable', $s);
+    $s = str_replace('order_number_capture_code', 'Order number applicable', $s);
+    $s = str_replace('measure_type_id', 'Type', $s);
+    $s = str_replace('additional_code_type_id', 'Type', $s);
+    $s = str_replace('footnote_type_id', 'Type', $s);
+    $s = str_replace('certificate_type_code', 'Code', $s);
+    $s = str_replace('operation', 'action', $s);
+    $s = str_replace('validity_', '', $s);
+    $s = str_replace('_', ' ', $s);
+    $s = ucfirst($s);
+    $s = str_replace('id', 'ID', $s);
+    $s = str_replace('IDentifier', 'identifier', $s);
+    return ($s);
+}
+
+function format_value($row, $field)
+{
+    switch ($field) {
+        case "status":
+            return (status_image(ucwords($row->{$field})) . ucwords($row->{$field}));
+            break;
+        case "operation_date":
+        case "validity_start_date":
+        case "validity_end_date":
+            return (short_date($row->{$field}));
+            break;
+        case "operation":
+            return (expand_operation($row->{$field}));
+            break;
+        default:
+            return ($row->{$field});
+            break;
+    }
+    return ($row->{$field});
+}
+
+function expand_operation($s)
+{
+    switch ($s) {
+        case "C":
+            return ("Create");
+            break;
+        case "U":
+            return ("Update");
+            break;
+        case "D":
+            return ("Delete");
+            break;
+    }
+}
+
+function string_before($s, $term)
+{
     $term_pos = strpos($s, "-");
     if ($term_pos !== -1) {
         $s = substr($s, 0, $term_pos - 1);
@@ -793,21 +855,56 @@ function string_before($s, $term) {
     return (trim($s));
 }
 
-function put_spaces_round_slashes($s) {
+function put_spaces_round_slashes($s)
+{
     $s = str_replace("/", " / ", $s);
     $s = str_replace("  ", " ", $s);
     return ($s);
 }
 
-function underscore($s) {
+function underscore($s)
+{
     $s = str_replace(' ', '_', $s);
     return ($s);
 }
 
-function db_execute($sql, $array) {
+function db_execute($sql, $array)
+{
     global $conn;
     $stmt = "stmt_" . uniqid();
     pg_prepare($conn, $stmt, $sql);
     pg_execute($conn, $stmt, $array);
 }
-?>
+
+function status_image($status)
+{
+    switch ($status) {
+        case "In Progress":
+            $status_image = "in_progress.png";
+            break;
+        case "Approval Rejected":
+            $status_image = "approval_rejected.png";
+            break;
+        case "Sent To CDS":
+            $status_image = "sent_to_cds.png";
+            break;
+        case "Published":
+            $status_image = "published.png";
+            break;
+        case "In Progress":
+            $status_image = "in_progress.png";
+            break;
+        case "Awaiting Approval":
+            $status_image = "awaiting_approval.png";
+            break;
+        case "Re-editing":
+            $status_image = "re_editing.png";
+            break;
+        case "CDS Error":
+            $status_image = "cds_error.png";
+            break;
+        default:
+            $status_image = "";
+    }
+    return ("<img alt='" . $status . "' title='" . $status . "' style='position:relative;top:3px;margin-right:10px' src='/assets/images/" . $status_image . "' />");
+}

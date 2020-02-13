@@ -1265,3 +1265,9 @@ table.workbaskets tbody tr td.govuk-table__cell img {
     margin-right:0px !important;
 }
 
+.btn_nomargin {
+	margin:0px 0px 5px 0px !important;
+	font-size:10pt !important;
+	width:80px !important;
+	padding: 4px 0px 0px 2px !important;
+}

@@ -58,7 +58,13 @@
                     "control_scope": "view",
                     "caption": "Additional codes",
                     "subcaption": "Lists the additional codes ..."
-                }
+                },
+                {
+                    "control_type": "version_control",
+                    "control_scope": "view",
+                    "control_name": "versions",
+                    "caption": "Version control"
+                }    
             ]
         },
         "form": [

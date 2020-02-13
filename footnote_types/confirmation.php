@@ -2,6 +2,7 @@
 require(dirname(__FILE__) . "../../includes/db.php");
 $error_handler = new error_handler();
 $application = new application;
+$key = get_querystring("key");
 if ($application->mode == "insert") {
     $verb = "created";
 } else {
@@ -31,7 +32,7 @@ require("../includes/metadata.php");
                     <!-- Start panel //-->
                     <div class="govuk-panel govuk-panel--confirmation">
                         <h1 class="govuk-panel__title">
-                            Footnote type X has been <?= $verb ?>.
+                            Footnote type <?= $key ?> has been <?= $verb ?>.
                         </h1>
                         <div class="govuk-panel__body">
                             This change has been added to your workbasket<br /><br />&quot;<?=$application->session->workbasket->title?>&quot;

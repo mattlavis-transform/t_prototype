@@ -7,6 +7,7 @@
             "title_edit": "Edit certificate type {certificate_type_code}",
             "url_edit": "./create_edit.html?mode=update&certificate_type_code={certificate_type_code}",
             "title_view": "Certificate code type {certificate_type_code}",
+            "description_keys": "certificate_type_code",
             "validate": false,
             "inset": "Enter criteria to help find a certificate type. Alternatively, <a class='govuk-link' href='create_edit.html'>create a new certificate type</a>.",
             "freetext_fields": "",
@@ -40,6 +41,12 @@
                 }
             ],
             "controls": [
+                {
+                    "control_type": "version_control",
+                    "control_scope": "view",
+                    "control_name": "versions",
+                    "caption": "Version control"
+                }    
             ]
         },
         "form": [
@@ -76,11 +83,6 @@
                 "maxlength": 500,
                 "required": true,
                 "default": ""
-            },
-            {
-                "control_type": "xinclude_control",
-                "control_scope": "",
-                "path": "/includes/common/formatting_help.html"
             },
             {
                 "control_type": "date_picker_control",

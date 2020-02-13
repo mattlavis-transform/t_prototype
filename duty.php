@@ -56,7 +56,7 @@ $duty2 = preg_replace('/TON /', 'TONNE ', $duty2);
 // replace the measurement units
 $sql = "select measurement_unit_code, upper(description) as description from measurement_unit_descriptions mud
 where measurement_unit_code not in ('KGM') order by 1 desc;";
-$stmt = "stm1_1";
+$stmt = "stmt_1";
 pg_prepare($conn, $stmt, $sql);
 $result = pg_execute($conn, $stmt, array());
 if ($result) {
@@ -71,7 +71,7 @@ if ($result) {
 // replace the measurement unit qualifiers
 $sql = "select measurement_unit_qualifier_code, upper(description) as description from measurement_unit_qualifier_descriptions mud
 order by 1 desc;";
-$stmt = "stm1_2";
+$stmt = "stmt_2";
 pg_prepare($conn, $stmt, $sql);
 $result = pg_execute($conn, $stmt, array());
 if ($result) {

@@ -51,6 +51,7 @@ class measure_activity
         $this->commodity_code_list = array();
         $this->additional_code_list = array();
         $this->duties_same_for_all_commodities = null;
+        $this->ordernumber = null;
 
         $this->activity_name = "";
         $this->measure_components_xml = "";
@@ -444,7 +445,10 @@ class measure_activity
         global $conn;
 
         // Get duties all the same
-        $sql = "select duties_same_for_all_commodities from measure_activities where measure_activity_sid = $1";
+        $sql = "select ma.measure_type_id, duties_same_for_all_commodities, mt.order_number_capture_code 
+        from measure_activities ma, measure_types mt
+        where measure_activity_sid = $1
+        and ma.measure_type_id = mt.measure_type_id;";
         pg_prepare($conn, "p1", $sql);
         $result = pg_execute($conn, "p1", array(
             $this->measure_activity_sid
@@ -453,6 +457,8 @@ class measure_activity
         $row_count = pg_num_rows($result);
         if (($result) && ($row_count > 0)) {
             $row = pg_fetch_array($result);
+            $this->measure_type_id = $row['measure_type_id'];
+            $this->order_number_capture_code = $row['order_number_capture_code'];
             $this->duties_same_for_all_commodities = $row['duties_same_for_all_commodities'];
         }
 

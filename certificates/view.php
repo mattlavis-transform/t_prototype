@@ -22,6 +22,7 @@ require("../includes/metadata.php");
 
         $control_content = array();
         $control_content["certificate_descriptions"] = $certificate->descriptions;
+        $control_content["versions"] = $certificate->versions;
         new view_form($control_content, $certificate);
         ?>
 

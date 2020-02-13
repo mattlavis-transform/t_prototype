@@ -61,6 +61,12 @@
                     "control_name": "footnote_assignments",
                     "caption": "Assignments",
                     "subcaption": "This footnote has been assigned to the following measures."
+                },
+                {
+                    "control_type": "version_control",
+                    "control_scope": "view",
+                    "control_name": "versions",
+                    "caption": "Version control"
                 }    
             ]
         },

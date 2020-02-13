@@ -45,13 +45,49 @@ class geographical_area
                     h1("An error has occurred - no such geographical area");
                     die();
                 }
+                $this->get_version_control();
             } else {
                 $this->populate_from_cookies();
             }
         }
     }
 
-
+    public function get_version_control() {
+        global $conn;
+        $sql = "with cte as
+        (
+        select operation, operation_date,
+        validity_start_date, validity_end_date, status, null as description, '0' as object_precedence
+        from geographical_areas_oplog
+        where geographical_area_id = $1
+        union
+        select gad.operation, gad.operation_date,
+        validity_start_date, null as validity_end_date, gad.status, description, '1' as object_precedence
+        from geographical_area_descriptions_oplog gad, geographical_area_description_periods_oplog gadp
+        where gad.geographical_area_description_period_sid = gadp.geographical_area_description_period_sid 
+        and gad.geographical_area_id = $1
+        )
+        select operation, operation_date, validity_start_date, validity_end_date, status, description
+        from cte order by operation_date desc, object_precedence desc;";
+        $stmt = "stmt_1";
+        pg_prepare($conn, $stmt, $sql);
+        $result = pg_execute($conn, $stmt, array($this->geographical_area_id));
+        if ($result) {
+            $this->versions = $result;
+            return;
+            $row_count = pg_num_rows($result);
+            if (($row_count > 0) && (pg_num_rows($result))) {
+                while ($row = pg_fetch_array($result)) {
+                    $version = new footnote_type();
+                    $version->validity_start_date = $row["validity_start_date"];
+                    $version->validity_end_date = $row["validity_start_date"];
+                    $version->validity_start_date = $row["validity_start_date"];
+                    $version->validity_start_date = $row["validity_start_date"];
+                    array_push($this->versions, $version);
+                }
+            }
+        }
+    }
 
     public function get_members()
     {

@@ -67,8 +67,42 @@ class measure_type
                     h1("An error has occurred - no such measure type");
                     die();
                 }
+                $this->get_version_control();
             } else {
                 $this->populate_from_cookies();
+            }
+        }
+    }
+
+    public function get_version_control() {
+        global $conn;
+        $sql = "with cte as (select operation, operation_date,
+        validity_start_date, validity_end_date, status, null as description, '0' as object_precedence
+        from measure_types_oplog
+        where measure_type_id = $1
+        union
+        select operation, operation_date,
+        null as validity_start_date, null as validity_end_date, status, description, '1' as object_precedence
+        from measure_type_descriptions_oplog
+        where measure_type_id = $1)
+        select operation, operation_date, validity_start_date, validity_end_date, status, description
+        from cte order by operation_date desc, object_precedence desc;";
+        $stmt = "stmt_1";
+        pg_prepare($conn, $stmt, $sql);
+        $result = pg_execute($conn, $stmt, array($this->measure_type_id));
+        if ($result) {
+            $this->versions = $result;
+            return;
+            $row_count = pg_num_rows($result);
+            if (($row_count > 0) && (pg_num_rows($result))) {
+                while ($row = pg_fetch_array($result)) {
+                    $version = new measure_type();
+                    $version->validity_start_date = $row["validity_start_date"];
+                    $version->validity_end_date = $row["validity_start_date"];
+                    $version->validity_start_date = $row["validity_start_date"];
+                    $version->validity_start_date = $row["validity_start_date"];
+                    array_push($this->versions, $version);
+                }
             }
         }
     }

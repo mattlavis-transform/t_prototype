@@ -22,6 +22,7 @@ require("../includes/metadata.php");
 
         $control_content = array();
         $control_content["additional_code_descriptions"] = $additional_code->descriptions;
+        $control_content["versions"] = $additional_code->versions;
         new view_form($control_content, $additional_code);
         ?>
 

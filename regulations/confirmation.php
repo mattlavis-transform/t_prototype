@@ -2,6 +2,7 @@
 require(dirname(__FILE__) . "../../includes/db.php");
 $error_handler = new error_handler();
 $application = new application;
+$key = get_querystring("key");
 if ($application->mode == "insert") {
     $verb = "created";
 } else {
@@ -31,7 +32,7 @@ require("../includes/metadata.php");
                     <!-- Start panel //-->
                     <div class="govuk-panel govuk-panel--confirmation">
                         <h1 class="govuk-panel__title">
-                            The regulation has been <?= $verb ?>
+                            Regulation <?= $key ?> has been <?= $verb ?>
                         </h1>
                         <div class="govuk-panel__body">
                             Subject to approval

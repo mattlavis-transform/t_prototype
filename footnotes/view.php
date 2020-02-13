@@ -31,7 +31,8 @@ require("../includes/metadata.php");
             $control_content["footnote_assignments"] = $footnote->footnote_assignments;
         }
         $control_content["application_code_description"] = $footnote->application_code_description;
-        
+        $control_content["versions"] = $footnote->versions;
+
         new view_form($control_content, $footnote);
         ?>
 

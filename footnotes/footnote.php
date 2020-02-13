@@ -184,8 +184,46 @@ class footnote
                     h1("An error has occurred - no such footnote");
                     die();
                 }
+                $this->get_version_control();
             } else {
                 $this->populate_from_cookies();
+            }
+        }
+    }
+
+    public function get_version_control() {
+        global $conn;
+        $sql = "with cte as
+        (
+        select operation, operation_date,
+        validity_start_date, validity_end_date, status, null as description, '0' as object_precedence
+        from footnotes_oplog
+        where footnote_type_id = $1 and footnote_id = $2
+        union
+        select fd.operation, fd.operation_date,
+        validity_start_date, null as validity_end_date, fd.status, description, '1' as object_precedence
+        from footnote_descriptions_oplog fd, footnote_description_periods_oplog fdp
+        where fd.footnote_description_period_sid = fdp.footnote_description_period_sid 
+        and fd.footnote_type_id = $1 and fd.footnote_id = $2
+        )
+        select operation, operation_date, validity_start_date, validity_end_date, status, description
+        from cte order by operation_date desc, object_precedence desc;";
+        $stmt = "stmt_1";
+        pg_prepare($conn, $stmt, $sql);
+        $result = pg_execute($conn, $stmt, array($this->footnote_type_id, $this->footnote_id));
+        if ($result) {
+            $this->versions = $result;
+            return;
+            $row_count = pg_num_rows($result);
+            if (($row_count > 0) && (pg_num_rows($result))) {
+                while ($row = pg_fetch_array($result)) {
+                    $version = new footnote_type();
+                    $version->validity_start_date = $row["validity_start_date"];
+                    $version->validity_end_date = $row["validity_start_date"];
+                    $version->validity_start_date = $row["validity_start_date"];
+                    $version->validity_start_date = $row["validity_start_date"];
+                    array_push($this->versions, $version);
+                }
             }
         }
     }

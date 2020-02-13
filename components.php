@@ -1,6 +1,6 @@
 <?php
-    require("includes/db.php");
-    ?>
+require("includes/db.php");
+?>
 <!DOCTYPE html>
 <html lang="en" class="govuk-template">
 
@@ -77,101 +77,101 @@
                     <!-- End warning //-->
 
 
-<!-- Start task list //-->
+                    <!-- Start task list //-->
                     <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">
-        Service name goes here
-      </h1>
+                        <div class="govuk-grid-column-two-thirds">
+                            <h1 class="govuk-heading-xl">
+                                Service name goes here
+                            </h1>
 
-      <ol class="app-task-list">
-        <li>
-          <h2 class="app-task-list__section">
-            <span class="app-task-list__section-number">1. </span> Check before you start
-          </h2>
-          <ul class="app-task-list__items">
-            <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
-                <a href="#" aria-describedby="eligibility-completed">
-                  Check eligibility
-                </a>
-              </span>
-              <strong class="govuk-tag app-task-list__task-completed" id="eligibility-completed">Completed</strong>
-            </li>
-            <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
-                <a href="#" aria-describedby="read-declaration-completed">
-                  Read declaration
-                </a>
-              </span>
-              <strong class="govuk-tag app-task-list__task-completed" id="read-declaration-completed">Completed</strong>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <h2 class="app-task-list__section">
-            <span class="app-task-list__section-number">2. </span> Prepare application
-          </h2>
-          <ul class="app-task-list__items">
-            <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
-                <a href="#" aria-describedby="company-information-completed">
-                  Company information
-                </a>
-              </span>
-              <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
-            </li>
-            <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
-                <a href="#" aria-describedby="contact-details-completed">
-                  Your contact details
-                </a>
-              </span>
-              <strong class="govuk-tag app-task-list__task-completed" id="contact-details-completed">Completed</strong>
-            </li>
-            <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
-                <a href="#">
-                  List convictions
-                </a>
-              </span>
-            </li>
-            <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
-                <a href="#">
-                  Provide financial evidence
-                </a>
-              </span>
-            </li>
-            <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
-                <a href="#" aria-describedby="medical-information-completed">
-                  Give medical information
-                </a>
-              </span>
-              <strong class="govuk-tag app-task-list__task-completed" id="medical-information-completed">Completed</strong>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <h2 class="app-task-list__section">
-            <span class="app-task-list__section-number">3. </span> Apply
-          </h2>
-          <ul class="app-task-list__items">
-            <li class="app-task-list__item">
-              <span class="app-task-list__task-name">
-                <a href="#">
-                  Submit and pay
-                </a>
-              </span>
-            </li>
-          </ul>
-        </li>
-      </ol>
+                            <ol class="app-task-list">
+                                <li>
+                                    <h2 class="app-task-list__section">
+                                        <span class="app-task-list__section-number">1. </span> Check before you start
+                                    </h2>
+                                    <ul class="app-task-list__items">
+                                        <li class="app-task-list__item">
+                                            <span class="app-task-list__task-name">
+                                                <a href="#" aria-describedby="eligibility-completed">
+                                                    Check eligibility
+                                                </a>
+                                            </span>
+                                            <strong class="govuk-tag app-task-list__task-completed" id="eligibility-completed">Completed</strong>
+                                        </li>
+                                        <li class="app-task-list__item">
+                                            <span class="app-task-list__task-name">
+                                                <a href="#" aria-describedby="read-declaration-completed">
+                                                    Read declaration
+                                                </a>
+                                            </span>
+                                            <strong class="govuk-tag app-task-list__task-completed" id="read-declaration-completed">Completed</strong>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <h2 class="app-task-list__section">
+                                        <span class="app-task-list__section-number">2. </span> Prepare application
+                                    </h2>
+                                    <ul class="app-task-list__items">
+                                        <li class="app-task-list__item">
+                                            <span class="app-task-list__task-name">
+                                                <a href="#" aria-describedby="company-information-completed">
+                                                    Company information
+                                                </a>
+                                            </span>
+                                            <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
+                                        </li>
+                                        <li class="app-task-list__item">
+                                            <span class="app-task-list__task-name">
+                                                <a href="#" aria-describedby="contact-details-completed">
+                                                    Your contact details
+                                                </a>
+                                            </span>
+                                            <strong class="govuk-tag app-task-list__task-completed" id="contact-details-completed">Completed</strong>
+                                        </li>
+                                        <li class="app-task-list__item">
+                                            <span class="app-task-list__task-name">
+                                                <a href="#">
+                                                    List convictions
+                                                </a>
+                                            </span>
+                                        </li>
+                                        <li class="app-task-list__item">
+                                            <span class="app-task-list__task-name">
+                                                <a href="#">
+                                                    Provide financial evidence
+                                                </a>
+                                            </span>
+                                        </li>
+                                        <li class="app-task-list__item">
+                                            <span class="app-task-list__task-name">
+                                                <a href="#" aria-describedby="medical-information-completed">
+                                                    Give medical information
+                                                </a>
+                                            </span>
+                                            <strong class="govuk-tag app-task-list__task-completed" id="medical-information-completed">Completed</strong>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <h2 class="app-task-list__section">
+                                        <span class="app-task-list__section-number">3. </span> Apply
+                                    </h2>
+                                    <ul class="app-task-list__items">
+                                        <li class="app-task-list__item">
+                                            <span class="app-task-list__task-name">
+                                                <a href="#">
+                                                    Submit and pay
+                                                </a>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ol>
 
-    </div>
-  </div>
-<!-- End task list //-->
+                        </div>
+                    </div>
+                    <!-- End task list //-->
 
 
 

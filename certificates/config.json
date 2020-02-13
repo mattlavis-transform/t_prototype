@@ -50,7 +50,13 @@
                     "control_scope": "view",
                     "control_name": "certificate_descriptions",
                     "caption": "Descriptions"
-                }
+                },
+                {
+                    "control_type": "version_control",
+                    "control_scope": "view",
+                    "control_name": "versions",
+                    "caption": "Version control"
+                }    
             ]
         },
         "form": [

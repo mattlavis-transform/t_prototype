@@ -24,6 +24,7 @@ require("../includes/metadata.php");
         $control_content["geographical_area_descriptions"] = $geographical_area->descriptions;
         $control_content["geographical_area_memberships"] = $geographical_area->members;
         $control_content["roo_scheme_memberships"] = $geographical_area->roo_members;
+        $control_content["versions"] = $geographical_area->versions;
         new view_form($control_content, $geographical_area);
         ?>
 

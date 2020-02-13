@@ -17,6 +17,7 @@ class base_regulation
     public $public_identifier = "";
     public $trade_remedies_case = "";
     public $url = "";
+    public $measures = array();
 
     public function get_parameters()
     {
@@ -36,9 +37,49 @@ class base_regulation
                     h1("An error has occurred - no such regulation");
                     die();
                 }
+                $this->get_version_control();
+                $this->get_measures();
             } else {
                 $this->populate_from_cookies();
             }
+        }
+    }
+
+    public function get_measures() {
+        global $conn;
+        $sql = "
+        select m.measure_sid,
+        (m.measure_type_id || ' - ' || mtd.description) as measure_type_description,
+        (m.geographical_area_id || ' - ' || ga.description) as geographical_area_description,
+        m.validity_start_date, m.validity_end_date, m.goods_nomenclature_item_id, m.ordernumber,
+        (m.additional_code_type_id || m.additional_code_id) as additional_code
+        from measures m, ml.ml_geographical_areas ga, measure_type_descriptions mtd 
+        where m.geographical_area_id = ga.geographical_area_id 
+        and m.measure_type_id = mtd.measure_type_id 
+        and m.measure_generating_regulation_id = $1
+        order by m.validity_start_date, m.goods_nomenclature_item_id;";
+        $stmt = "stmt_get_measures";
+        pg_prepare($conn, $stmt, $sql);
+        $result = pg_execute($conn, $stmt, array($this->base_regulation_id));
+        if ($result) {
+            $this->measures = $result;
+            return;
+        }
+    }
+
+    public function get_version_control() {
+        global $conn;
+        $sql = "select operation, operation_date, base_regulation_id,
+        validity_start_date, validity_end_date, status, '0' as object_precedence
+        from base_regulations_oplog ft
+        where base_regulation_id = $1
+        order by operation_date desc, object_precedence desc;";
+        $stmt = "stmt_1";
+        pg_prepare($conn, $stmt, $sql);
+        $result = pg_execute($conn, $stmt, array($this->base_regulation_id));
+        if ($result) {
+            $this->versions = $result;
+            return;
         }
     }
 

@@ -170,22 +170,22 @@ class view_form
                                 </tbody>
                             </table>
                             <?php
-                                $warning_array = array("Footnotes", "Additional codes", "Geographical areas", "Certificates");
-                                if (in_array($config["object_name"], $warning_array)) {
-                                    $tab_name = "#tab_" . $this->singularise($config["object_name"], true) . "_descriptions";
+                            $warning_array = array("Footnotes", "Additional codes", "Geographical areas", "Certificates");
+                            if (in_array($config["object_name"], $warning_array)) {
+                                $tab_name = "#tab_" . $this->singularise($config["object_name"], true) . "_descriptions";
                             ?>
-                            <!-- Start warning //-->
-                            <div class="govuk-warning-text">
-                                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                                <strong class="govuk-warning-text__text">
-                                    <span class="govuk-warning-text__assistive">Warning</span>
-                                    Please note that you are unable to modify descriptions on this tab.
-                                    Please select the '<a href="<?= $tab_name ?>">Descriptions</a>' tab to create and modify descriptions.
-                                </strong>
-                            </div>
-                            <!-- End warning //-->
+                                <!-- Start warning //-->
+                                <div class="govuk-warning-text">
+                                    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                                    <strong class="govuk-warning-text__text">
+                                        <span class="govuk-warning-text__assistive">Warning</span>
+                                        Please note that you are unable to modify descriptions on this tab.
+                                        Please select the '<a href="<?= $tab_name ?>">Descriptions</a>' tab to create and modify descriptions.
+                                    </strong>
+                                </div>
+                                <!-- End warning //-->
                             <?php
-                                }
+                            }
                             ?>
                             <p class='govuk-body'><a class="govuk-link" href="<?= $this->url_edit ?>">Edit this <?= $this->singularise($config["object_name"]) ?></a></p>
                             <!-- End primary fields //-->
@@ -199,10 +199,19 @@ class view_form
                         foreach ($my_control_content as $item) {
                         ?>
                             <section class="govuk-tabs__panel govuk-tabs__panel--hidden" id="tab_<?= $item["control_name"] ?>">
-                                <!--<h2 class="govuk-heading-l">Past year</h2>//-->
                                 <?php
                                 $control_type = $item["control_type"];
                                 switch ($control_type) {
+                                    case "version_control":
+                                        new version_control(
+                                            $control_name = $item["control_name"],
+                                            $control_scope = $item["control_scope"],
+                                            $caption = $item["caption"],
+                                            $dataset = $this->control_content[$control_name],
+                                            $description_keys = $config["description_keys"]
+                                        );
+                                        break;
+
                                     case "detail_table_control":
                                         new detail_table_control(
                                             $control_name = $item["control_name"],

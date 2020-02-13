@@ -158,7 +158,7 @@
                 "heading_text": "Next steps",
                 "submit_button_text_create": "Continue to select commodities",
                 "submit_button_text_edit": "Continue to select commodities",
-                "save_progress_button_text": "",
+                "save_progress_button_text": "Save progress",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
             }
@@ -306,7 +306,7 @@
                 "heading_text": "Next steps",
                 "submit_button_text_create": "Continue to enter duties",
                 "submit_button_text_edit": "Continue to enter duties",
-                "save_progress_button_text": "",
+                "save_progress_button_text": "Save progress",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
             }
@@ -456,7 +456,7 @@
                 "heading_text": "Next steps",
                 "submit_button_text_create": "Continue to apply measure conditions",
                 "submit_button_text_edit": "Continue to apply measure conditions",
-                "save_progress_button_text": "",
+                "save_progress_button_text": "Save progress",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
             }
@@ -469,6 +469,22 @@
             },
             {
                 "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "Enter quota order number",
+                "label_style": "govuk-label--m",
+                "hint_text": "Because you have selected a quota measure type, you will need to enter the quota order number here.",
+                "control_name": "ordernumber",
+                "control_style": "govuk-input--width-10",
+                "size": 6,
+                "maxlength": 6,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": "",
+                "group_class": "ordernumber"
             },
             {
                 "control_type": "input_control",
@@ -621,7 +637,7 @@
                 "heading_text": "Next steps",
                 "submit_button_text_create": "Continue to apply footnotes",
                 "submit_button_text_edit": "Continue to apply footnotes",
-                "save_progress_button_text": "",
+                "save_progress_button_text": "Save progress",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
             }
@@ -660,7 +676,7 @@
                 "heading_text": "Next steps",
                 "submit_button_text_create": "Add measures to workbasket",
                 "submit_button_text_edit": "Add measures to workbasket",
-                "save_progress_button_text": "",
+                "save_progress_button_text": "Save progress",
                 "cancel_button_text": "Cancel",
                 "cancel_button_href": "./"
             }

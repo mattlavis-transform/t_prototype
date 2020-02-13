@@ -2,7 +2,7 @@
     <div class="govuk-grid-column-full">
         <?php
         global $measure_activity;
-        //pre ($measure_activity->additional_code_list);
+        
         foreach ($measure_activity->additional_code_list as $additional_code) {
             if ($additional_code->additional_code == "999") {
         ?>

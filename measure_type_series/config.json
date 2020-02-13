@@ -55,11 +55,6 @@
                 "default": ""
             },
             {
-                "control_type": "include_control",
-                "control_scope": "",
-                "path": "/includes/common/formatting_help.html"
-            },
-            {
                 "control_type": "date_picker_control",
                 "label": "When does this measure type series enter into force?",
                 "label_style": "govuk-label--m",

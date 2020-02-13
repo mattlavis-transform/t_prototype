@@ -1,7 +1,7 @@
 select * from duty_expression_descriptions ded order by 1;
 
 select measurement_unit_qualifier_code from measurement_unit_qualifiers order by 1;
-
+frand
 select * from duty_expressions where duty_expression_id = '01';
 
 select * from measurements m where measurement_unit_code = 'KGM' and measurement_unit_qualifier_code = 'N'
@@ -1599,3 +1599,42 @@ select * from measures where ordernumber = '090059' order by validity_start_date
 select * from quota_order_numbers qon where quota_order_number_id = '090059'
 
 select * from measures_oplog where goods_nomenclature_item_id = '2309109000' and ordernumber is not null
+
+
+select additional_code_type_id || additional_code as additional_code from measure_activity_additional_codes
+        where measure_activity_sid = 7
+order by additional_code_type_id, additional_code
+
+
+
+
+CREATE TABLE public.measure_activity_conditions (
+	measure_condition_sid int4 NULL,
+	condition_code varchar(255) NULL,
+	component_sequence_number int4 NULL,
+	condition_duty_amount float8 NULL,
+	condition_monetary_unit_code varchar(255) NULL,
+	condition_measurement_unit_code varchar(3) NULL,
+	condition_measurement_unit_qualifier_code varchar(1) NULL,
+	action_code varchar(255) NULL,
+	certificate_type_code varchar(1) NULL,
+	certificate_code varchar(3) NULL,
+	measure_activity_sid int4 NULL
+);
+
+select measurement_unit_qualifier_code, upper(description) from measurement_unit_qualifier_descriptions muqd 
+order by 1 desc
+
+select distinct measurement_unit_code, measurement_unit_qualifier_code
+from measure_components mc, measures m 
+where m.measure_sid = mc.measure_sid 
+order by 1, 2;
+
+select * from duty_expression_descriptions ded order by duty_expression_id 
+
+select measurement_unit_code, upper(description) from measurement_unit_descriptions mud
+where measurement_unit_code not in ('KGM') order by 1 desc;
+
+select measurement_unit_qualifier_code, upper(description) as description from measurement_unit_qualifier_descriptions mud
+where measurement_unit_qualifier_code not in ('KGM') order by 1 desc;
+

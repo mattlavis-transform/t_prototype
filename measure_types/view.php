@@ -21,7 +21,7 @@ require("../includes/metadata.php");
         require("../includes/phase_banner.php");
 
         $control_content = array();
-        //prend ($measure_type);
+        $control_content["versions"] = $measure_type->versions;
         new view_form($control_content, $measure_type);
         ?>
 

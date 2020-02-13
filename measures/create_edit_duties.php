@@ -37,11 +37,9 @@ require("../includes/metadata.php");
     require("../includes/header.php");
     ?>
     <div class="govuk-width-container">
-        <h1>If you have selected a quota type, then you will be asked to enter it here</h1>
         <?php
-        
+
         if ($show_trade_remedies_fields == false) {
-            //H1("Hide the trade remedies fields.");
         ?>
             <script>
                 $(document).ready(function() {
@@ -50,7 +48,16 @@ require("../includes/metadata.php");
             </script>
         <?php
         }
-        
+        if ($measure_activity->order_number_capture_code != 1) {
+        ?>
+            <script>
+                $(document).ready(function() {
+                    $(".ordernumber").hide();
+                });
+            </script>
+        <?php
+        }
+
         require("../includes/phase_banner.php");
         $control_content = array();
         $control_content["duties_same_for_all_commodities"] = $application->duties_same_for_all_commodities;

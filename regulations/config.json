@@ -10,6 +10,7 @@
             "title_edit": "Edit regulation",
             "url_edit": "./create_edit.html?mode=update&base_regulation_id={base_regulation_id}",
             "title_view": "Regulation {base_regulation_id}",
+            "description_keys": "base_regulation_id",
             "validate": false,
             "buttons": {
                 "heading_text": "Finish now",
@@ -56,7 +57,20 @@
                     "value": "{validity_end_date}"
                 }
             ],
-            "controls": []
+            "controls": [
+                {
+                    "control_type": "version_control",
+                    "control_scope": "view",
+                    "control_name": "measures",
+                    "caption": "Measures"
+                },
+                {
+                    "control_type": "version_control",
+                    "control_scope": "view",
+                    "control_name": "versions",
+                    "caption": "Version control"
+                }
+            ]
         },
         "form": [
             {

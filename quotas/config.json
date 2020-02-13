@@ -179,11 +179,6 @@
             {
                 "control_type": "include_control",
                 "control_scope": "",
-                "path": "/includes/common/formatting_help.html"
-            },
-            {
-                "control_type": "include_control",
-                "control_scope": "",
                 "path": "/includes/origins.php"
             },
             {

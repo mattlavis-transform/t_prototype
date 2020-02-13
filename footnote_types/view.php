@@ -21,6 +21,7 @@ require("../includes/metadata.php");
         require("../includes/phase_banner.php");
 
         $control_content = array();
+        $control_content["versions"] = $footnote_type->versions;
         new view_form($control_content, $footnote_type);
         ?>
 

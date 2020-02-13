@@ -50,6 +50,12 @@
                     "control_name": "additional_code_descriptions",
                     "control_scope": "view",
                     "caption": "Descriptions"
+                },
+                {
+                    "control_type": "version_control",
+                    "control_scope": "view",
+                    "control_name": "versions",
+                    "caption": "Version control"
                 }    
             ]
         },

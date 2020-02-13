@@ -33,39 +33,6 @@ class workbasket
     {
     }
 
-    public function status_image()
-    {
-        switch ($this->status) {
-            case "In Progress":
-                $this->status_image = "in_progress.png";
-                break;
-            case "Approval Rejected":
-                $this->status_image = "approval_rejected.png";
-                break;
-            case "Sent To CDS":
-                $this->status_image = "sent_to_cds.png";
-                break;
-            case "Published":
-                $this->status_image = "published.png";
-                break;
-            case "In Progress":
-                $this->status_image = "in_progress.png";
-                break;
-            case "Awaiting Approval":
-                $this->status_image = "awaiting_approval.png";
-                break;
-            case "Re-editing":
-                $this->status_image = "re_editing.png";
-                break;
-            case "CDS Error":
-                $this->status_image = "cds_error.png";
-                break;
-            default:
-                $this->status_image = "";
-        }
-        return ("<img alt='" . $this->status . "' title='" . $this->status . "' style='position:relative;top:3px;margin-right:10px' src='/assets/images/" . $this->status_image . "' />");
-    }
-
     public function show_section($object_type, $result)
     {
         $id = "accordion-with-summary-sections-" . underscore($object_type);
@@ -111,7 +78,7 @@ class workbasket
                             <?php
                             for ($i = 0; $i < $field_count; $i++) {
                                 $field = pg_field_name($result, $i);
-                                echo ('<th width="' . $widths[$i] . '%" scope="col" class="govuk-table__header">' . $this->format_field_name($field) . '</th>');
+                                echo ('<th width="' . $widths[$i] . '%" scope="col" class="govuk-table__header">' . format_field_name($field) . '</th>');
                             }
                             ?>
                             <th scope="col" class="govuk-table__header r">Next step</th>
@@ -124,7 +91,7 @@ class workbasket
                             echo ('<tr class="govuk-table__row">');
                             for ($i = 0; $i < $field_count; $i++) {
                                 $field = pg_field_name($result, $i);
-                                echo ('<td class="govuk-table__cell">' . $this->format_value($row, $field) . '</td>');
+                                echo ('<td class="govuk-table__cell">' . format_value($row, $field) . '</td>');
                             }
                             $delete_url = "actions.php?action=delete_workbasket_item&id=" . $row->id;
                             echo ('<td class="govuk-table__cell r" nowrap>');
@@ -145,58 +112,6 @@ class workbasket
     public function get_view_url($object_type, $record_id)
     {
         h1($object_type . $record_id);
-    }
-
-    public function format_value($row, $field)
-    {
-        switch ($field) {
-            case "validity_start_date":
-            case "validity_end_date":
-                return (short_date($row->{$field}));
-                break;
-            case "operation":
-                return ($this->expand_operation($row->{$field}));
-                break;
-            default:
-                return ($row->{$field});
-                break;
-        }
-        return ($row->{$field});
-    }
-
-    public function expand_operation($s)
-    {
-        switch ($s) {
-            case "C":
-                return ("Create");
-                break;
-            case "U":
-                return ("Update");
-                break;
-            case "D":
-                return ("Delete");
-                break;
-        }
-    }
-
-    public function format_field_name($s)
-    {
-        $s = str_replace('base_regulation_id', 'Regulation id', $s);
-        $s = str_replace('regulation_group_id', 'regulation_group', $s);
-        $s = str_replace('trade_movement_code', 'Trade movement', $s);
-        $s = str_replace('measure_component_applicable_code', 'Components applicable', $s);
-        $s = str_replace('order_number_capture_code', 'Order number applicable', $s);
-        $s = str_replace('measure_type_id', 'Type', $s);
-        $s = str_replace('additional_code_type_id', 'Type', $s);
-        $s = str_replace('footnote_type_id', 'Type', $s);
-        $s = str_replace('certificate_type_code', 'Code', $s);
-        $s = str_replace('operation', 'action', $s);
-        $s = str_replace('validity_', '', $s);
-        $s = str_replace('_', ' ', $s);
-        $s = ucfirst($s);
-        $s = str_replace('id', 'ID', $s);
-        $s = str_replace('IDentifier', 'identifier', $s);
-        return ($s);
     }
 
     public function workbasket_get_footnote_types()

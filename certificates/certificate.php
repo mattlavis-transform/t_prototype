@@ -155,12 +155,49 @@ class certificate
                     h1("An error has occurred - no such certificate");
                     die();
                 }
+                $this->get_version_control();
             } else {
                 $this->populate_from_cookies();
             }
         }
     }
 
+    public function get_version_control() {
+        global $conn;
+        $sql = "with cte as
+        (
+        select operation, operation_date,
+        validity_start_date, validity_end_date, status, null as description, '0' as object_precedence
+        from certificates_oplog
+        where certificate_type_code = $1 and certificate_code = $2
+        union
+        select ct.operation, ct.operation_date,
+        validity_start_date, null as validity_end_date, ct.status, description, '1' as object_precedence
+        from certificate_descriptions_oplog ct, certificate_description_periods_oplog ctp
+        where ct.certificate_description_period_sid = ctp.certificate_description_period_sid 
+        and ct.certificate_type_code = $1 and ct.certificate_code = $2
+        )
+        select operation, operation_date, validity_start_date, validity_end_date, status, description
+        from cte order by operation_date desc, object_precedence desc;";
+        $stmt = "stmt_1";
+        pg_prepare($conn, $stmt, $sql);
+        $result = pg_execute($conn, $stmt, array($this->certificate_type_code, $this->certificate_code));
+        if ($result) {
+            $this->versions = $result;
+            return;
+            $row_count = pg_num_rows($result);
+            if (($row_count > 0) && (pg_num_rows($result))) {
+                while ($row = pg_fetch_array($result)) {
+                    $version = new footnote_type();
+                    $version->validity_start_date = $row["validity_start_date"];
+                    $version->validity_end_date = $row["validity_start_date"];
+                    $version->validity_start_date = $row["validity_start_date"];
+                    $version->validity_start_date = $row["validity_start_date"];
+                    array_push($this->versions, $version);
+                }
+            }
+        }
+    }
 
     public function get_specific_description($validity_start_date)
     {

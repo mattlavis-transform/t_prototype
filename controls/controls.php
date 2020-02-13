@@ -29,5 +29,7 @@ require (dirname(__FILE__) . "../../controls/additional_code_measure_type_table.
 require (dirname(__FILE__) . "../../controls/back_to_top.php");
 require (dirname(__FILE__) . "../../controls/left_nav.php");
 require (dirname(__FILE__) . "../../controls/dependent_object_table_control.php");
+require (dirname(__FILE__) . "../../controls/version_control.php");
+require (dirname(__FILE__) . "../../controls/measures_table.php");
 
 ?>

@@ -3,7 +3,7 @@ class footnote_type
 {
     // Class properties and methods go here
     public $footnote_type_id  = "";
-    public $description             = "";
+    public $description = "";
     public $id_disabled = "";
     public $validity_start_date = null;
     public $validity_end_date = null;
@@ -14,6 +14,7 @@ class footnote_type
     public $next_id = null;
     public $workbasket_id = null;
     public $status = null;
+    public $versions = array();
 
     public function __construct()
     {
@@ -49,8 +50,43 @@ class footnote_type
                     h1("An error has occurred - no such footnote type");
                     die();
                 }
+                $this->get_version_control();
             } else {
                 $this->populate_from_cookies();
+            }
+        }
+    }
+
+    public function get_version_control() {
+        global $conn;
+        $sql = "with cte as (select operation, operation_date,  ft.application_code || ' - ' || description as application_code,
+        validity_start_date, validity_end_date, status, null as description, '0' as object_precedence
+        from footnote_types_oplog ft, footnote_type_application_codes ftac
+        where footnote_type_id = $1
+        and ft.application_code = ftac.footnote_type_application_code
+        union
+        select operation, operation_date, null as application_code,
+        null as validity_start_date, null as validity_end_date, status, description, '1' as object_precedence
+        from footnote_type_descriptions_oplog ft
+        where footnote_type_id = $1)
+        select operation, operation_date, application_code, validity_start_date, validity_end_date, status, description
+        from cte order by operation_date desc, object_precedence desc;";
+        $stmt = "stmt_1";
+        pg_prepare($conn, $stmt, $sql);
+        $result = pg_execute($conn, $stmt, array($this->footnote_type_id));
+        if ($result) {
+            $this->versions = $result;
+            return;
+            $row_count = pg_num_rows($result);
+            if (($row_count > 0) && (pg_num_rows($result))) {
+                while ($row = pg_fetch_array($result)) {
+                    $version = new footnote_type();
+                    $version->validity_start_date = $row["validity_start_date"];
+                    $version->validity_end_date = $row["validity_start_date"];
+                    $version->validity_start_date = $row["validity_start_date"];
+                    $version->validity_start_date = $row["validity_start_date"];
+                    array_push($this->versions, $version);
+                }
             }
         }
     }
@@ -222,7 +258,7 @@ class footnote_type
                 // Do edit scripts
                 $this->create_update("U");
             }
-            $url = "./confirmation.html?mode=" . $application->mode;
+            $url = "./confirmation.html?mode=" . $application->mode . "&key=" . $this->footnote_type_id;
         }
         header("Location: " . $url);
     }
@@ -265,7 +301,6 @@ class footnote_type
         $result = pg_execute($conn, "stmt_2", array(
             $workbasket_item_id, $oid
         ));
-
 
         # Create the footnote_type description record
         $sql = "INSERT INTO footnote_type_descriptions_oplog (

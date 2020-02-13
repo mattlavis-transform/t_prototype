@@ -2,6 +2,7 @@
 require(dirname(__FILE__) . "../../includes/db.php");
 $error_handler = new error_handler();
 $application = new application;
+$key = get_querystring("key");
 if ($application->mode == "insert") {
     $verb = "created";
 } else {
