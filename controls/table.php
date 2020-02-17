@@ -46,7 +46,7 @@ class table_control
         }
 
         ?>
-        <!-- Start table //-->
+        <!-- Start table control //-->
         <table class="govuk-table govuk-table--m sticky" id="results">
             <thead class="govuk-table__head">
                 <tr class="govuk-table__row">
@@ -54,6 +54,7 @@ class table_control
                     foreach ($this->columns as $column) {
                         $sort_field = $column["sort_field"];
                         $column_name = $column["column_name"];
+
                         $column_name2 = $this->cleanse_column_name($column_name);
                         $tooltip = $column["tooltip"];
                         $align = $column["align"];
@@ -78,6 +79,7 @@ class table_control
                             $tooltip_control = "tip_" . $column_name2;
                             $described_by = ' aria-describedby="' . $tooltip_control . '"';
                             $tooltip_content = '<span id="' . $tooltip_control . '" class="tooltip govuk-visually-hidden" role="tooltip" aria-hidden="true">' . $tooltip . '</span>';
+                            //h1 ($tooltip_content);
                         } else {
                             $tooltip_control = "";
                             $described_by = "";
@@ -102,9 +104,51 @@ class table_control
                                 $align_class = "";
                             }
                             $data_column = $column["data_column"];
-                            //print_r ($data_item);
-                            $x = $data_item->{$data_column};
-                            echo ('<td class="govuk-table__cell ' . $align_class . '">' . $x . '</td>');
+                            if (isset($column["treatment"])) {
+                                $treatment = $column["treatment"];
+                            } else {
+                                $treatment = "";
+                            }
+
+                            echo ('<td class="govuk-table__cell ' . $align_class . '">');
+                            switch ($treatment) {
+                                case "checkbox":
+                                    $control_id = $data_column . "_" . $data_item->{$data_column};
+                                    echo ('<div class="govuk-checkboxes govuk-checkboxes--vsmall">');
+                                    echo ('<div class="govuk-checkboxes__item">');
+                                    echo ('<input class="govuk-checkboxes__input" id="' . $control_id . '" name="' . $data_column . '[]" type="checkbox" value="' . ($data_item->{$data_column}) . '">');
+                                    echo ('<label class="govuk-label govuk-checkboxes__label" for="' . $control_id . '"><a class="govuk-link" href="/measures/view.html?mode=view&measure_sid=' . $data_item->{$data_column} . '">' . ($data_item->{$data_column}) . '</a></label>');
+                                    echo ('</div>');
+                                    echo ('</div>');
+                                    break;
+                                case "link_measure_type_id":
+                                    echo ('<a class="govuk-link" href="/measure_types/view.html?mode=view&measure_type_id=' . $data_item->{$data_column} . '">' . $data_item->{$data_column} . "</a>");
+                                    break;
+                                case "link_regulation_id":
+                                    echo ('<a class="govuk-link" href="/regulations/view.html?mode=view&base_regulation=' . $data_item->{$data_column} . '">' . $data_item->{$data_column} . "</a>");
+                                    break;
+                                case "link_geographical_area_id":
+                                    echo ('<a class="govuk-link" href="/geographical_areas/view.html?mode=view&geographical_area_id=' . $data_item->{$data_column} . '">' . $data_item->{$data_column} . "</a>");
+                                    break;    
+                                case "link_additional_code":
+                                    echo ('<a class="govuk-link" href="/additional_codes/view.html?mode=view&additional_code_sid=' . $data_item->additional_code_sid . '">' . $data_item->{$data_column} . "</a>");
+                                    break;    
+                                case "ordernumber":
+                                case "quota_order_number_id":
+                                    echo ('<a class="govuk-link" href="/quotas/view.html?mode=view&quota_order_number_id=' . $data_item->{$data_column} . '">' . $data_item->{$data_column} . "</a>");
+                                    break;    
+                                case "commodity":
+                                    echo ('<a class="nodecorate" href="/goods_nomenclatures/goods_nomenclature_item_view.php?goods_nomenclature_item_id=' . $data_item->{$data_column} . '">' . format_goods_nomenclature_item_id($data_item->{$data_column}) . "</a>");
+                                    break;
+                                case "status":
+                                    echo (status_image($data_item->{$data_column}));
+                                    break;
+                                default:
+                                    echo ($data_item->{$data_column});
+                                    break;
+                            }
+                            echo ('</td>');
+                            
                         }
                         ?>
                     </tr>
@@ -113,7 +157,7 @@ class table_control
                 ?>
             </tbody>
         </table>
-        <!-- End table //-->
+        <!-- End table control //-->
 <?php
     }
 

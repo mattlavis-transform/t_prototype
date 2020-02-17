@@ -7,7 +7,12 @@ class measure_activity
     public $workbasket_id = null;
     public $certificate_code = null;
     public $activity_name = null;
+    public $edit_activity_option = null;
+    public $remove_existing_footnotes = null;
+    public $measure_sid_list = array();
+    public $measure_count = null;
 
+    public $activity_options = array();
     /* End prototype-specific fields */
 
     public function __construct()
@@ -61,6 +66,13 @@ class measure_activity
         $this->footnote_association_measures_xml = "";
         $this->footnote_list = array();
         $this->condition_list = array();
+
+        $this->activity_name_complete = false;
+        $this->core_data_complete = false;
+        $this->commodity_data_complete = false;
+        $this->duty_data_complete = false;
+        $this->condition_data_complete = false;
+        $this->footnote_data_complete = false;
     }
 
     public function get_parameters($description = false)
@@ -260,7 +272,7 @@ class measure_activity
             setcookie("errors", $error_string, time() + (86400 * 30), "/");
             $url = "create_edit.html?err=1&mode=" . $application->mode;
         } else {
-            $this->persist_activity_name();
+            $this->persist_activity_name("Create measures");
             $url = "./create_edit_core.html?mode=" . $application->mode;
         }
         header("Location: " . $url);
@@ -288,20 +300,23 @@ class measure_activity
         ));
     }
 
-    function persist_activity_name()
+
+
+    function persist_activity_name($sub_record_type)
     {
-        // functions will go here 
+        // Create the measure activity record
         global $conn, $application;
         $date = $application->get_operation_date();
-        $sql = "insert into measure_activities (workbasket_id, date_created, activity_name)
-        VALUES ($1, $2, $3)
+        $sql = "insert into measure_activities (workbasket_id, date_created, activity_name, activity_name_complete)
+        VALUES ($1, $2, $3, $4)
         RETURNING measure_activity_sid;";
 
         pg_prepare($conn, "persist_activity_name", $sql);
         $result = pg_execute($conn, "persist_activity_name", array(
-            $application->session->workbasket->workbasket_id, $date, $this->activity_name
+            $application->session->workbasket->workbasket_id, $date, $this->activity_name, true
         ));
 
+        // Set the session variable
         $row_count = pg_num_rows($result);
         if (($result) && ($row_count > 0)) {
             $row = pg_fetch_row($result);
@@ -309,6 +324,19 @@ class measure_activity
         } else {
             die();
         }
+
+        // Create the workbasket item
+        $sql = "insert into workbasket_items (
+            workbasket_id, record_id, record_type, sub_record_type,
+            status, created_at, operation)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)";
+
+        pg_prepare($conn, "create_workbasket_item", $sql);
+        $result = pg_execute($conn, "create_workbasket_item", array(
+            $application->session->workbasket->workbasket_id, $_SESSION["measure_activity_sid"], "measure_activity", $sub_record_type,
+            "in progress", $date, "C"
+        ));
+        //die();
     }
 
     function persist_commodities()
@@ -352,9 +380,9 @@ class measure_activity
         foreach ($this->additional_code_list as $additional_code) {
             $code = $additional_code->code;
             $additional_code_type_id = substr($code, 0, 1) . "";
-            $additional_code = substr($code, 1, 3). "";
+            $additional_code = substr($code, 1, 3) . "";
             if (($additional_code_type_id != "") && ($additional_code != "")) {
-                h1 ("Inserting");
+                h1("Inserting");
                 $sql = "insert into measure_activity_additional_codes (measure_activity_sid, additional_code_type_id, additional_code) values ($1, $2, $3)";
                 $stmt = "persist_additional_codes" . $code;
                 pg_prepare($conn, $stmt, $sql);
@@ -1499,52 +1527,22 @@ class measure_activity
     function populate_from_db()
     {
         global $conn;
-        $sql = "select measure_type_id, geographical_area_id, goods_nomenclature_item_id,
- validity_start_date, validity_end_date, measure_generating_regulation_role, measure_generating_regulation_id,
- justification_regulation_id, justification_regulation_role, stopped_flag, ordernumber,
- additional_code_type_id, additional_code_id, reduction_indicator
- from measures where measure_sid = $1";
-        $query_name = "get_measure_" . $this->measure_sid;
+        $sql = "select activity_name, activity_name_complete,  core_data_complete, 
+        commodity_data_complete, duty_data_complete, condition_data_complete, footnote_data_complete
+        from measure_activities where measure_activity_sid = $1";
+        $query_name = "get_measure_activity_" . $this->measure_sid;
         pg_prepare($conn, $query_name, $sql);
-        $result = pg_execute($conn, $query_name, array($this->measure_sid));
+        $result = pg_execute($conn, $query_name, array($this->measure_activity_sid));
         $row_count = pg_num_rows($result);
         if (($result) && ($row_count > 0)) {
             $row = pg_fetch_row($result);
-            $this->measure_type_id = $row[0];
-            $this->geographical_area_id = $row[1];
-            $this->goods_nomenclature_item_id = $row[2];
-            $this->validity_start_date = $row[3];
-            $this->validity_end_date = $row[4];
-            $this->measure_generating_regulation_role = $row[5];
-            $this->measure_generating_regulation_id = $row[6];
-            $this->justification_regulation_id = $row[7];
-            $this->justification_regulation_role = $row[8];
-            $this->stopped_flag = $row[9];
-            $this->ordernumber = $row[10];
-            $this->additional_code_type_id = $row[11];
-            $this->additional_code_id = $row[12];
-            $this->reduction_indicator = $row[13];
-
-            if ($this->validity_start_date != Null) {
-                $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
-                $this->validity_start_date_month = date('m', strtotime($this->validity_start_date));
-                $this->validity_start_date_year = date('Y', strtotime($this->validity_start_date));
-            } else {
-                $this->validity_start_date_day = "";
-                $this->validity_start_date_month = "";
-                $this->validity_start_date_year = "";
-            }
-
-            if ($this->validity_end_date != Null) {
-                $this->validity_end_date_day = date('d', strtotime($this->validity_end_date));
-                $this->validity_end_date_month = date('m', strtotime($this->validity_end_date));
-                $this->validity_end_date_year = date('Y', strtotime($this->validity_end_date));
-            } else {
-                $this->validity_end_date_day = "";
-                $this->validity_end_date_month = "";
-                $this->validity_end_date_year = "";
-            }
-            $this->heading = "Edit measure " . $this->measure_sid;
+            $this->activity_name = $row[0];
+            $this->activity_name_complete = $row[1];
+            $this->core_data_complete = $row[2];
+            $this->commodity_data_complete = $row[3];
+            $this->duty_data_complete = $row[4];
+            $this->condition_data_complete = $row[5];
+            $this->footnote_data_complete = $row[6];
         }
     }
 
@@ -1653,7 +1651,8 @@ class measure_activity
  */
     }
 
-    public function add_condition () {
+    public function add_condition()
+    {
         global $conn;
         $condition_code = get_formvar("condition_code");
         $action_code = get_formvar("action_code");
@@ -1670,18 +1669,18 @@ class measure_activity
         VALUES
         ($1, $2, $3, $4, $5, $6)";
         $stmt = "add_condition";
-            pg_prepare($conn, $stmt, $sql);
-            pg_execute($conn, $stmt, array(
-                $condition_code,
-                $condition_duty_amount,
-                $action_code,
-                $certificate->certificate_type_code,
-                $certificate->certificate_code,
-                $this->measure_activity_sid
-            ));
-        
-        h1 ($condition_code);
-        prend ($_REQUEST);
+        pg_prepare($conn, $stmt, $sql);
+        pg_execute($conn, $stmt, array(
+            $condition_code,
+            $condition_duty_amount,
+            $action_code,
+            $certificate->certificate_type_code,
+            $certificate->certificate_code,
+            $this->measure_activity_sid
+        ));
+
+        h1($condition_code);
+        prend($_REQUEST);
     }
 
     public function add_footnote()
@@ -1727,6 +1726,90 @@ class measure_activity
         /*
         $url = "/measures/create_edit_footnotes.html";
         header("Location: " . $url);
+        */
+    }
+
+    public function get_activity_options()
+    {
+        global $conn;
+        $sql = "select measure_activity_option_id, description from measure_activity_options
+        where active is true order by sort_index";
+        pg_prepare($conn, "get_activity_options", $sql);
+        $result = pg_execute($conn, "get_activity_options", array());
+        $row_count = pg_num_rows($result);
+        if (($result) && ($row_count > 0)) {
+            while ($row = pg_fetch_array($result)) {
+                $obj = new simple_object($row["measure_activity_option_id"], $row["description"]);
+                array_push($this->activity_options, $obj);
+            }
+        }
+    }
+
+    public function execute_activity_option()
+    {
+        $this->activity_name = get_formvar("activity_name");;
+        $this->edit_activity_option = get_formvar("edit_activity_option");
+        $this->persist_activity_name($this->edit_activity_option);
+
+        switch ($this->edit_activity_option) {
+            case "Measures - Change generating regulation":
+                // Change generating regulation
+                $url = "./measure_change_regulation.html";
+                break;
+            case "Measures - Change measure type":
+                // Change measure type
+                $url = "./measure_change_measure_type.html";
+                break;
+            case "Measures - Change validity period":
+                // Change validity period
+                $url = "./measure_change_validity_period.html";
+                break;
+            case "Measures - Change geography":
+                // Change geography
+                $url = "./measure_change_geography.html";
+                break;
+            case "vChange duties":
+                // Change duties
+                $url = "./measure_change_duties.html";
+                break;
+            case "Measures - Change conditions":
+                // Change conditions
+                $url = "./measure_change_conditions.html";
+                break;
+            case "Measures - Change footnotes":
+                // Change footnote
+                $url = "./measure_change_footnotes.html";
+                break;
+            case "Measures - Delete or end-date":
+                // Delete or end-date
+                $url = "./measure_terminate.html";
+                break;
+            case "Measures - Change commodity codes":
+                // Change commodity codes
+                break;
+            case "Measures - Change additional codes":
+                // Change additional code
+                break;
+        }
+        header("Location: " . $url);
+    }
+
+    public function get_measure_sids()
+    {
+        $this->measure_sid_list = get_formvar("measure_sid");
+        if (!is_array($this->measure_sid_list)) {
+            prend("No measures selected");
+        } else {
+            $this->measure_count = count($this->measure_sid_list);
+        }
+        //die();
+        /*
+        h1 (gettype($this->measure_sid_list));
+        if ($this->measure_sid_list == "") {
+            //prend ($_SERVER);
+            $url = "/measures/";
+            //header("Location: " . $url);
+        }
         */
     }
 }

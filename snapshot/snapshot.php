@@ -42,14 +42,14 @@ class snapshot
     }
 
     private function simple_write_csv() {
-        echo "Commodity code,Suffix,Indent,End-line?,Description,Assigned,Measure type,Origin,Origin exclusions,Duties,EP,Start,End";
+        echo "Commodity code,Suffix,Indent,End-line?,Description,Assigned,Measure type,Origin,Origin exclusions,Duties,EPS,Start,End";
         echo ($this->delimiter);
         foreach ($this->commodities as $commodity) {
             if (count($commodity->measure_list) == 0) {
                 echo ("'" . $commodity->goods_nomenclature_item_id . "',");
                 echo ("'" . $commodity->productline_suffix . "',");
                 echo ($commodity->number_indents . ",");
-                echo ("'" . yn($commodity->leaf) . "',");
+                echo ("'" . $commodity->leaf . "',");
                 echo ("'" . $commodity->format_description2() . "',");
                 echo ("'" . yn($commodity->assigned) . "',");
                 echo ("'',");
@@ -62,14 +62,14 @@ class snapshot
                     echo ("'" . $commodity->goods_nomenclature_item_id . "',");
                     echo ("'" . $commodity->productline_suffix . "',");
                     echo ($commodity->number_indents . ",");
-                    echo ("'" . yn($commodity->leaf) . "',");
+                    echo ("'" . $commodity->leaf . "',");
                     echo ("'" . $commodity->format_description2() . "',");
                     echo ("'" . yn($commodity->assigned) . "',");
                     echo ("'" . $measure->measure_type_id . " " . $measure->measure_type_description . "',");
                     echo ("'" . $measure->geographical_area_id . "',");
                     echo ("'" . "" . "',");
                     //echo ("'" . "$measure->mega_string" . "',");
-                    echo ("'" . $measure->combined_duty . "',");
+                    echo ("'" . str_replace("  ", " ", $measure->combined_duty) . "',");
                     echo ("'" . $measure->entry_price_string . "',");
                     echo ("'" . $measure->validity_start_date . "',");
                     echo ("'" . $measure->validity_end_date . "'");

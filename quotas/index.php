@@ -25,7 +25,18 @@ require("../includes/metadata.php");
 
         <?php
         require("../includes/phase_banner.php");
-
+        ?>
+        <!-- Start breadcrumbs //-->
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">Find and edit quotas</li>
+            </ol>
+        </div>
+        <!-- End breadcrumbs //-->
+        <?php
         /*
         $filter_content = array();
         array_push($filter_content, $application->quota_mechanisms);
@@ -41,7 +52,7 @@ require("../includes/metadata.php");
                 <div class="govuk-grid-column-full">
                     <?php
                     new title_control("oc", "", "", "Find and edit quotas");
-                    new inset_control("Enter search criteria to find quotas. Alternatively <a class='govuk-link' href='create_edit.html'>create a new quota</a>. Please separate multiple terms with commas, semi-colons or spaces.")
+                    new inset_control("Enter search criteria to find quotas. Please separate multiple terms with commas, semi-colons or spaces. Alternatively <a class='govuk-link' href='create_edit.html'>create a new quota</a>.")
 
                     ?>
 
@@ -78,22 +89,21 @@ require("../includes/metadata.php");
                                 </label>
                             </div>
                             <div class="complex_search_form complex_search_form_column1a">
-                                <label class="govuk-label" for="event-name">
-
+                                <label class="govuk-label">
+                                    &nbsp;
                                 </label>
                             </div>
                             <div class="complex_search_form complex_search_form_column2">
                                 <div class="govuk-radios govuk-radios--inline">
-
                                     <div class="govuk-checkboxes__item">
-                                        <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
-                                        <label class="govuk-label govuk-checkboxes__label" for="waste">
+                                        <input class="govuk-checkboxes__input" id="administration_mechanism_fcfs" name="administration_mechanism" type="checkbox" value="fcfs">
+                                        <label class="govuk-label govuk-checkboxes__label" for="administration_mechanism_fcfs">
                                             First come, first served quotas
                                         </label>
                                     </div>
                                     <div class="govuk-checkboxes__item">
-                                        <input class="govuk-checkboxes__input" id="waste-2" name="waste" type="checkbox" value="mines">
-                                        <label class="govuk-label govuk-checkboxes__label" for="waste-2">
+                                        <input class="govuk-checkboxes__input" id="administration_mechanism_licensed" name="administration_mechanism" type="checkbox" value="licensed">
+                                        <label class="govuk-label govuk-checkboxes__label" for="administration_mechanism_licensed">
                                             Licensed quotas
                                         </label>
                                     </div>
@@ -121,20 +131,20 @@ require("../includes/metadata.php");
                             <div class="complex_search_form complex_search_form_column2">
 
                                 <div class="govuk-checkboxes__item">
-                                    <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
-                                    <label class="govuk-label govuk-checkboxes__label" for="waste">
+                                    <input class="govuk-checkboxes__input" id="quota_category_wto" name="quota_category" type="checkbox" value="carcasses">
+                                    <label class="govuk-label govuk-checkboxes__label" for="quota_category_wto">
                                         WTO quota
                                     </label>
                                 </div>
                                 <div class="govuk-checkboxes__item">
-                                    <input class="govuk-checkboxes__input" id="waste-2" name="waste" type="checkbox" value="mines">
-                                    <label class="govuk-label govuk-checkboxes__label" for="waste-2">
+                                    <input class="govuk-checkboxes__input" id="quota_category_atq" name="quota_category" type="checkbox" value="mines">
+                                    <label class="govuk-label govuk-checkboxes__label" for="quota_category_atq">
                                         ATQ (Autonomous tariff quota)
                                     </label>
                                 </div>
                                 <div class="govuk-checkboxes__item">
-                                    <input class="govuk-checkboxes__input" id="waste-2" name="waste" type="checkbox" value="mines">
-                                    <label class="govuk-label govuk-checkboxes__label" for="waste-2">
+                                    <input class="govuk-checkboxes__input" id="quota_category_preferential" name="quota_category" type="checkbox" value="mines">
+                                    <label class="govuk-label govuk-checkboxes__label" for="quota_category_preferential">
                                         Preferential tariff rate quota
                                     </label>
                                 </div>

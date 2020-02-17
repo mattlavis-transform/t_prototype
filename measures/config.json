@@ -33,15 +33,249 @@
             }
         ]
     },
+    "measures": {
+        "config": {
+            "title": "Measures",
+            "inset": "Enter criteria to help find measures. Alternatively, <a class='govuk-link' href='./create_edit.html'>create new measures</a>.",
+            "freetext_fields": "ordernumber|description",
+            "default_sort_fields": "ordernumber",
+            "object_name": "Measures",
+            "title_create": "New measures",
+            "title_edit": "Edit measure",
+            "url_edit": "./create_edit.html?mode=update&measure_sid={measure_sid}",
+            "title_view": "Measure {measure_sid}",
+            "description_keys": "measure_sid",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Continue to core measure data",
+                "submit_button_text_edit": "Continue to core measure data",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "view": {
+            "fields": [
+                {
+                    "label": "Measure SID",
+                    "value": "{measure_sid}"
+                },
+                {
+                    "label": "Measure-generating regulation",
+                    "value": "{measure_generating_regulation_id}"
+                },
+                {
+                    "label": "Justification regulation",
+                    "value": "{justification_regulation_id}"
+                },
+                {
+                    "label": "Commodity code",
+                    "value": "{goods_nomenclature_item_id}"
+                },
+                {
+                    "label": "Commodity code description",
+                    "value": "{goods_nomenclature_description}"
+                },
+                {
+                    "label": "Additional code",
+                    "value": "{additional_code_type_id}{additional_code_id}"
+                },
+                {
+                    "label": "Measure type",
+                    "value": "{measure_type_id} - {measure_type_description}"
+                },
+                {
+                    "label": "Validity start date",
+                    "value": "{validity_start_date}"
+                },
+                {
+                    "label": "Validity end date",
+                    "value": "{validity_end_date}"
+                },
+                {
+                    "label": "Geography",
+                    "value": "{geographical_area_id} - {geographical_area_description}"
+                },
+                {
+                    "label": "Quota order number",
+                    "value": "{ordernumber}"
+                },
+                {
+                    "label": "Reduction indicator",
+                    "value": "{reduction_indicator}"
+                },
+                {
+                    "label": "Duty",
+                    "value": "{combined_duty}"
+                }
+            ],
+            "controls": [
+                {
+                    "control_type": "misc_data_table_control",
+                    "control_scope": "view",
+                    "control_name": "measure_components",
+                    "caption": "Components",
+                    "edit_text": "",
+                    "edit_url": ""
+                },
+                {
+                    "control_type": "misc_data_table_control",
+                    "control_scope": "view",
+                    "control_name": "measure_conditions",
+                    "caption": "Conditions",
+                    "edit_text": "",
+                    "edit_url": ""
+
+                },
+                {
+                    "control_type": "misc_data_table_control",
+                    "control_scope": "view",
+                    "control_name": "measure_footnotes",
+                    "caption": "Footnotes",
+                    "edit_text": "Add footnote",
+                    "edit_url": "www.google.com"
+
+                },
+                {
+                    "control_type": "misc_data_table_control",
+                    "control_scope": "view",
+                    "control_name": "measure_exclusions",
+                    "caption": "Geographical exclusions",
+                    "edit_text": "",
+                    "edit_url": ""
+
+                },
+                {
+                    "control_type": "version_control",
+                    "control_scope": "view",
+                    "control_name": "versions",
+                    "caption": "Version control",
+                    "edit_text": "",
+                    "edit_url": ""
+
+                }
+            ]
+        },
+        "filters": [],
+        "columns": [
+            {
+                "column_name": "SID",
+                "data_column": "measure_sid",
+                "sort_field": "measure_sid",
+                "tooltip": "",
+                "align": "",
+                "treatment": "checkbox"
+            },
+            {
+                "column_name": "Regulation",
+                "data_column": "measure_generating_regulation_id",
+                "sort_field": "measure_generating_regulation_id",
+                "tooltip": "",
+                "align": "",
+                "treatment": "link_regulation_id"
+            },
+            {
+                "column_name": "Type",
+                "data_column": "measure_type_id",
+                "sort_field": "measure_type_id",
+                "tooltip": "",
+                "align": "",
+                "treatment": "link_measure_type_id"
+            },
+            {
+                "column_name": "Start date",
+                "data_column": "validity_start_date",
+                "sort_field": "validity_start_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "End date",
+                "data_column": "validity_end_date",
+                "sort_field": "validity_end_date",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Commodity",
+                "data_column": "goods_nomenclature_item_id",
+                "sort_field": "goods_nomenclature_item_id",
+                "tooltip": "",
+                "align": "",
+                "treatment": "commodity"
+            },
+            {
+                "column_name": "Add. code",
+                "data_column": "additional_code",
+                "sort_field": "additional_code_type_id|additional_code",
+                "tooltip": "",
+                "align": "",
+                "treatment": "link_additional_code"
+            },
+            {
+                "column_name": "Geography",
+                "data_column": "geographical_area_id",
+                "sort_field": "geographical_area_id",
+                "tooltip": "",
+                "align": "",
+                "treatment": "link_geographical_area_id"
+            },
+            {
+                "column_name": "Exclusions",
+                "data_column": "exclusions",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Order number",
+                "data_column": "ordernumber",
+                "sort_field": "ordernumber",
+                "tooltip": "",
+                "align": "",
+                "treatment": "ordernumber"
+            },
+            {
+                "column_name": "Duties",
+                "data_column": "duties",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Conditions",
+                "data_column": "conditions",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Footnotes",
+                "data_column": "footnotes",
+                "sort_field": "",
+                "tooltip": "",
+                "align": ""
+            },
+            {
+                "column_name": "Status",
+                "data_column": "status",
+                "sort_field": "",
+                "tooltip": "",
+                "align": "",
+                "treatment": "status"
+            }
+        ]
+    },
     "measures_activity": {
         "config": {
             "title": "Measures",
             "inset": "Enter criteria to help find measures. Alternatively, <a class='govuk-link' href='./create_edit.html'>create new measures</a>.",
             "freetext_fields": "ordernumber|description",
-            "default_sort_fields": "ordenumber",
+            "default_sort_fields": "ordernumber",
             "object_name": "Measures",
             "title_create": "New measures",
-            "title_edit": "Edit quota",
+            "title_edit": "",
             "description_keys": "",
             "validate": false,
             "buttons": {
@@ -57,7 +291,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Please use this function to bulk-create measures. It is essential to plan your activities in advance of using this bulk measure creation functionality. For example, if you intend to add footnotes or conditions to these measures, please ensure that they apply en masse to all measures.<br /><br />This activity will be added to workbasket {workbasket_name}."
+                "text": "Please use this function to bulk-create measures. It is essential to plan your activities in advance of using this bulk measure creation functionality.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -148,7 +382,7 @@
             "title": "Measures",
             "inset": "Enter criteria to help find measures. Alternatively, <a class='govuk-link' href='./create_edit.html'>create new measures</a>.",
             "freetext_fields": "ordernumber|description",
-            "default_sort_fields": "ordenumber",
+            "default_sort_fields": "ordernumber",
             "object_name": "Measures",
             "title_create": "New measures - core data",
             "title_edit": "Edit quota",
@@ -167,7 +401,7 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Please use this form to bulk create measures. It is essential to plan your activities in advance of using this bulk measure creation functionality. For example, if you intend to add footnotes or conditions to these measures, please ensure that they apply en masse to all measures.<br /><br />This activity will be added to workbasket {workbasket_name}."
+                "text": "Please enter the basic shared data for these measures.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
@@ -219,6 +453,22 @@
                 "default": "",
                 "disabled_on_edit": true,
                 "custom_errors": ""
+            },
+            {
+                "control_type": "input_control",
+                "label": "Enter quota order number",
+                "label_style": "govuk-label--m",
+                "hint_text": "If you selected a quota measure type, you will need to enter the quota order number here.",
+                "control_name": "ordernumber",
+                "control_style": "govuk-input--width-10",
+                "size": 6,
+                "maxlength": 6,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": "",
+                "group_class": "ordernumber"
             },
             {
                 "control_type": "include_control",
@@ -296,7 +546,7 @@
             "title": "Measures",
             "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
             "freetext_fields": "ordernumber|description",
-            "default_sort_fields": "ordenumber",
+            "default_sort_fields": "ordernumber",
             "object_name": "Measures",
             "title_create": "New measures - commodities",
             "title_edit": "Edit quota",
@@ -446,7 +696,7 @@
             "title": "Measures",
             "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
             "freetext_fields": "ordernumber|description",
-            "default_sort_fields": "ordenumber",
+            "default_sort_fields": "ordernumber",
             "object_name": "Measures",
             "title_create": "New measures - duties",
             "title_edit": "Edit quota",
@@ -465,26 +715,10 @@
             {
                 "control_type": "inset_control",
                 "control_scope": "",
-                "text": "Dolore sint incididunt ut nisi. Laborum duis sunt fugiat incididunt adipisicing irure excepteur nisi labore amet ad qui velit. Enim id laboris eu voluptate qui. Fugiat eu nulla ex aute aute voluptate velit duis veniam fugiat deserunt eiusmod. Ea est sit aliquip incididunt.<br /><br />This activity will be added to workbasket {workbasket_name}."
+                "text": "Use this form to enter the duties that will apply to the measures for the previously selected commodity codes.<br /><br />This activity will be added to workbasket {workbasket_name}."
             },
             {
                 "control_type": "error_block"
-            },
-            {
-                "control_type": "input_control",
-                "label": "Enter quota order number",
-                "label_style": "govuk-label--m",
-                "hint_text": "Because you have selected a quota measure type, you will need to enter the quota order number here.",
-                "control_name": "ordernumber",
-                "control_style": "govuk-input--width-10",
-                "size": 6,
-                "maxlength": 6,
-                "pattern": "",
-                "required": true,
-                "default": "",
-                "disabled_on_edit": true,
-                "custom_errors": "",
-                "group_class": "ordernumber"
             },
             {
                 "control_type": "input_control",
@@ -534,7 +768,6 @@
                 "custom_errors": "",
                 "group_class": "trade_remedies"
             },
-
             {
                 "control_type": "include_control",
                 "control_scope": "",
@@ -627,7 +860,7 @@
             "title": "Measures",
             "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
             "freetext_fields": "ordernumber|description",
-            "default_sort_fields": "ordenumber",
+            "default_sort_fields": "ordernumber",
             "object_name": "Measures",
             "title_create": "New measures - conditions",
             "title_edit": "Edit quota",
@@ -666,7 +899,7 @@
             "title": "Measures",
             "inset": "Enter criteria to help find a quota. Alternatively, <a class='govuk-link' href='./create_edit.html'>create a new quota</a>.",
             "freetext_fields": "ordernumber|description",
-            "default_sort_fields": "ordenumber",
+            "default_sort_fields": "ordernumber",
             "object_name": "Measures",
             "title_create": "New measures - footnotes",
             "title_edit": "Edit quota",

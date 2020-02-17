@@ -47,7 +47,7 @@ require(dirname(__FILE__) . "../../classes/measure_excluded_geographical_area.ph
 require(dirname(__FILE__) . "../../footnotes/footnote_association_measure.php");
 require(dirname(__FILE__) . "../../measure_condition_codes/measure_condition_code.php");
 require(dirname(__FILE__) . "../../measure_actions/measure_action.php");
-require(dirname(__FILE__) . "../../classes/snapshot.php");
+require(dirname(__FILE__) . "../../snapshot/snapshot.php");
 require(dirname(__FILE__) . "../../classes/description.php");
 require(dirname(__FILE__) . "../../classes/member.php");
 require(dirname(__FILE__) . "../../classes/cryptor.php");
@@ -181,7 +181,11 @@ function get_formvar($key, $prefix = "", $store_cookie = False)
     $s = "";
     $prefix = "";
     if (isset($_REQUEST[$key])) {
-        $s = trim($_REQUEST[$key]);
+        if (!is_array($_REQUEST[$key])) {
+            $s = trim($_REQUEST[$key]);
+        } else {
+            $s = $_REQUEST[$key];
+        }
     }
     if ($s == "") {
         $s = Null;
@@ -305,8 +309,9 @@ function footnote_type_application_code($id)
 
 function yn($var)
 {
-    $var = intval($var);
-    if ($var == 0) {
+    $var = strtoupper($var);
+    $var2 = intval($var);
+    if (($var2 == 0) || ($var == "N")) {
         return ("N");
     } else {
         return ("Y");
@@ -332,7 +337,26 @@ function yn3($var)
     }
 }
 
-function standardise($var)
+function standardise_form_string($var)
+{
+    $var = str_replace(" ", ",", $var);
+    $var = str_replace(";", ",", $var);
+    $var = str_replace("\t", ",", $var);
+    $var = str_replace(",,", ",", $var);
+    return ($var);
+}
+
+function get_before_hyphen($s)
+{
+    $s = trim($s);
+    $hyphen_pos = strpos($s, "-");
+    if ($hyphen_pos !== -1) {
+        $s = trim(substr($s, 0, $hyphen_pos - 1));
+    }
+    return ($s);
+}
+
+function standardise_date($var)
 {
     $pos = strpos($var, "-");
     if ($pos == false) {
@@ -347,8 +371,8 @@ function standardise($var)
 function rowclass($validity_start_date, $validity_end_date)
 {
     #h1 ($validity_end_date);
-    $validity_start_date = standardise($validity_start_date);
-    $validity_end_date = standardise($validity_end_date);
+    $validity_start_date = standardise_date($validity_start_date);
+    $validity_end_date = standardise_date($validity_end_date);
 
     $rowclass = "";
     if (($validity_start_date == "31/10/2019") || ($validity_start_date == "01/11/2019")) {
@@ -679,7 +703,7 @@ function format_goods_nomenclature_item_id($s)
     $len = strlen($s);
     switch ($len) {
         case 10:
-            $s2 = "<span class='rpad mauve'>" . substr($s, 0, 4) . "</span><span class='rpad blue'>" . substr($s, 4, 2) . "</span><span class='rpad blue'>" . substr($s, 6, 2) . "</span><span class='rpad green'>" . substr($s, 8, 2) . "</span>";
+            $s2 = "<span class='rpad mauve'>" . substr($s, 0, 2) . "</span><span class='rpad mauve'>" . substr($s, 2, 2) . "</span><span class='rpad mauve'>" . substr($s, 4, 2) . "</span><span class='rpad blue'>" . substr($s, 6, 2) . "</span><span class='rpad green'>" . substr($s, 8, 2) . "</span>";
             break;
         case 8:
             $s2 = "<span class='rpad mauve'>" . substr($s, 0, 4) . "</span><span class='rpad blue'>" . substr($s, 4, 2) . "</span><span class='rpad blue'>" . substr($s, 6, 2) . "</span>";

@@ -67,8 +67,7 @@ class measure
         global $application;
         global $error_handler;
 
-        $this->quota_order_number_sid = trim(get_querystring("quota_order_number_sid"));
-        $this->quota_order_number_id = trim(get_querystring("quota_order_number_id"));
+        $this->measure_sid = trim(get_querystring("measure_sid"));
 
         if (empty($_GET)) {
             $this->clear_cookies();
@@ -76,24 +75,32 @@ class measure
             $this->populate_from_cookies();
         } else {
             if (empty($error_handler->error_string)) {
-                if ($description == false) {
-                    $ret = $this->populate_from_db();
-                } else {
-                    //$ret = $this->get_specific_description($this->validity_start_date);
-                    $a = 1;
-                }
+                $ret = $this->populate_from_db();
                 if (!$ret) {
-                    h1("An error has occurred - no such quota order number");
+                    h1("An error has occurred - no such measure");
                     die();
                 }
+                $this->get_version_control();
             } else {
                 $this->populate_from_cookies();
             }
         }
-        //pre ($this);
     }
 
 
+    public function get_version_control()
+    {
+        global $conn;
+        $sql = "select operation, operation_date, validity_start_date, validity_end_date, status, geographical_area_id, measure_type_id
+        from measures where measure_sid = $1 order by operation_date desc;";
+        $stmt = "stmt_1";
+        pg_prepare($conn, $stmt, $sql);
+        $result = pg_execute($conn, $stmt, array($this->measure_sid));
+        if ($result) {
+            $this->versions = $result;
+            return;
+        }
+    }
     function set_dates()
     {
         if (($this->validity_start_date_day == "") || ($this->validity_start_date_month == "") || ($this->validity_start_date_year == "")) {
@@ -300,8 +307,7 @@ class measure
         if (($result) && ($row_count > 0)) {
             $row = pg_fetch_row($result);
             $_SESSION["measure_activity_sid"] = $row[0];
-        }
-        else {
+        } else {
             die();
         }
     }
@@ -628,7 +634,6 @@ class measure
     public function validate_form_duties()
     {
         global $application;
-        //prend ($_REQUEST);
         $errors = array();
         if (count($errors) > 0) {
             $error_string = serialize($errors);
@@ -1478,11 +1483,104 @@ class measure
     function populate_from_db()
     {
         global $conn;
-        $sql = "select measure_type_id, geographical_area_id, goods_nomenclature_item_id,
- validity_start_date, validity_end_date, measure_generating_regulation_role, measure_generating_regulation_id,
- justification_regulation_id, justification_regulation_role, stopped_flag, ordernumber,
- additional_code_type_id, additional_code_id, reduction_indicator
- from measures where measure_sid = $1";
+
+        // Get the duties or measure components
+        $sql = "select duty_expression_id, duty_amount, monetary_unit_code, measurement_unit_code, measurement_unit_qualifier_code 
+        from measure_components mc where measure_sid = $1;";
+        $stmt = "get_measure_components_" . $this->measure_sid;
+        pg_prepare($conn, $stmt, $sql);
+        $this->duty_string = "";
+        $this->duty_list = array();
+        $result = pg_execute($conn, $stmt, array($this->measure_sid));
+        $result2 = pg_execute($conn, $stmt, array($this->measure_sid));
+        if ($result) {
+            $row_count = pg_num_rows($result);
+            if (($row_count > 0) && (pg_num_rows($result))) {
+                $this->measure_components = $result2;
+
+                while ($row = pg_fetch_array($result)) {
+                    $mc = new duty();
+                    $mc->measure_type_id = "";
+                    $mc->duty_expression_id = $row['duty_expression_id'];
+                    $mc->duty_amount = $row['duty_amount'];
+                    $mc->monetary_unit_code = $row['monetary_unit_code'];
+                    $mc->measurement_unit_codemeasurement_unit_code = $row['measurement_unit_code'];
+                    $mc->measurement_unit_qualifier_code = $row['measurement_unit_qualifier_code'];
+                    $mc->get_duty_string();
+                    array_push($this->duty_list, $mc);
+                }
+            }
+        }
+        $this->combine_duties();
+
+
+        // Get the measure conditions
+        $this->measure_conditions = null;
+        $sql = "select condition_code, component_sequence_number, condition_duty_amount,
+        condition_monetary_unit_code, condition_measurement_unit_code, condition_measurement_unit_qualifier_code,
+        action_code, certificate_type_code, certificate_code 
+        from measure_conditions mc
+        where measure_sid = $1 order by component_sequence_number ;";
+        $stmt = "get_measure_conditions_" . $this->measure_sid;
+        pg_prepare($conn, $stmt, $sql);
+
+        $result = pg_execute($conn, $stmt, array($this->measure_sid));
+        if ($result) {
+            if (pg_num_rows($result)) {
+                $this->measure_conditions = $result;
+            }
+        }
+
+        // Get the measure footnotes
+        $this->measure_footnotes = null;
+        $sql = "select fam.footnote_type_id || fam.footnote_id as footnote, f.description 
+        from footnote_association_measures fam, ml.ml_footnotes f
+        where fam.footnote_type_id = f.footnote_type_id 
+        and fam.footnote_id = f.footnote_id 
+        and measure_sid = $1 order by 1, 2;";
+        $stmt = "get_measure_footnotes_" . $this->measure_sid;
+        pg_prepare($conn, $stmt, $sql);
+
+        $result = pg_execute($conn, $stmt, array($this->measure_sid));
+        if ($result) {
+            if (pg_num_rows($result)) {
+                $this->measure_footnotes = $result;
+            }
+        }
+
+        // Get the measure exclusions
+        $this->measure_exclusions = null;
+        $sql = "select excluded_geographical_area, mega.geographical_area_sid, ga.description 
+        from measure_excluded_geographical_areas mega, ml.ml_geographical_areas ga 
+        where mega.geographical_area_sid = ga.geographical_area_sid 
+        and measure_sid = $1 order by ga.description ;";
+        $stmt = "get_measure_exclusions_" . $this->measure_sid;
+        pg_prepare($conn, $stmt, $sql);
+
+        $result = pg_execute($conn, $stmt, array($this->measure_sid));
+        if ($result) {
+            if (pg_num_rows($result)) {
+                $this->measure_exclusions = $result;
+            }
+        }
+
+        // Get core measure data
+        $sql = "select m.measure_type_id, m.geographical_area_id, m.goods_nomenclature_item_id,
+        m.validity_start_date, m.validity_end_date, measure_generating_regulation_role, measure_generating_regulation_id,
+        justification_regulation_id, justification_regulation_role, stopped_flag, ordernumber,
+        additional_code_type_id, additional_code_id, reduction_indicator,
+        mtd.description as measure_type_description, ga.description as geographical_area_description,
+        gnd.description as goods_nomenclature_description
+        from measures m, measure_type_descriptions mtd, ml.ml_geographical_areas ga,
+        goods_nomenclature_descriptions gnd, goods_nomenclature_description_periods gndp 
+        where m.measure_type_id = mtd.measure_type_id
+        and m.geographical_area_id = ga.geographical_area_id
+        and m.goods_nomenclature_sid = gnd.goods_nomenclature_sid 
+        and m.goods_nomenclature_sid = gndp.goods_nomenclature_sid 
+        and gnd.goods_nomenclature_sid = gndp.goods_nomenclature_sid
+        and measure_sid = $1
+        order by gndp.validity_start_date desc
+        limit 1;";
         $query_name = "get_measure_" . $this->measure_sid;
         pg_prepare($conn, $query_name, $sql);
         $result = pg_execute($conn, $query_name, array($this->measure_sid));
@@ -1503,6 +1601,9 @@ class measure
             $this->additional_code_type_id = $row[11];
             $this->additional_code_id = $row[12];
             $this->reduction_indicator = $row[13];
+            $this->measure_type_description = $row[14];
+            $this->geographical_area_description = $row[15];
+            $this->goods_nomenclature_description = $row[16];
 
             if ($this->validity_start_date != Null) {
                 $this->validity_start_date_day = date('d', strtotime($this->validity_start_date));
@@ -1523,7 +1624,7 @@ class measure
                 $this->validity_end_date_month = "";
                 $this->validity_end_date_year = "";
             }
-            $this->heading = "Edit measure " . $this->measure_sid;
+            return (true);
         }
     }
 
@@ -1554,6 +1655,39 @@ class measure
             $s = floatval($this->siv_component_list[0]->duty_amount);
         }
         $this->combined_duty = "<span class='entry_price'>Entry Price</span> " . number_format($s, 3) . "%";
+    }
+
+    public function combine_conditions()
+    {
+        $this->combined_conditions = "";
+        $index = 0;
+        foreach ($this->condition_list as $c) {
+            $index++;
+            $title = "Condition of type " . $c->condition_code . " - " . $c->condition_code_description . "\n\n";
+            if (strlen($c->certificate_type_code) == 1) {
+                $title .= "On presentation of certificate " . $c->certificate_type_code . $c->certificate_code . ", ";
+            } else {
+                $title .= "On presentation of no certificate, ";
+            }
+            $title .= " perform action " . $c->action_code . " - " . $c->action_code_description . "\n\n";
+            $title .= "Applicable duty is " . $c->condition_string;
+            $c->description = '<span class="tip" title="' . $title . '">' . $c->condition_code . $c->component_sequence_number . ' ' . $c->certificate_type_code . $c->certificate_code . ' (' . $c->condition_string . ')</span>';
+            $this->combined_conditions .= $c->description . ", ";
+        }
+        $this->combined_conditions = trim($this->combined_conditions);
+        $this->combined_conditions = trim($this->combined_conditions, ",");
+    }
+
+    public function combine_footnotes()
+    {
+        $this->combined_footnotes = "";
+        foreach ($this->footnote_list as $f) {
+            $f->footnote_url = "/footnotes/view.html?mode=view&footnote_type_id=" . $f->footnote_type_id . "&footnote_id=" . $f->footnote_id;
+            $f->footnote_link = '<a class="govuk-link" href="' . $f->footnote_url . '">' . $f->footnote . '</a>';
+            $this->combined_footnotes .= $f->footnote_link . ", ";
+        }
+        $this->combined_footnotes = trim($this->combined_footnotes);
+        $this->combined_footnotes = trim($this->combined_footnotes, ",");
     }
 
     public function combine_duties()

@@ -1254,4 +1254,23 @@ $(document).ready(function () {
     /***************************************************************************************************************/
 
 
+    /***************************************************************************************************************/
+    // START - conditional date picker controls
+
+    $(document).ready(function () {
+        $(".conditional_date_entry_fields input").prop("disabled", true);
+    });
+
+    $(".conditional_date_entry_fields_off").click(function () {
+        //alert ("Switching off");
+        $(".conditional_date_entry_fields input").prop("disabled", true);
+    });
+    $(".conditional_date_entry_fields_on").click(function () {
+        //alert ("Switching on");
+        $(".conditional_date_entry_fields input").prop("disabled", false);
+    });
+
+    // END - conditional date picker controls
+    /***************************************************************************************************************/
+
 });

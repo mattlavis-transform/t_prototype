@@ -2,12 +2,12 @@
 <div class="govuk-form-group" id="origin_group">
     <fieldset class="govuk-fieldset" aria-describedby="erga_omnes-hint">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 class="govuk-fieldset__heading">Which origin will the measures apply to?</h1>
+            <h1 class="govuk-fieldset__heading">Which geographical area will the measures apply to?</h1>
         </legend>
         <span id="erga_omnes-hint" class="govuk-hint">
             You can specify a single country or territory, or a pre-defined group of countries, or select
-            'Erga Omnes' to apply the quota to all origins. If the group you need is not in the list, you
-            can add it from here.
+            'Erga Omnes' to apply the quota to all geographical areas. If the geography you need is not in the list, you
+            can <a class="govuk-link" href="/geographical-areas/create_edit.html">create a new geographical area</a> here.
         </span>
         <div class="govuk-radios">
             <div class="govuk-radios__item">

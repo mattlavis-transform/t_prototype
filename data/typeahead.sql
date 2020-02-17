@@ -1638,3 +1638,33 @@ where measurement_unit_code not in ('KGM') order by 1 desc;
 select measurement_unit_qualifier_code, upper(description) as description from measurement_unit_qualifier_descriptions mud
 where measurement_unit_qualifier_code not in ('KGM') order by 1 desc;
 
+select m.measure_sid, mcc.* from ml.measures_real_end_dates m, measure_conditions mc, measure_condition_components mcc 
+where m.measure_sid = mc.measure_sid 
+and mc.measure_condition_sid = mcc.measure_condition_sid 
+and mc.condition_code = 'A'
+and m.measure_type_id in ('552', '551', '553', '554')
+and m.validity_end_date is null
+order by m.measure_sid, mcc.duty_expression_id ;
+
+select mc.measure_sid, mc.duty_expression_id, mc.duty_amount, mc.measurement_unit_code,
+mc.measurement_unit_code, mc.monetary_unit_code
+from measure_components mc 
+where 1 > 0 and mc.measure_sid in (3348740);
+
+select mcc.measure_condition_sid, mcc.duty_expression_id, mcc.duty_amount, mcc.measurement_unit_code,
+mcc.measurement_unit_code, mcc.monetary_unit_code 
+from measures m, measure_conditions mc
+left outer join measure_condition_components mcc on mc.measure_condition_sid = mcc.measure_condition_sid 
+where m.measure_sid = mc.measure_sid and m.measure_sid in (3348740);
+
+
+select measure_sid, measure_generating_regulation_id, validity_start_date, validity_end_date,
+goods_nomenclature_item_id, additional_code,
+geographical_area_id, 'tbc' as exclusions, measure_type_id, measure_generating_regulation_id, ordernumber, status,
+case
+    when validity_end_date is null then 'Terminated'
+	else 'Active'
+end as active_state,
+count(*) OVER() AS full_count
+from ml.measures_real_end_dates m
+where 1 > 0 and measure_sid in (3348740);

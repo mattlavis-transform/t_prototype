@@ -135,7 +135,7 @@ class rules_of_origin_scheme
         }
     }
 
-    // Get mesaure types
+    // Get measure types
     function get_measure_types()
     {
         global $conn;

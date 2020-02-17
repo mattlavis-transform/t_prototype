@@ -2,26 +2,9 @@
 require(dirname(__FILE__) . "../../includes/db.php");
 $application = new application;
 $application->init("measures_activity");
-$error_handler = new error_handler();
-
-// If there is no measure activity in place, then create it
 $measure_activity = new measure_activity();
-
-$submitted = intval(get_formvar("submitted"));
-if ($submitted == 1) {
-    $a = 1;
-    $_SESSION["actvity_name"] = get_formvar("activity_name");
-    $measure_activity->validate_form_activity_name();
-} else {
-    $measure_sid = null;
-    if (isset($_SESSION["measure_sid"])) {
-        $measure_sid = $_SESSION["measure_sid"];
-        $measure_activity->measure_activity_sid = $measure_activity_sid;
-        $measure_activity->populate_activity_from_db();
-    } else {
-        //$measure_sid = $application->session->workbasket->create_measure();
-    }
-}
+$measure_activity->measure_activity_sid = intval(get_querystring("measure_activity_sid"));
+$measure_activity->populate_from_db();
 
 ?>
 
@@ -48,9 +31,9 @@ require("../includes/metadata.php");
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="#">Measures</a>
+                    <a class="govuk-breadcrumbs__link" href="/measures/">Measures</a>
                 </li>
-                <li class="govuk-breadcrumbs__list-item" aria-current="page">Measure activity x</li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">Measure activity &quot;<?= $measure_activity->activity_name ?>&quot;</li>
             </ol>
         </div>
         <!-- End breadcrumbs //-->
@@ -58,12 +41,12 @@ require("../includes/metadata.php");
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-three-quarters">
                     <!-- Start main title //-->
-                    <h1 class="govuk-heading-xl">Measure activity x</h1>
+                    <h1 class="govuk-heading-xl">Measure activity <span class="subheading"><?= $measure_activity->activity_name ?></span></h1>
                     <!-- End main title //-->
 
                     <!-- Start task list //-->
                     <ol class="app-task-list">
-                        
+                        <!--
                         <li>
                             <h2 class="app-task-list__section">
                                 <span class="app-task-list__section-number">Activity data
@@ -112,7 +95,7 @@ require("../includes/metadata.php");
                             <ul class="app-task-list__items">
                                 <li class="app-task-list__item">
                                     <span class="app-task-list__task-name">
-                                        <a href="#" aria-describedby="eligibility-completed">
+                                        <a class="govuk-link" href="#" aria-describedby="eligibility-completed">
                                             Check eligibility
                                         </a>
                                     </span>
@@ -120,7 +103,7 @@ require("../includes/metadata.php");
                                 </li>
                                 <li class="app-task-list__item">
                                     <span class="app-task-list__task-name">
-                                        <a href="#" aria-describedby="read-declaration-completed">
+                                        <a class="govuk-link" href="#" aria-describedby="read-declaration-completed">
                                             Read declaration
                                         </a>
                                     </span>
@@ -136,50 +119,64 @@ require("../includes/metadata.php");
                             <ul class="app-task-list__items">
                                 <li class="app-task-list__item">
                                     <span class="app-task-list__task-name">
-                                        <a href="#" aria-describedby="company-information-completed">
-                                            Activity name
+                                        <a class="govuk-link" href="#" aria-describedby="company-information-completed">
+                                            Activity name (<?= $measure_activity->activity_name ?>)
                                         </a>
                                     </span>
-                                    <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
+                                    <?php if ($measure_activity->activity_name_complete) { ?>
+                                        <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
+                                    <?php } ?>
                                 </li>
                                 <li class="app-task-list__item">
                                     <span class="app-task-list__task-name">
-                                        <a href="#" aria-describedby="company-information-completed">
+                                        <a class="govuk-link" href="#" aria-describedby="company-information-completed">
                                             Core measure data
                                         </a>
                                     </span>
+                                    <?php if ($measure_activity->core_data_complete) { ?>
                                     <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
+                                    <?php } ?>
                                 </li>
                                 <li class="app-task-list__item">
                                     <span class="app-task-list__task-name">
-                                        <a href="#" aria-describedby="contact-details-completed">
+                                        <a class="govuk-link" href="#" aria-describedby="contact-details-completed">
                                             Commodities
                                         </a>
                                     </span>
+                                    <?php if ($measure_activity->commodity_data_complete) { ?>
                                     <strong class="govuk-tag app-task-list__task-completed" id="contact-details-completed">Completed</strong>
+                                    <?php } ?>
                                 </li>
                                 <li class="app-task-list__item">
                                     <span class="app-task-list__task-name">
-                                        <a href="#">
+                                        <a class="govuk-link" href="#">
                                             Duties
                                         </a>
                                     </span>
+                                    <?php if ($measure_activity->duty_data_complete) { ?>
+                                    <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
+                                    <?php } ?>
                                 </li>
                                 <li class="app-task-list__item">
                                     <span class="app-task-list__task-name">
-                                        <a href="#">
+                                        <a class="govuk-link" href="#">
                                             Conditions
                                         </a>
                                     </span>
+                                    <?php if ($measure_activity->condition_data_complete) { ?>
+                                    <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
+                                    <?php } ?>
                                 </li>
                                 <li class="app-task-list__item">
                                     <span class="app-task-list__task-name">
-                                        <a href="#" aria-describedby="medical-information-completed">
+                                        <a class="govuk-link" href="#" aria-describedby="medical-information-completed">
                                             Footnotes
                                         </a>
                                     </span>
-                                    <!--<strong class="govuk-tag app-task-list__task-completed" id="medical-information-completed">Completed</strong>//-->
-                                </li>
+                                    <?php if ($measure_activity->footnote_data_complete) { ?>
+                                    <strong class="govuk-tag app-task-list__task-completed" id="company-information-completed">Completed</strong>
+                                    <?php } ?>
+                                    </li>
                             </ul>
                         </li>
                         <li>
@@ -189,7 +186,7 @@ require("../includes/metadata.php");
                             <ul class="app-task-list__items">
                                 <li class="app-task-list__item">
                                     <span class="app-task-list__task-name">
-                                        <a href="#">
+                                        <a class="govuk-link" href="#">
                                             Submit for approval
                                         </a>
                                     </span>

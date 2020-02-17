@@ -47,7 +47,7 @@ require("includes/metadata.php");
                     <h2 class="govuk-heading-m govuk-!-margin-0">Manage measures</h2>
                     <ul class="menu">
                         <li><a href="/measures/create_edit.html">Create new measures</a></li>
-                        <li><a href="/measures/search.html">Find and edit measures</a></li>
+                        <li><a href="/measures/">Find and edit measures</a></li>
                     </ul>
 
                     <h2 class="govuk-heading-m govuk-!-margin-0">Manage quotas</h2>

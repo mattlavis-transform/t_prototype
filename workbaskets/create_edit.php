@@ -76,8 +76,6 @@ require("../includes/metadata.php");
                             $control_scope = ""
                         );
 
-                        //prend ($_SESSION);
-
                         new hidden_control(
                             $control_name = "user_id",
                             $value = $_SESSION["uid"]

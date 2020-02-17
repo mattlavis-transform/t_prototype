@@ -41,7 +41,6 @@ class workbasket
             return;
         }
         $field_count = pg_num_fields($result) - 3;
-        //h1 ($field_count);
         switch ($field_count) {
             case 5:
                 $widths = [10, 10, 12, 12, 46, 10];
@@ -308,8 +307,26 @@ class workbasket
             $this->workbasket_id
         ));
         $this->show_section("geographical areas", $result);
-    }
+    }    
 
+    public function workbasket_get_measure_activities()
+    {
+        global $conn;
+        $sql = "select ma.activity_name, wi.sub_record_type, ma.validity_start_date, ma.validity_end_date,
+        ma.measure_generating_regulation_id, ma.commodity_list,
+        wi.id, wi.record_id,
+        '/measures/measure_activity_review.html?mode=view&measure_activity_sid=' || wi.record_id as view_url
+        from workbasket_items wi, measure_activities ma
+        where wi.record_id = ma.measure_activity_sid 
+        and wi.record_type = 'measure_activity'
+        and wi.workbasket_id = $1
+        order by wi.created_at";
+        pg_prepare($conn, "workbasket_get_measure_activities", $sql);
+        $result = pg_execute($conn, "workbasket_get_measure_activities", array(
+            $this->workbasket_id
+        ));
+        $this->show_section("measure activities", $result);
+    }
 
     public function insert_workbasket_item($oid, $record_type, $status, $operation, $operation_date)
     {

@@ -29,6 +29,36 @@ class measure_condition
         $this->regulation_group_id		= get_cookie("base_regulation_regulation_group_id");
 	}
 
+	public function get_condition_string() {
+		$duty_list = explode(",", $this->duties);
+		$m = new measure();
+		foreach ($duty_list as $duty) {
+			if ($duty != "") {
+				$parts = explode("|", $duty);
+				$mc = new duty();
+				$mc->measure_type_id = "n/a";
+				$mc->duty_expression_id = $parts[0];
+				$mc->duty_amount = $parts[1];
+				$mc->monetary_unit_code = $parts[2];
+				$mc->measurement_unit_code = $parts[3];
+				$mc->measurement_unit_qualifier_code = $parts[4];
+				$mc->get_duty_string();
+				array_push($m->duty_list, $mc);
+	
+			}
+		}
+		$m->combine_duties();
+		$this->condition_string = $m->combined_duty;
+	}
+
+	/*
+	mcc.duty_expression_id || '|' ||
+            coalesce (mcc.duty_amount::text, '') || '|' ||
+            coalesce (mcc.monetary_unit_code, '') || '|' ||
+            coalesce (mcc.measurement_unit_code, '') || '|' ||
+			coalesce (mcc.measurement_unit_qualifier_code, ''),
+	*/
+
 	function get_next_measure_condition_sid() {
 		global $conn;
         $application = new application;

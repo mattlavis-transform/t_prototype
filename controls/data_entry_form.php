@@ -36,8 +36,16 @@ class data_entry_form
         } else {
             $this->root = "./";
         }
-        $this->page_title_create = $config["title_create"];
-        $this->page_title_edit = $config["title_edit"];
+        if (isset($config["title_create"])) {
+            $this->page_title_create = $config["title_create"];
+        } else {
+            $this->page_title_create = "";
+        }
+        if (isset($config["title_edit"])) {
+            $this->page_title_edit = $config["title_edit"];
+        } else {
+            $this->page_title_edit = "";
+        }
         $this->validate = $config["validate"];
         if ($this->validate == true) {
             $this->validate_string = "";
@@ -49,8 +57,16 @@ class data_entry_form
         } else {
             $this->page_title = $this->page_title_create;
         }
-        $this->freetext_fields = $config["freetext_fields"];
-        $this->default_sort_fields = $config["default_sort_fields"];
+        if (isset($config["freetext_fields"])) {
+            $this->freetext_fields = $config["freetext_fields"];
+        } else {
+            $this->freetext_fields = "";
+        }
+        if (isset($config["default_sort_fields"])) {
+            $this->default_sort_fields = $config["default_sort_fields"];
+        } else {
+            $this->default_sort_fields = "";
+        }
         $application->default_sort_fields_array = explode("|", $this->default_sort_fields);
 
         $this->parse_title();
@@ -269,6 +285,10 @@ class data_entry_form
                                                 $text = $item["text"],
                                             );
                                             break;
+                                        case "back_control":
+                                            new back_control();
+                                            break;
+
                                         case "error_block":
                                             /* Start error handler */
                                             echo ($error_handler->get_primary_error_block());
@@ -317,6 +337,19 @@ class data_entry_form
                                                 $required = $item["required"]
                                             );
                                             break;
+
+                                        case "conditional_date_picker_control":
+                                            new conditional_date_picker_control(
+                                                $label = $item["label"],
+                                                $label_style = $item["label_style"],
+                                                $hint_text = $item["hint_text"],
+                                                $control_name = $item["control_name"],
+                                                $control_scope = $control_scope,
+                                                $default = $this->object->{$item["control_name"]},
+                                                $required = $item["required"]
+                                            );
+                                            break;
+    
                                         case "select_control":
                                             new select_control(
                                                 $label = $item["label"],

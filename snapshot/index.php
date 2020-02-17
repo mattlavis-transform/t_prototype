@@ -162,47 +162,51 @@ require("../includes/metadata.php");
                             </fieldset>
                         </div>
                         <!-- Format field //-->
+                        <?php
+                        if (1 > 2) {
+                        ?>
+                            <div class="hidden" id="json_fields">
 
-                        <div class="hidden" id="json_fields">
-
-                            <fieldset class="govuk-fieldset" aria-describedby="snapshot_hint" role="group" style="min-width:100%;max-width:100%;">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="min-width:100%;max-width:100%;">
-                                    <h1 class="govuk-fieldset__heading" style="padding-top:1.5em;min-width:100%;border-top:2px #ccc solid">JSON-extract specific fields</h1>
-                                </legend>
-                                <!-- Begin depth fields //-->
-                                <div class="govuk-form-group <?= $snapshot->error_handler->get_error("depth"); ?>">
-                                    <span id="snapshot_hint" class="govuk-hint">Enter the required depth : 2, 4, 6 or 8</span>
-                                    <?= $snapshot->error_handler->display_error_message("depth"); ?>
-                                    <div class="govuk-date-input" id="measure_start">
-                                        <div class="govuk-date-input__item">
-                                            <div class="govuk-form-group">
-                                                <!--<label class="govuk-label govuk-date-input__label" for="day" style="display:hidden !important">Enter geographical area ID</label>//-->
-                                                <input value="<?= $snapshot->depth ?>" class="govuk-input govuk-date-input__input govuk-input--width-4" id="depth" maxlength="4" name="depth" type="text">
+                                <fieldset class="govuk-fieldset" aria-describedby="snapshot_hint" role="group" style="min-width:100%;max-width:100%;">
+                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="min-width:100%;max-width:100%;">
+                                        <h1 class="govuk-fieldset__heading" style="padding-top:1.5em;min-width:100%;border-top:2px #ccc solid">JSON-extract specific fields</h1>
+                                    </legend>
+                                    <!-- Begin depth fields //-->
+                                    <div class="govuk-form-group <?= $snapshot->error_handler->get_error("depth"); ?>">
+                                        <span id="snapshot_hint" class="govuk-hint">Enter the required depth : 2, 4, 6 or 8</span>
+                                        <?= $snapshot->error_handler->display_error_message("depth"); ?>
+                                        <div class="govuk-date-input" id="measure_start">
+                                            <div class="govuk-date-input__item">
+                                                <div class="govuk-form-group">
+                                                    <!--<label class="govuk-label govuk-date-input__label" for="day" style="display:hidden !important">Enter geographical area ID</label>//-->
+                                                    <input value="<?= $snapshot->depth ?>" class="govuk-input govuk-date-input__input govuk-input--width-4" id="depth" maxlength="4" name="depth" type="text">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- End depth fields //-->
+                                    <!-- End depth fields //-->
 
-                                <!-- Begin omit duties field //-->
-                                <div class="govuk-form-group">
-                                    <span id="changed-name-hint" class="govuk-hint">Would you like to omit duties?</span>
-                                    <div class="govuk-radios govuk-radios--inline">
-                                        <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="omit_duties_yes" name="omit_duties" type="radio" value="1">
-                                            <label class="govuk-label govuk-radios__label" for="omit_duties_yes">Yes</label>
-                                        </div>
-                                        <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="omit_duties_no" name="omit_duties" type="radio" value="0">
-                                            <label class="govuk-label govuk-radios__label" for="omit_duties_no">No</label>
+                                    <!-- Begin omit duties field //-->
+                                    <div class="govuk-form-group">
+                                        <span id="changed-name-hint" class="govuk-hint">Would you like to omit duties?</span>
+                                        <div class="govuk-radios govuk-radios--inline">
+                                            <div class="govuk-radios__item">
+                                                <input class="govuk-radios__input" id="omit_duties_yes" name="omit_duties" type="radio" value="1">
+                                                <label class="govuk-label govuk-radios__label" for="omit_duties_yes">Yes</label>
+                                            </div>
+                                            <div class="govuk-radios__item">
+                                                <input class="govuk-radios__input" id="omit_duties_no" name="omit_duties" type="radio" value="0">
+                                                <label class="govuk-label govuk-radios__label" for="omit_duties_no">No</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- End omit duties field //-->
-                            </fieldset>
-                        </div>
+                                    <!-- End omit duties field //-->
+                                </fieldset>
+                            </div>
 
-
+                        <?php
+                        }
+                        ?>
                         <!-- Start Submit button //-->
                         <div class="govuk-form-group" style="padding:0px;margin:0px">
                             <button type="submit" class="govuk-button">Generate snapshot</button>

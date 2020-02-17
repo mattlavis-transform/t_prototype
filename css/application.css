@@ -1271,3 +1271,89 @@ table.workbaskets tbody tr td.govuk-table__cell img {
 	width:80px !important;
 	padding: 4px 0px 0px 2px !important;
 }
+
+
+
+.govuk-checkboxes--vsmall .govuk-checkboxes__item {
+    min-height: 0;
+    margin-bottom: 0;
+    padding-left: 34px;
+    float: left
+}
+
+.govuk-checkboxes--vsmall .govuk-checkboxes__item:after {
+    content: "";
+    display: block;
+    clear: both
+}
+
+.govuk-checkboxes--vsmall .govuk-checkboxes__input {
+    left: -10px
+}
+
+.govuk-checkboxes--vsmall .govuk-checkboxes__label {
+    margin-top: -2px;
+    /*padding: 13px 15px 13px 1px;*/
+    padding: 4px 15px 13px 1px;
+    float: left;
+    font-size:14px;
+}
+
+@media (min-width:40.0625em) {
+    .govuk-checkboxes--vsmall .govuk-checkboxes__label {
+        /*padding: 11px 15px 10px 1px;*/
+        padding: 2px 15px 10px 1px
+    }
+}
+
+.govuk-checkboxes--vsmall .govuk-checkboxes__label:before {
+    /*top: 8px;*/
+    top: -2px;
+    width: 24px;
+    height: 24px
+}
+
+.govuk-checkboxes--vsmall .govuk-checkboxes__label:after {
+    /*top: 15px;*/
+    top: 6px;
+    left: 6px;
+    width: 9px;
+    height: 3.5px;
+    border-width: 0 0 3px 3px
+}
+
+.govuk-checkboxes--vsmall .govuk-checkboxes__hint {
+    padding: 0;
+    clear: both
+}
+
+.govuk-checkboxes--vsmall .govuk-checkboxes__conditional {
+    margin-left: 10px;
+    padding-left: 20px;
+    clear: both
+}
+
+@media (hover:none), (pointer:coarse) {
+    .govuk-checkboxes--vsmall .govuk-checkboxes__item:hover .govuk-checkboxes__input:not(:disabled)+.govuk-checkboxes__label:before {
+        box-shadow: none
+    }
+    .govuk-checkboxes--vsmall .govuk-checkboxes__item:hover .govuk-checkboxes__input:focus+.govuk-checkboxes__label:before {
+        box-shadow: 0 0 0 3px #fd0
+    }
+}
+.govuk-warning-text {
+    max-width:800px;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    /*border: 1px solid #aaa;*/
+    border:0px !important;
+    font-size:16px !important;
+
+}
+.subheading {
+    display: block;
+    font-weight: normal;
+    font-size:19px;
+    margin:1em 0px 0px 0px;
+}

@@ -635,19 +635,22 @@ class geographical_area
     function populate_from_db()
     {
         global $conn;
-        /*
- $sql = "SELECT gad.description, gadp.validity_start_date, gad.geographical_area_description_period_sid,
- gad.geographical_area_sid, gad.geographical_area_id
- FROM geographical_area_descriptions gad, geographical_area_description_periods gadp
- WHERE gad.geographical_area_description_period_sid = gadp.geographical_area_description_period_sid
- AND gad.geographical_area_description_period_sid = $1";
- */
-        $sql = "select geographical_area_sid, geographical_area_id, description, geographical_code, validity_start_date, validity_end_date, parent_geographical_area_group_sid
- from ml.ml_geographical_areas mga where geographical_area_sid = $1;";
-        $stmt = "get_geographical_area" . strval($this->geographical_area_sid);
-
-        pg_prepare($conn, $stmt, $sql);
-        $result = pg_execute($conn, $stmt, array($this->geographical_area_sid));
+        if ($this->geographical_area_sid != "") {
+            $sql = "select geographical_area_sid, geographical_area_id, description, geographical_code, validity_start_date, validity_end_date, parent_geographical_area_group_sid
+            from ml.ml_geographical_areas mga where geographical_area_sid = $1;";
+            $stmt = "get_geographical_area" . strval($this->geographical_area_sid);
+    
+            pg_prepare($conn, $stmt, $sql);
+            $result = pg_execute($conn, $stmt, array($this->geographical_area_sid));
+        } else {
+            $sql = "select geographical_area_sid, geographical_area_id, description, geographical_code, validity_start_date, validity_end_date, parent_geographical_area_group_sid
+            from ml.ml_geographical_areas mga where geographical_area_id = $1;";
+            $stmt = "get_geographical_area" . strval($this->geographical_area_id);
+    
+            pg_prepare($conn, $stmt, $sql);
+            $result = pg_execute($conn, $stmt, array($this->geographical_area_id));
+        }
+        
         $row_count = pg_num_rows($result);
         if (($result) && ($row_count > 0)) {
             $row = pg_fetch_row($result);

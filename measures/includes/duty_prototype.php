@@ -22,11 +22,12 @@
             array_push($measure_activity->additional_code_list, $ac);
         }
         foreach ($measure_activity->additional_code_list as $additional_code) {
-            $row_count = 0;
+            $row_index = 0;
             $code_count++;
             ?>
             <table class="govuk-table govuk-table--m sticky" id="duty_table_<?= $additional_code->code ?>">
-                <tbody class="govuk-table__body">
+                <caption class="govuk-table__caption--m">Applicable duties</caption>
+                <thead class="govuk-table__head">
                     <?php
                         if ($additional_code->code != "Dummy") {
                     ?>
@@ -43,14 +44,16 @@
                         <th scope="col" class="govuk-table__header" style="width:60%">Duty</th>
                         <th scope="col" class="govuk-table__header" style="width:25%">&nbsp;</th>
                     </tr>
+                </thead>
+                <tbody class="govuk-table__body">
                     <?php
-
+                    $row_count = count($measure_activity->commodity_code_list);
                     foreach ($measure_activity->commodity_code_list as $commodity_code) {
-                        $row_count++;
-                        if (($measure_activity->duties_same_for_all_commodities) && ($row_count > 1)) {
+                        $row_index++;
+                        if (($measure_activity->duties_same_for_all_commodities) && ($row_index > 1)) {
                     ?>
                             <tr class="govuk-table__row">
-                                <td class="govuk-table__cell vertical_align_middle"><?= $row_count ?></td>
+                                <td class="govuk-table__cell vertical_align_middle"><?= $row_index ?></td>
                                 <td class="govuk-table__cell vertical_align_middle">
                                     <?= format_goods_nomenclature_item_id($commodity_code->goods_nomenclature_item_id) ?>
                                 </td>
@@ -62,7 +65,7 @@
                         } else {
                         ?>
                             <tr class="govuk-table__row">
-                                <td class="govuk-table__cell vertical_align_middle"><?= $row_count ?></td>
+                                <td class="govuk-table__cell vertical_align_middle"><?= $row_index ?></td>
                                 <td class="govuk-table__cell vertical_align_middle">
                                     <?= format_goods_nomenclature_item_id($commodity_code->goods_nomenclature_item_id) ?>
                                 </td>
@@ -70,7 +73,7 @@
                                     <input class="govuk-input govuk-input--width-40 duty" id="duty_<?= $commodity_code->goods_nomenclature_item_id ?>" name="duty_<?= $commodity_code->goods_nomenclature_item_id ?>" type="text">
                                 </td>
                                 <?php
-                            if ((!$measure_activity->duties_same_for_all_commodities) && ($row_count == 1)) {
+                            if ((!$measure_activity->duties_same_for_all_commodities) && ($row_index == 1) && ($row_count > 1)) {
                             ?>
                                 <td class="govuk-table__cell vertical_align_middle">
                                     <a class="govuk-link copy_to_all_rows" href="#">Copy to all rows</a>

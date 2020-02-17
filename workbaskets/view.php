@@ -100,9 +100,11 @@ $application->session->workbasket->workbasket_get_certificates();
 $application->session->workbasket->workbasket_get_additional_codes();
 $application->session->workbasket->workbasket_get_regulations();
 $application->session->workbasket->workbasket_get_geographical_areas();
+$application->session->workbasket->workbasket_get_measure_activities();
 ?>
 
 <!-- Start accordion section - footnote associations with measures //-->
+<!--
                         <div class="govuk-accordion__section ">
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
@@ -150,9 +152,11 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                 </table>
                             </div>
                         </div>
+                        //-->
                         <!-- End accordion section - footnote associations with measures //-->
 
                         <!-- Start accordion section - footnote associations with commodities //-->
+                        <!--
                         <div class="govuk-accordion__section ">
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
@@ -200,83 +204,13 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                 </table>
                             </div>
                         </div>
+                        //-->
                         <!-- End accordion section - footnote associations with commodities //-->
 
-                        <!-- Start accordion section - additional codes //-->
-                        <div class="govuk-accordion__section ">
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
-                                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
-                                        Additional codes (4)
-                                    </span>
-                                </h2>
-                            </div>
-                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
-                                <table class="govuk-table">
-                                    <thead class="govuk-table__head">
-                                        <tr class="govuk-table__row">
-                                            <th scope="col" class="govuk-table__header">Action</th>
-                                            <th scope="col" class="govuk-table__header">Code</th>
-                                            <th scope="col" class="govuk-table__header" nowrap>Start date</th>
-                                            <th scope="col" class="govuk-table__header" nowrap>End date</th>
-                                            <th scope="col" class="govuk-table__header">Description</th>
-                                            <th scope="col" class="govuk-table__header r">Next step</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="govuk-table__body">
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">Create</td>
-                                            <td class="govuk-table__cell">C233</td>
-                                            <td class="govuk-table__cell">01 Jan 21</td>
-                                            <td class="govuk-table__cell">-</td>
-                                            <td class="govuk-table__cell">Baoding Industries</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">Update</td>
-                                            <td class="govuk-table__cell">C233</td>
-                                            <td class="govuk-table__cell">01 Jan 21</td>
-                                            <td class="govuk-table__cell">-</td>
-                                            <td class="govuk-table__cell">Baoding Industries</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">New description</td>
-                                            <td class="govuk-table__cell">C233</td>
-                                            <td class="govuk-table__cell">01 Jan 21</td>
-                                            <td class="govuk-table__cell">-</td>
-                                            <td class="govuk-table__cell">Baoding Industries</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">Updated description</td>
-                                            <td class="govuk-table__cell">C233</td>
-                                            <td class="govuk-table__cell">01 Jan 21</td>
-                                            <td class="govuk-table__cell">-</td>
-                                            <td class="govuk-table__cell">Baoding Industries</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End accordion section - additional codes //-->
-
-
+                        
 
                         <!-- Start accordion section - geographical areas //-->
+                        <!--
                         <div class="govuk-accordion__section ">
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
@@ -346,10 +280,12 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                 </table>
                             </div>
                         </div>
+                        //-->
                         <!-- End accordion section - geographical areas //-->
 
 
                         <!-- Start accordion section - geographical area memberships //-->
+                        <!--
                         <div class="govuk-accordion__section ">
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
@@ -397,103 +333,12 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                 </table>
                             </div>
                         </div>
+                        //-->
                         <!-- End accordion section - geographical area memberships //-->
 
 
-                        <!-- Start accordion section - regulations //-->
-                        <div class="govuk-accordion__section ">
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
-                                    <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
-                                        Regulations (4)
-                                    </span>
-                                </h2>
-                            </div>
-                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
-                                <table class="govuk-table">
-                                    <thead class="govuk-table__head">
-                                        <tr class="govuk-table__row">
-                                            <th scope="col" class="govuk-table__header">Action</th>
-                                            <th scope="col" class="govuk-table__header">ID</th>
-                                            <th scope="col" class="govuk-table__header">Start date</th>
-                                            <th scope="col" class="govuk-table__header">Information text</th>
-                                            <th scope="col" class="govuk-table__header">URL</th>
-                                            <th scope="col" class="govuk-table__header">Public identifier</th>
-                                            <th scope="col" class="govuk-table__header">TRA case</th>
-                                            <th scope="col" class="govuk-table__header">Regulation group</th>
-                                            <th scope="col" class="govuk-table__header r">Next step</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="govuk-table__body">
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">Create</td>
-                                            <td class="govuk-table__cell">R1010100</td>
-                                            <td class="govuk-table__cell">01 Jan 21</td>
-                                            <td class="govuk-table__cell">
-                                                UK / South Korea Free Trade Agreement - tariff preferences
-                                            </td>
-                                            <td class="govuk-table__cell">http://www.legislation.gov.uk/2019/436</td>
-                                            <td class="govuk-table__cell">2019 No. 436</td>
-                                            <td class="govuk-table__cell">-</td>
-                                            <td class="govuk-table__cell">FTA - Free Trade Agreement</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">Create</td>
-                                            <td class="govuk-table__cell">R1010101</td>
-                                            <td class="govuk-table__cell">01 Jan 21</td>
-                                            <td class="govuk-table__cell">
-                                                UK / South Korea Free Trade Agreement - preferential quotas,/td>
-                                            <td class="govuk-table__cell">http://www.legislation.gov.uk/2019/436</td>
-                                            <td class="govuk-table__cell">2019 No. 436</td>
-                                            <td class="govuk-table__cell">-</td>
-                                            <td class="govuk-table__cell">FTA - Free Trade Agreement</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">Create</td>
-                                            <td class="govuk-table__cell">R1010102</td>
-                                            <td class="govuk-table__cell">01 Jan 21</td>
-                                            <td class="govuk-table__cell">
-                                                UK / South Korea Free Trade Agreement - supplementary unit
-                                            </td>
-                                            <td class="govuk-table__cell">http://www.legislation.gov.uk/2019/436</td>
-                                            <td class="govuk-table__cell">2019 No. 436</td>
-                                            <td class="govuk-table__cell">-</td>
-                                            <td class="govuk-table__cell">UTS - Supplementary unit</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                        <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">Update</td>
-                                            <td class="govuk-table__cell">N2100190</td>
-                                            <td class="govuk-table__cell">01 Jan 21</td>
-                                            <td class="govuk-table__cell">
-                                                An updated information text field</td>
-                                            <td class="govuk-table__cell">http://www.legislation.gov.uk/2019/436</td>
-                                            <td class="govuk-table__cell" nowrap>Notice (2021)</td>
-                                            <td class="govuk-table__cell">AS1010</td>
-                                            <td class="govuk-table__cell">DUM - Anti-dumping duties</td>
-                                            <td class="govuk-table__cell r" nowrap>
-                                                <a title='View or edit this item' href=""><img src="/assets/images/view.png" /></a>
-                                                <a title='Delete this item' href=""><img src="/assets/images/delete.png" /></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End accordion section - regulations //-->
-
                         <!-- Start accordion section - commodity codes //-->
+                        <!--
                         <div class="govuk-accordion__section ">
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
@@ -578,11 +423,13 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                 </table>
                             </div>
                         </div>
+                        //-->
                         <!-- End accordion section - commodity codes //-->
 
 
 
                         <!-- Start accordion section - new quota //-->
+                        <!--
                         <div class="govuk-accordion__section ">
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
@@ -625,7 +472,6 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                         </tr>
                                         <tr>
                                             <td class="govuk-table__cell" colspan="10">
-                                                <!-- Start details component //-->
                                                 <details class="govuk-details" data-module="govuk-details">
                                                     <summary class="govuk-details__summary">
                                                         <span class="govuk-details__summary-text">
@@ -697,8 +543,6 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                                         </table>
                                                     </div>
                                                 </details>
-                                                <!-- End details component //-->
-                                                <!-- Start details component //-->
                                                 <details class="govuk-details" data-module="govuk-details">
                                                     <summary class="govuk-details__summary">
                                                         <span class="govuk-details__summary-text">
@@ -734,7 +578,6 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                                         </table>
                                                     </div>
                                                 </details>
-                                                <!-- End details component //-->
                                             </td>
                                         </tr>
 
@@ -756,7 +599,6 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                         </tr>
                                         <tr>
                                             <td class="govuk-table__cell" colspan="10">
-                                                <!-- Start details component //-->
                                                 <details class="govuk-details" data-module="govuk-details">
                                                     <summary class="govuk-details__summary">
                                                         <span class="govuk-details__summary-text">
@@ -828,8 +670,6 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                                         </table>
                                                     </div>
                                                 </details>
-                                                <!-- End details component //-->
-                                                <!-- Start details component //-->
                                                 <details class="govuk-details" data-module="govuk-details">
                                                     <summary class="govuk-details__summary">
                                                         <span class="govuk-details__summary-text">
@@ -928,7 +768,6 @@ $application->session->workbasket->workbasket_get_geographical_areas();
 
                                                     </div>
                                                 </details>
-                                                <!-- End details component //-->
                                             </td>
                                         </tr>
 
@@ -937,9 +776,11 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                 </table>
                             </div>
                         </div>
+                        //-->
                         <!-- End accordion section - new quota //-->
 
                         <!-- Start accordion section - new measures //-->
+                        <!--
                         <div class="govuk-accordion__section ">
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
@@ -1062,6 +903,7 @@ $application->session->workbasket->workbasket_get_geographical_areas();
                                 </table>
                             </div>
                         </div>
+                        //-->
                         <!-- End accordion section - new measures //-->
 
 

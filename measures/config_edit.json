@@ -1,0 +1,428 @@
+{
+    "work_with_measures": {
+        "config": {
+            "object_name": "Measures",
+            "title_create": "Work with selected measures",
+            "validate": true,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Continue",
+                "submit_button_text_edit": "Continue to core measure data",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "You are about to work with <b>{measure_count} measures</b>. When you have finished editing, these will be submitted into workflow as a single activity in the workbasket {workbasket_name}."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "input_control",
+                "label": "What is the name of this activity?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please provide a name for this activity, so that it can be identified later in your workbasket.",
+                "control_name": "activity_name",
+                "control_style": "govuk-input",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "xdate_picker_control",
+                "label": "When should this change take effect?",
+                "label_style": "govuk-label--m",
+                "hint_text": "The existing measures will be end-dated on the day before the date you specify here, and replaced with new measures starting on the same day. If you want there to be a gap between the old measures ending and the new ones beginning, you should do this as separate actions — first end date the existing measures (change validity period), then copy them and make your changes to the copies.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "xinput_control",
+                "label": "What regulation (if any) gives force to this change?",
+                "label_style": "govuk-label--m",
+                "hint_text": "Start typing in the field to see available regulations. If the regulation you need is not in the list, you can add it from here. If you're not sure of the regulation name or ID, you can search here. ",
+                "control_name": "activity_name",
+                "control_style": "govuk-input",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "radio_control",
+                "label": "What would you like to do with these measures?",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "Please select from the list of options below.",
+                "control_name": "edit_activity_option",
+                "dataset": "",
+                "selected": "",
+                "default": "1",
+                "radio_control_style": "stacked",
+                "required": true,
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": []
+    },
+    "change_regulation": {
+        "config": {
+            "object_name": "Measures",
+            "title_create": "Change regulation",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Add change to workbasket",
+                "submit_button_text_edit": "",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "warning_control",
+                "control_scope": "",
+                "text": "Use this form to change the regulation associated with the x measures that you have selected. This is especially useful in migrating measures that have been set up with a draft regulation to a fully operational equivalent."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "conditional_date_picker_control",
+                "label": "When should this change take effect?",
+                "label_style": "govuk-label--m",
+                "hint_text": "If the measures have already started, then the existing measures will be end-dated on the day before the date you specify here, and replaced with new measures starting on the next day. However, if the measures have not already started, then the existing measures will be updated.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "input_control",
+                "label": "Enter the new regulation",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please enter the regulation ID in the box below.",
+                "control_name": "measure_type_id",
+                "control_style": "govuk-input tt-input",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": []
+    },
+    "change_measure_type": {
+        "config": {
+            "object_name": "Measures",
+            "title_create": "Change measure type",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Add change to workbasket",
+                "submit_button_text_edit": "",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "warning_control",
+                "control_scope": "",
+                "text": "Use this form to change the measure type associated with one or more measures. This is most useful for bulk changing provisional anti-dumping and anti-subsidy measures (551 and 553) into their final equivalents (552 and 554)."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "conditional_date_picker_control",
+                "label": "When should this change take effect?",
+                "label_style": "govuk-label--m",
+                "hint_text": "If the measures have already started, then the existing measures will be end-dated on the day before the date you specify here, and replaced with new measures starting on the next day. However, if the measures have not already started, then the existing measures will be updated.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "input_control",
+                "label": "Select the new measure type",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please enter the type of measure to which you would like to change these measures.",
+                "control_name": "measure_type_id",
+                "control_style": "govuk-input govuk-input--width-40 tt-input",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": []
+    },
+    "change_validity_period": {
+        "config": {
+            "object_name": "Measures",
+            "title_create": "Change validity period",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Add change to workbasket",
+                "submit_button_text_edit": "",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "warning_control",
+                "control_scope": "",
+                "text": "Use this form to change the validity period of the x measures that you have selected. "
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When should these measures start?",
+                "label_style": "govuk-label--m",
+                "hint_text": "The selected measures currently all start on 01 Jan 2012. |<br />The selected measures currently start on various dates.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When should these measures end?",
+                "label_style": "govuk-label--m",
+                "hint_text": "The selected measures currently all end on 01 Jan 2012. |<br />The selected measures currently end on various dates. |<br />The selected measures are currently all open-ended.",
+                "control_name": "validity_end_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": []
+    },
+    "change_geography": {
+        "config": {
+            "object_name": "Measures",
+            "title_create": "Change geography",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Add change to workbasket",
+                "submit_button_text_edit": "",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "warning_control",
+                "control_scope": "",
+                "text": "Use this form to change the validity period of the x measures that you have selected. "
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "conditional_date_picker_control",
+                "label": "When should this change take effect?",
+                "label_style": "govuk-label--m",
+                "hint_text": "",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/includes/origins.php"
+            },
+
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": []
+    },
+    "change_duties": {
+        "config": {
+            "title": "Measures",
+            "object_name": "Measures",
+            "title_create": "Change duties",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Add change to workbasket",
+                "submit_button_text_edit": "",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Use this form to change the duties associated with one or more measures."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "conditional_date_picker_control",
+                "label": "When should this change take effect?",
+                "label_style": "govuk-label--m",
+                "hint_text": "If the measures have already started, then the existing measures will be end-dated on the day before the date you specify here, and replaced with new measures starting on the next day. However, if the measures have not already started, then the existing measures will be updated.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "input_control",
+                "label": "Enter the new duties",
+                "label_style": "govuk-label--m",
+                "hint_text": "Please free-type the duties to assign to these measures.",
+                "control_name": "duty",
+                "control_style": "govuk-input tt-input",
+                "size": 100,
+                "maxlength": 100,
+                "pattern": "",
+                "required": true,
+                "default": "",
+                "disabled_on_edit": true,
+                "custom_errors": ""
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": []
+    },
+    "change_footnotes": {
+        "config": {
+            "object_name": "Measures",
+            "title_create": "Change footnotes",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Add change to workbasket",
+                "submit_button_text_edit": "",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "inset_control",
+                "control_scope": "",
+                "text": "Use this form to change the footnotes associated one or more measures."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "radio_control",
+                "label": "Would you like to remove all footnotes already attached to these measures?",
+                "label_style": "govuk-fieldset__legend--m",
+                "hint_text": "",
+                "control_name": "remove_existing_footnotes",
+                "dataset": "",
+                "selected": "",
+                "default": "1",
+                "radio_control_style": "stacked",
+                "required": true,
+                "disabled_on_edit": true
+            },
+            {
+                "control_type": "include_control",
+                "control_scope": "",
+                "path": "/measures/includes/footnote_prototype.php"
+            },
+
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": []
+    },
+    "measure_terminate": {
+        "config": {
+            "object_name": "Measures",
+            "title_create": "Delete or terminate measures",
+            "validate": false,
+            "buttons": {
+                "heading_text": "Next steps",
+                "submit_button_text_create": "Add change to workbasket",
+                "submit_button_text_edit": "",
+                "save_progress_button_text": "",
+                "cancel_button_text": "Cancel",
+                "cancel_button_href": "./"
+            }
+        },
+        "form": [
+            {
+                "control_type": "warning_control",
+                "control_scope": "",
+                "text": "Use this form to terminate or delete the x measures that you have selected."
+            },
+            {
+                "control_type": "error_block"
+            },
+            {
+                "control_type": "date_picker_control",
+                "label": "When should this change take effect?",
+                "label_style": "govuk-label--m",
+                "hint_text": "If the measures have already started, then the existing measures will be end-dated on the date you specify here. However, if the measures have not already started, then they will be deleted.",
+                "control_name": "validity_start_date",
+                "default": "",
+                "required": true
+            },
+            {
+                "control_type": "button_cluster_control"
+            }
+        ],
+        "filters": [],
+        "columns": []
+    }
+}

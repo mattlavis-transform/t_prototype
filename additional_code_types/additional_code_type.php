@@ -147,7 +147,7 @@ class additional_code_type
         }
     }
 
-    // Get mesaure types
+    // Get measure types
     function get_measure_types()
     {
         global $conn;

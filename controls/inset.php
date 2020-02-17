@@ -7,9 +7,12 @@ class inset_control
 
     public function __construct($text, $control_scope = "")
     {
-        global $application;
+        global $application, $measure_activity;
         if (strpos($text, "{workbasket_name}") !== false) {
             $text = str_replace("{workbasket_name}", "<strong>" . $application->session->workbasket->title . "</strong>", $text);        
+        }
+        if (strpos($text, "{measure_count}") !== false) {
+            $text = str_replace("{measure_count}", $measure_activity->measure_count, $text);        
         }
         preg_match_all('/{(.*?)}/', $text, $matches);
         foreach ($matches[1] as $match) {

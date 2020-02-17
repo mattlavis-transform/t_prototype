@@ -1,14 +1,16 @@
 <?php
-class detail_table_control
+class misc_data_table_control
 {
     // Class properties and methods go here
     public $control_name = "";
     public $caption = "";
+    public $edit_text = "";
+    public $edit_url = "";
     public $dataset = array();
     public $description_keys = array();
     public $suppress_control = false;
 
-    public function __construct($control_name, $control_scope, $caption, $dataset, $description_keys)
+    public function __construct($control_name, $control_scope, $caption, $edit_text, $edit_url, $dataset, $description_keys)
     {
         global $application;
         $this->control_name = $control_name;
@@ -21,6 +23,8 @@ class detail_table_control
         }
 
         $this->caption = $caption;
+        $this->edit_text = $edit_text;
+        $this->edit_url = $edit_url;
         $this->dataset = $dataset;
         $this->object_name = strtolower($application->object_name);
         $this->object_name = rtrim($this->object_name, "s");
@@ -33,17 +37,69 @@ class detail_table_control
         }
         $this->querystring = rtrim($this->querystring, "&");
 
+        /*
         $this->create_url = "/" . str_replace(" ", "_", $this->object_name) . "_descriptions/create_edit.html?" . $this->querystring;
         $this->edit_url = "/" . str_replace(" ", "_", $this->object_name) . "_descriptions/create_edit.html?mode=update&" . $this->querystring;
+        */
 
         $this->display();
     }
 
-
     private function display()
     {
+        $data_found = false;
         if ($this->suppress_control == false) {
+            if ($this->dataset) {
+                $row_count = pg_num_rows($this->dataset);
+                if ($row_count > 0) {
+                    $data_found = true;
+                    $field_count = pg_num_fields($this->dataset);
+
 ?>
+                    <!-- Start version control //-->
+                    <table class="govuk-table sticky" id="<?= $this->control_name ?>">
+                        <caption class="govuk-table__caption--m"><?= $this->caption ?> </caption>
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <?php
+                                for ($i = 0; $i < $field_count; $i++) {
+                                    $field = pg_field_name($this->dataset, $i);
+                                    echo ('<th  scope="col" class="govuk-table__header">' . format_field_name($field) . '</th>');
+                                }
+                                ?>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            <?php
+                            while ($row = pg_fetch_object($this->dataset)) {
+                                echo ('<tr class="govuk-table__row">');
+                                for ($i = 0; $i < $field_count; $i++) {
+                                    $field = pg_field_name($this->dataset, $i);
+                                    echo ('<td class="govuk-table__cell">' . format_value($row, $field) . '</td>');
+                                }
+                                echo ('</tr>');
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                    <!-- End version control //-->
+            <?php
+                }
+            }
+            if (!$data_found) {
+                echo ("<h1 class='govuk-heading-m'>" . $this->caption . "</h1>");
+                echo ("<p class='govuk-body'>No data found</p>");
+            }
+            if (($this->edit_text != "") && ($this->edit_url != "")) {
+                echo ("<p class='govuk-body'><a class='govuk-link' href='" . $this->edit_url . "'>" . $this->edit_text . "</a></p>");
+            }
+        }
+    }
+
+    private function display_old()
+    {
+        if ($this->suppress_control == false) {
+            ?>
             <!-- Start detail table control //-->
             <table class="govuk-table sticky" id="<?= $this->control_name ?>">
                 <caption class="govuk-table__caption--m"><?= $this->caption ?> </caption>

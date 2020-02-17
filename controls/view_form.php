@@ -80,6 +80,8 @@ class view_form
         foreach ($matches[1] as $match) {
             if (strpos($match, "date") !== false) {
                 $s = str_replace("{" . $match . "}", short_date($this->object->{$match}), $s);
+            } elseif ($match == "goods_nomenclature_item_id") {
+                $s = str_replace("{" . $match . "}", format_goods_nomenclature_item_id($this->object->{$match}), $s);
             } else {
                 $s = str_replace("{" . $match . "}", $this->object->{$match}, $s);
             }
@@ -159,6 +161,7 @@ class view_form
                                         $value = $item["value"];
                                         $value = $this->detokenise($value);
 
+
                                     ?>
                                         <tr class="govuk-table__row">
                                             <td class="govuk-table__cell b" style="width:30%"><?= $label ?></td>
@@ -222,6 +225,18 @@ class view_form
                                         );
                                         break;
 
+                                    case "misc_data_table_control":
+                                        new misc_data_table_control(
+                                            $control_name = $item["control_name"],
+                                            $control_scope = $item["control_scope"],
+                                            $caption = $item["caption"],
+                                            $edit_text = $item["edit_text"],
+                                            $edit_url = $item["edit_url"],
+                                            $dataset = $this->control_content[$control_name],
+                                            $description_keys = $config["description_keys"]
+                                        );
+                                        break;
+    
                                     case "additional_code_measure_type_table_control":
                                         new additional_code_measure_type_table_control(
                                             $control_name = $item["control_name"],

@@ -217,6 +217,7 @@ class additional_code
         $this->additional_code_sid = trim(get_querystring("additional_code_sid"));
         $this->additional_code_type_id = trim(get_querystring("additional_code_type_id"));
         $this->additional_code = trim(get_querystring("additional_code"));
+        $this->ac = trim(get_querystring("ac"));
 
         if (empty($_GET)) {
             $this->clear_cookies();
